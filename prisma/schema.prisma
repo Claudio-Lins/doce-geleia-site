@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id            String          @id @default(uuid())
+  title         String
+  slug          String          @unique
+  coverUrl      String?
+  harmonization String?
+  validate      String?
+  isDestack     Boolean         @default(false)
+  categoryId    String?
+  createdAt     DateTime        @default(now())
+  category      Category?       @relation(fields: [categoryId], references: [id])
+  productDetail ProductDetail[]
+  ingredients   Ingredient[]    @relation("IngredientToProduct")
+
+  @@index([categoryId], map: "Product_categoryId_fkey")
+}
+
+model ProductDetail {
+  id              String   @id @default(uuid())
+  weight          String
+  price           Int
+  qunatityInStock Int
+  productId       String
+  createdAt       DateTime @default(now())
+  product         Product  @relation(fields: [productId], references: [id])
+
+  @@index([productId], map: "ProductDetail_productId_fkey")
+}
+
+model Ingredient {
+  id        String    @id @default(uuid())
+  name      String
+  cor       String?
+  imageUrl  String?
+  createdAt DateTime  @default(now())
+  products  Product[] @relation("IngredientToProduct")
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  coverUrl    String?
+  createdAt   DateTime  @default(now())
+  products    Product[]
+}
+
+model Testimonial {
+  id          String   @id @default(uuid())
+  name        String
+  testimonial String
+  email       String?
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  imageUrl    String?
+}
