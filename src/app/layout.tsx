@@ -24,13 +24,13 @@ export default async function RootLayout({
     <html lang="en">
       <body
         className={`
-      min-h-screen w-full
+      min-h-screen w-full scroll-smooth antialiased
       ${montserrat.className}
       `}
       >
         <Navbar />
         <ToastProvider />
-        <div className="">{children}</div>
+        <main className="grow">{children}</main>
       </body>
     </html>
   )

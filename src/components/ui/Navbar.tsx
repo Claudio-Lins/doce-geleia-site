@@ -14,6 +14,7 @@ import { useCartStore } from "@/context/cartContext"
 import { ShoppingBag } from "lucide-react"
 import ModalContexts from "../modals/use-modal-store"
 import { Button } from "./button"
+import { useEffect, useState } from "react"
 
 interface NavbarProps {
   // products: ProductTypes[]
@@ -23,19 +24,46 @@ export function Navbar() {
   const pathName = usePathname()
   const cart = useCartStore()
   const { setShowModalProducts, showModalProducts } = ModalContexts()
+  const [color, setColor] = useState("transparent")
+  const [textColor, setTextColor] = useState("white")
+  const [cartColor, setCartColor] = useState("white")
+  const [lgNeg, setLgNeg] = useState(false)
+
+  const router = useRouter()
+  useEffect(() => {
+    const changeColor = () => {
+      if (window.scrollY >= 90) {
+        setColor("#ffffff")
+        setTextColor("#09090b")
+        setCartColor("#09090b")
+        setLgNeg(true)
+      } else {
+        setColor("transparent")
+        setTextColor("white")
+        setLgNeg(false)
+      }
+    }
+    window.addEventListener("scroll", changeColor)
+  }, [])
+
   return (
     <div
       className={cn(
         " fixed inset-0 z-10 w-full h-24 bg-transparent px-4",
         pathName !== "/" ? "bg-white" : "bg-transparent"
       )}
+      style={{
+        backgroundColor: color,
+      }}
     >
       <div className="w-full max-w-6xl mx-auto py-4 flex items-center justify-between">
         <div className="border p-1">
           <Link href="/" legacyBehavior passHref>
             <Image
               src={
-                pathName === "/" ? "/logo/lg-site-neg.svg" : "/logo/lg-site.svg"
+                pathName === "/" && !lgNeg
+                  ? "/logo/lg-site-neg.svg"
+                  : "/logo/lg-site.svg"
               }
               alt="Doce Geleia"
               width={60}
@@ -45,14 +73,19 @@ export function Navbar() {
           </Link>
         </div>
         <NavigationMenu>
-          <NavigationMenuItem className="gap-2 flex items-center">
+          <NavigationMenuItem
+            className="gap-2 flex items-center"
+            style={{
+              color: textColor,
+            }}
+          >
             <Link href="/products" legacyBehavior passHref>
               <NavigationMenuLink
                 className={cn(
                   "bg-transparent px-3 py-2 rounded-lg",
                   pathName !== "/"
                     ? " text-zinc-950 hover:bg-zinc-100  bg-white"
-                    : " text-white hover:bg-zinc-100/50 hover:text-zinc-900"
+                    : " hover:bg-zinc-100/50 hover:text-zinc-900"
                 )}
               >
                 Produtos
@@ -64,7 +97,7 @@ export function Navbar() {
                   "bg-transparent px-3 py-2 rounded-lg",
                   pathName !== "/"
                     ? " text-zinc-950 hover:bg-zinc-100"
-                    : " text-white hover:bg-zinc-100/50 hover:text-zinc-900"
+                    : " hover:bg-zinc-100/50 hover:text-zinc-900"
                 )}
               >
                 Sobre
@@ -76,7 +109,7 @@ export function Navbar() {
                   "bg-transparent px-3 py-2 rounded-lg",
                   pathName !== "/"
                     ? " text-zinc-950 hover:bg-zinc-100"
-                    : " text-white hover:bg-zinc-100/50 hover:text-zinc-900"
+                    : " hover:bg-zinc-100/50 hover:text-zinc-900"
                 )}
               >
                 Contacto
@@ -88,7 +121,7 @@ export function Navbar() {
                 "bg-transparent px-3 py-2 rounded-lg",
                 pathName !== "/"
                   ? " text-zinc-950 hover:bg-zinc-100"
-                  : " text-white hover:bg-zinc-100/50 hover:text-zinc-900"
+                  : " hover:bg-zinc-100/50 hover:text-zinc-900"
               )}
             >
               <ShoppingBag

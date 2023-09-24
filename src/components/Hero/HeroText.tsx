@@ -2,10 +2,12 @@ import Link from "next/link"
 
 export function HeroText() {
   return (
-    <div className="bg-white flex flex-col space-y-4 w-full max-w-xs md:max-w-md p-6 rounded-lg backdrop-blur-sm bg-opacity-50 mt-16 md:mt-0">
-      <h1 className="text-4xl font-oldStandardTT font-bold">Doce Geleia</h1>
+    <div className="bg-transparent flex flex-col space-y-4 w-full max-w-xs md:max-w-md p-6 rounded-lg bg-opacity-50 mt-16 md:mt-0">
+      <h1 className="text-4xl font-oldStandardTT font-bold text-white">
+        Doce Geleia
+      </h1>
       <hr className="my-2" />
-      <div className="flex flex-col space-y-4 mt-2 text-xs md:text-sm font-light leading-relaxed md:leading-6">
+      <div className="flex flex-col text-white space-y-4 mt-2 text-xs md:text-sm font-light leading-relaxed md:leading-6">
         <p className="">
           A geleia artesanal é um produto delicioso e saudável, feito à base de
           frutas frescas e sem adição de conservantes. É uma otima opção para
@@ -25,7 +27,7 @@ export function HeroText() {
       </div>
       <Link
         href="/products"
-        className="border px-8 rounded-lg py-2 text-center transition-all duration-700 hover:bg-zinc-50 hover:text-zinc-900 mt-12"
+        className="border px-8 rounded-lg py-2 text-center text-white transition-all duration-700 hover:bg-zinc-50 hover:text-zinc-900 mt-12"
       >
         Sabores
       </Link>
