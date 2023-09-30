@@ -5,7 +5,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { Product } from "@/@types"
 
 interface ProductListProps {
-  products: any
+  products: Product[]
 }
 
 export function ProductList({ products }: ProductListProps) {
