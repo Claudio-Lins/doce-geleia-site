@@ -14,6 +14,8 @@ type Product = {
 }
 
 type CartStore = {
+  showCart: boolean
+  setShowCart: (showCart: boolean) => void
   cart: Product[]
   addToCart: (product: Product) => void
   removeFromCart: (productId: string) => void
@@ -22,6 +24,8 @@ type CartStore = {
 export const useCartStore = create<CartStore>()(
   persist(
     (set) => ({
+      showCart: false,
+      setShowCart: (showCart: boolean) => set({ showCart }),
       cart: [] as Product[],
       addToCart: (product) => {
         set((state) => {

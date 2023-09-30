@@ -4,6 +4,7 @@ import Image from "next/image"
 import prisma from "@/lib/prisma"
 import { ProductList } from "@/components/ProductList"
 import { Separator } from "@/components/ui/separator"
+import { useOrderStore } from "@/context/orderStore"
 
 export default async function ProductPage({
   params,

@@ -9,12 +9,19 @@ import { Separator } from "./ui/separator"
 import { Button } from "./ui/button"
 import { cn } from "@/lib/utils"
 import toast from "react-hot-toast"
+import { useOrderStore } from "@/context/orderStore"
 
 interface ProductProps {
   product: Product
 }
 
 export function Info({ product }: any) {
+  const { add, productSelected } = useOrderStore()
+  function handleAddToCart() {
+    add(product)
+    toast.success("Produto adicionado ao seu carrinho")
+  }
+
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
@@ -39,11 +46,16 @@ export function Info({ product }: any) {
       <div className="mt-10 flex flex-wrap justify-evenly items-center gap-2"></div>
       <div className="w-full mt-6 flex justify-center">
         <Button
-          // onClick={() => handleAddToCart()}
-          className={cn("flex items-center justify-center gap-2")}
+          disabled={productSelected.some((item: any) => item.id === product.id)}
+          onClick={handleAddToCart}
+          className="w-full flex items-center gap-2"
         >
-          Adicionar ao carrinho
-          <ShoppingCart />
+          <span>
+            {productSelected.some((item: any) => item.id === product.id)
+              ? "Adicionado ao"
+              : "Adicionar"}
+          </span>{" "}
+          <ShoppingCart size={16} />
         </Button>
       </div>
     </div>

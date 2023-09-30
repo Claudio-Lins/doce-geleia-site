@@ -14,7 +14,9 @@ import { useCartStore } from "@/context/cartContext"
 import { ShoppingBag } from "lucide-react"
 import ModalContexts from "../modals/use-modal-store"
 import { Button } from "./button"
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
+import { Cart } from "../order/Cart"
+import { useOrderStore } from "@/context/orderStore"
 
 interface NavbarProps {
   // products: ProductTypes[]
@@ -22,6 +24,7 @@ interface NavbarProps {
 
 export function Navbar() {
   const pathName = usePathname()
+  const { productSelected } = useOrderStore()
   const cart = useCartStore()
   const { setShowModalProducts, showModalProducts } = ModalContexts()
   const [color, setColor] = useState("transparent")
@@ -30,6 +33,11 @@ export function Navbar() {
   const [lgNeg, setLgNeg] = useState(false)
 
   const router = useRouter()
+
+  useEffect(() => {
+    productSelected.length >= 1 && setShowModalProducts(true)
+  }, [productSelected, setShowModalProducts])
+
   useEffect(() => {
     const changeColor = () => {
       if (window.scrollY >= 90) {
@@ -116,7 +124,8 @@ export function Navbar() {
               </NavigationMenuLink>
             </Link>
 
-            <NavigationMenuLink
+            <Cart />
+            {/* <NavigationMenuLink
               className={cn(
                 "bg-transparent px-3 py-2 rounded-lg",
                 pathName !== "/"
@@ -128,7 +137,7 @@ export function Navbar() {
                 onClick={() => setShowModalProducts(true)}
                 className=""
               />
-            </NavigationMenuLink>
+            </NavigationMenuLink> */}
           </NavigationMenuItem>
         </NavigationMenu>
       </div>

@@ -1,6 +1,7 @@
 import { create } from "zustand"
+import { persist } from "zustand/middleware"
 
-export type Order = {
+export type ProductSelected = {
   id: string
   title: string
   coverUrl: string
@@ -17,7 +18,7 @@ export type Order = {
 interface OrderStore {
   step: number
   setStep: (step: number) => void
-  order: {
+  productSelected: {
     id: string
     title: string
     coverUrl: string
@@ -30,26 +31,40 @@ interface OrderStore {
       createdAt: string
     }[]
   }[]
-  add: (order: Order) => void
-  remove: (orderId: string) => void
+  add: (productSelected: ProductSelected) => void
+  remove: (productSelectedId: string) => void
 }
 
-export const useOrderStore = create<OrderStore>((set) => ({
-  step: 1,
-  setStep: (step) => set({ step }),
-  order: [] as Order[],
-
-  add(order) {
-    return set((state) => ({
-      ...state,
-      order: [...state.order, order],
-    }))
-  },
-
-  remove(orderId) {
-    return set((state) => ({
-      ...state,
-      order: state.order.filter((order) => order.id !== orderId),
-    }))
-  },
-}))
+export const useOrderStore = create<OrderStore>()(
+  persist(
+    (set) => ({
+      step: 1,
+      setStep: (step) => set({ step }),
+      productSelected: [] as ProductSelected[],
+      add(productSelected) {
+        return set((state: OrderStore) => {
+          const isProductSelectedInCart = state.productSelected.some(
+            (product) => product.id === productSelected.id
+          )
+          if (isProductSelectedInCart) {
+            alert("Product already in cart")
+            return state
+          }
+          return {
+            ...state,
+            productSelected: state.productSelected.concat(productSelected),
+          }
+        })
+      },
+      remove(productSelectedId) {
+        return set((state) => ({
+          ...state,
+          order: state.productSelected.filter(
+            (productSelected) => productSelected.id !== productSelectedId
+          ),
+        }))
+      },
+    }),
+    { name: "selectedProducts" }
+  )
+)
