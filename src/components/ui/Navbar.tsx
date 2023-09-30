@@ -123,21 +123,7 @@ export function Navbar() {
                 Contacto
               </NavigationMenuLink>
             </Link>
-
             <Cart />
-            {/* <NavigationMenuLink
-              className={cn(
-                "bg-transparent px-3 py-2 rounded-lg",
-                pathName !== "/"
-                  ? " text-zinc-950 hover:bg-zinc-100"
-                  : " hover:bg-zinc-100/50 hover:text-zinc-900"
-              )}
-            >
-              <ShoppingBag
-                onClick={() => setShowModalProducts(true)}
-                className=""
-              />
-            </NavigationMenuLink> */}
           </NavigationMenuItem>
         </NavigationMenu>
       </div>

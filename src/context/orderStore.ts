@@ -59,7 +59,7 @@ export const useOrderStore = create<OrderStore>()(
       remove(productSelectedId) {
         return set((state) => ({
           ...state,
-          order: state.productSelected.filter(
+          productSelected: state.productSelected.filter(
             (productSelected) => productSelected.id !== productSelectedId
           ),
         }))
