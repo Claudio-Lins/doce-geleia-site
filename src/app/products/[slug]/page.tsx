@@ -10,14 +10,6 @@ export default async function ProductPage({
 }: {
   params: { slug: string }
 }) {
-  // const product = await fetch(
-  //   `${process.env.NEXT_PUBLIC_API_URL}/products/${params.slug}`
-  // ).then((res) => res.json())
-
-  // const productDetail = await fetch(
-  //   `${process.env.NEXT_PUBLIC_API_URL}/productDetail`
-  // ).then((res) => res.json())
-
   const product = await prisma.product.findUnique({
     where: {
       slug: params.slug,

@@ -2,12 +2,11 @@ import { create } from "zustand"
 import { toast } from "react-hot-toast"
 import { persist, createJSONStorage } from "zustand/middleware"
 
-import { ProductDetailTypes, ProductTypes } from "@/@types"
-import { AlertTriangle } from "lucide-react"
+import { ProductDetail } from "@/@types"
 
 interface CartStore {
-  items: ProductDetailTypes[]
-  addItem: (data: ProductDetailTypes) => void
+  items: ProductDetail[]
+  addItem: (data: ProductDetail) => void
   removeItem: (id: string) => void
   removeAll: () => void
 }
@@ -16,7 +15,7 @@ const useCart = create(
   persist<CartStore>(
     (set, get) => ({
       items: [],
-      addItem: (data: ProductDetailTypes) => {
+      addItem: (data: ProductDetail) => {
         set({ items: [...get().items, data] })
         toast.success("Item added to cart.")
       },
