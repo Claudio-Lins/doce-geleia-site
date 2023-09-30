@@ -1,5 +1,15 @@
 "use client"
-import React, { use, useEffect } from "react"
+import React, { useEffect, useState } from "react"
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
 import {
   Sheet,
   SheetClose,
@@ -38,6 +48,7 @@ interface SelectedProduct {
 
 export function Cart() {
   const { showCart, setShowCart, removeFromCart } = useCartStore()
+  const [hasProductSelected, setHasProductSelected] = useState<boolean>(false)
   const { productSelected, remove } = useOrderStore()
   const pathName = usePathname()
   useEffect(() => {
@@ -61,7 +72,7 @@ export function Cart() {
             className={cn(
               " flex items-center gap-2 text-zinc-900",
               pathName === "/" ? "text-white" : "text-zinc-900",
-              productSelected.length <= 0 ? "hidden" : "block"
+              hasProductSelected ? "hidden" : "block"
             )}
           >
             <ShoppingCart
@@ -90,8 +101,34 @@ export function Cart() {
               Make changes to your profile here. Click save when done.
             </SheetDescription>
           </SheetHeader>
-          <Separator />
-          <ScrollArea className="h-[calc(70vh)] pb-6">
+          <Separator className="my-8" />
+          <Table className="overflow-hidden rounded-t-lg">
+            <TableHeader className="bg-zinc-950 text-white rounded-t-lg overflow-hidden">
+              <TableRow>
+                <TableHead className="w-64 text-white">Sabor</TableHead>
+                <TableHead>
+                  <div className="flex flex-col items-center w-20 text-white">
+                    <div className="text-xs">50gr</div>
+                    <div className="text-xs font-bold">2,50€</div>
+                  </div>
+                </TableHead>
+                <TableHead>
+                  <div className="flex flex-col items-center w-20 text-white">
+                    <div className="text-xs">130gr</div>
+                    <div className="text-xs font-bold">4,00€</div>
+                  </div>
+                </TableHead>
+                <TableHead>
+                  <div className="flex flex-col items-center w-20 text-white">
+                    <div className="text-xs">250gr</div>
+                    <div className="text-xs font-bold">5,00€</div>
+                  </div>
+                </TableHead>
+                <TableHead className="w-24  text-white">Subtotal</TableHead>
+              </TableRow>
+            </TableHeader>
+          </Table>
+          <ScrollArea className="h-[calc(60vh)] pb-6">
             <div className="p-4">
               {productSelected.map((product: SelectedProduct) => {
                 return (

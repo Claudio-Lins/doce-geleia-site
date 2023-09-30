@@ -10,6 +10,7 @@ import { Button } from "./ui/button"
 import { cn } from "@/lib/utils"
 import toast from "react-hot-toast"
 import { useOrderStore } from "@/context/orderStore"
+import { use, useEffect, useState } from "react"
 
 interface ProductProps {
   product: Product
@@ -17,10 +18,16 @@ interface ProductProps {
 
 export function Info({ product }: any) {
   const { add, productSelected } = useOrderStore()
+  const [hasProductSelected, setHasProductSelected] = useState<boolean>(false)
   function handleAddToCart() {
     add(product)
     toast.success("Produto adicionado ao seu carrinho")
   }
+
+  useEffect(() => {
+    productSelected.some((item: any) => item.id === product.id) &&
+      setHasProductSelected(true)
+  }, [productSelected])
 
   return (
     <div>
@@ -46,15 +53,11 @@ export function Info({ product }: any) {
       <div className="mt-10 flex flex-wrap justify-evenly items-center gap-2"></div>
       <div className="w-full mt-6 flex justify-center">
         <Button
-          disabled={productSelected.some((item: any) => item.id === product.id)}
+          disabled={hasProductSelected}
           onClick={handleAddToCart}
-          className="w-full flex items-center gap-2"
+          className={cn("w-full flex items-center gap-2")}
         >
-          <span>
-            {productSelected.some((item: any) => item.id === product.id)
-              ? "Adicionado ao"
-              : "Adicionar"}
-          </span>{" "}
+          {hasProductSelected ? "adicionado ao " : "adicionar ao "}
           <ShoppingCart size={16} />
         </Button>
       </div>
