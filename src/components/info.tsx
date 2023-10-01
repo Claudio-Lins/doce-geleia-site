@@ -11,23 +11,30 @@ import { cn } from "@/lib/utils"
 import toast from "react-hot-toast"
 import { useOrderStore } from "@/context/orderStore"
 import { use, useEffect, useState } from "react"
+import { useCartStore } from "@/hooks/useCartStore"
+// import { useCartStore } from "@/context/cartContext"
 
 interface ProductProps {
   product: Product
 }
 
 export function Info({ product }: any) {
-  const { add, productSelected } = useOrderStore()
+  const addItem = useCartStore((state) => state.addItem)
+  const items = useCartStore((state) => state.items)
+  const removeItem = useCartStore((state) => state.removeItem)
+  // const { add, productSelected } = useOrderStore()
   const [hasProductSelected, setHasProductSelected] = useState<boolean>(false)
-  function handleAddToCart() {
-    add(product)
-    toast.success("Produto adicionado ao seu carrinho")
-  }
+  // const { addToCart, cart } = useCartStore()
 
-  useEffect(() => {
-    productSelected.some((item: any) => item.id === product.id) &&
-      setHasProductSelected(true)
-  }, [productSelected])
+  // function handleAddToCart() {
+  //   add(product)
+  //   toast.success("Produto adicionado ao seu carrinho")
+  // }
+
+  // useEffect(() => {
+  //   productSelected.some((item: any) => item.id === product.id) &&
+  //     setHasProductSelected(true)
+  // }, [product.id, productSelected])
 
   return (
     <div>
@@ -51,15 +58,39 @@ export function Info({ product }: any) {
       </div>
       <Separator />
       <div className="mt-10 flex flex-wrap justify-evenly items-center gap-2"></div>
-      <div className="w-full mt-6 flex justify-center">
-        <Button
-          disabled={hasProductSelected}
-          onClick={handleAddToCart}
-          className={cn("w-full flex items-center gap-2")}
-        >
-          {hasProductSelected ? "adicionado ao " : "adicionar ao "}
-          <ShoppingCart size={16} />
-        </Button>
+      <div className="w-full mt-6 flex items-center justify-center">
+        <div className="flex flex-col items-center">
+          <div>
+            <h2>{product.title}</h2>
+            <button onClick={() => addItem({ ...product, size: "50gr" })}>
+              Adicionar tamanho S ao carrinho
+            </button>
+            <button onClick={() => addItem({ ...product, size: "130gr" })}>
+              Adicionar tamanho M ao carrinho
+            </button>
+            <button onClick={() => addItem({ ...product, size: "250gr" })}>
+              Adicionar tamanho L ao carrinho
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center">
+          <div>
+            {items.map((item: any) => (
+              <div className="flex flex-col" key={item.id}>
+                <span>{item.title}</span>
+                <span>{item.size}</span>
+                <button>-</button>
+                <span>{item.quantity}</span>
+                <span>{item.price}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <pre>
+          {JSON.stringify(items, null, 2)}
+          {/* {JSON.stringify(cart, null, 2)} */}
+        </pre>
       </div>
     </div>
   )

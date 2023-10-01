@@ -52,7 +52,6 @@ export const useOrderStore = create<OrderStore>()(
             (product) => product.id === productSelected.id
           )
           if (isProductSelectedInCart) {
-            alert("Product already in cart")
             return state
           }
           return {
@@ -61,6 +60,7 @@ export const useOrderStore = create<OrderStore>()(
           }
         })
       },
+
       remove(productSelectedId) {
         return set((state) => ({
           ...state,
@@ -77,9 +77,28 @@ export const useOrderStore = create<OrderStore>()(
             (orderDetail) => orderDetail.id === orderDetails.id
           )
           if (isOrderDetailsInCart) {
-            alert("Order already in cart")
             return state
           }
+
+          const newOrderDetails = orderDetails.productDetail?.map(
+            (productDetail) => {
+              const existingProductDetailIndex =
+                orderDetails.productDetail.findIndex(
+                  (item) => item.id === productDetail.id
+                )
+              if (existingProductDetailIndex >= 0) {
+                const newProductDetail = [...orderDetails.productDetail]
+                newProductDetail[existingProductDetailIndex].quantity +=
+                  productDetail.quantity
+                return { productDetail: newProductDetail }
+              } else {
+                return {
+                  productDetail: [...orderDetails.productDetail, productDetail],
+                }
+              }
+            }
+          )
+
           return {
             ...state,
             orderDetails: state.orderDetails.concat(orderDetails),

@@ -45,11 +45,25 @@ interface SelectedProduct {
     createdAt: string
   }[]
 }
+interface OrderDetails {
+  id: string
+  title: string
+  coverUrl: string
+  productDetail: {
+    id: string
+    weight: string
+    price: number
+    quantity: number
+    productId: string
+    createdAt: string
+  }[]
+}
 
 export function Cart() {
   const { showCart, setShowCart, removeFromCart } = useCartStore()
   const [hasProductSelected, setHasProductSelected] = useState<boolean>(false)
-  const { productSelected, remove } = useOrderStore()
+  const { productSelected, remove, addOrderDetails, orderDetails } =
+    useOrderStore()
   const pathName = usePathname()
   useEffect(() => {
     productSelected
@@ -62,6 +76,17 @@ export function Cart() {
   function handleRemove(id: string) {
     remove(id)
     toast.success("Produto removido do seu carrinho")
+  }
+
+  function handleAddToCart() {
+    const orderDetails: OrderDetails = {
+      id: productSelected[0]?.id,
+      title: productSelected[0]?.title,
+      coverUrl: productSelected[0]?.coverUrl,
+      productDetail: productSelected[0]?.productDetail,
+    }
+    addOrderDetails(orderDetails)
+    toast.success("Produto adicionado ao seu carrinho")
   }
 
   return (
