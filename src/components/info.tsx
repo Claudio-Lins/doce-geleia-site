@@ -33,25 +33,9 @@ export function Info({ product }: any) {
   // const addItem = useCartStore((state) => state.addItem)
   // const items = useCartStore((state) => state.items)
   // const removeItem = useCartStore((state) => state.removeItem)
-  useLocalStorage()
+  // useLocalStorage()
   // const { add, productSelected } = useOrderStore()
   const [hasProductSelected, setHasProductSelected] = useState<boolean>(false)
-  // const { addToCart, cart } = useCartStore()
-
-  // function handleAddToCart() {
-  //   add(product)
-  //   toast.success("Produto adicionado ao seu carrinho")
-  // }
-
-  function handleRemoveFromCart(size: string) {
-    removeItem(product.id, size)
-    toast.success("Produto removido do seu carrinho")
-  }
-
-  // useEffect(() => {
-  //   productSelected.some((item: any) => item.id === product.id) &&
-  //     setHasProductSelected(true)
-  // }, [product.id, productSelected])
 
   return (
     <div>
