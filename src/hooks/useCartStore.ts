@@ -20,7 +20,10 @@ type CartStore = {
 }
 
 export const useCartStore = create<CartStore>((set, get) => {
-  const initialCart = localStorage.getItem("cart")
+  let initialCart
+  if (typeof window !== "undefined") {
+    initialCart = localStorage.getItem("cart")
+  }
 
   return {
     items: initialCart ? JSON.parse(initialCart) : [],
