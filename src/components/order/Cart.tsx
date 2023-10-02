@@ -20,8 +20,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet"
-import { useCartStore } from "@/context/cartContext"
-import { ShoppingCart } from "lucide-react"
+// import { useCartStore } from "@/context/cartContext"
+import { useCartStore } from "@/hooks/useCartStore"
+import { MinusCircle, PlusCircle, ShoppingCart } from "lucide-react"
 import { Button } from "../ui/button"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -31,19 +32,17 @@ import { useOrderStore } from "@/context/orderStore"
 import { Product } from "@/@types"
 import Link from "next/link"
 import { toast } from "react-hot-toast"
+import Currency from "../currency"
+import Image from "next/image"
 
 interface SelectedProduct {
-  id?: string
-  title?: string
-  coverUrl?: string
-  productDetail?: {
-    id: string
-    weight: string
-    price: number
-    quantity: number
-    productId: string
-    createdAt: string
-  }[]
+  id: string
+  title: string
+  coverUrl: string
+  price: number
+  weight: string
+  size: string
+  quantity: number
 }
 interface OrderDetails {
   id: string
@@ -60,34 +59,36 @@ interface OrderDetails {
 }
 
 export function Cart() {
-  const { showCart, setShowCart, removeFromCart } = useCartStore()
+  // const items = useCartStore((state) => state.items)
+  const { items, setShowCart, showCart, removeItem, addItem } = useCartStore()
+  // const { showCart, setShowCart, removeFromCart } = useCartStore()
   const [hasProductSelected, setHasProductSelected] = useState<boolean>(false)
-  const { productSelected, remove, addOrderDetails, orderDetails } =
-    useOrderStore()
+  // const { productSelected, remove, addOrderDetails, orderDetails } =
+  //   useOrderStore()
   const pathName = usePathname()
-  useEffect(() => {
-    productSelected
-  }, [productSelected])
+  // useEffect(() => {
+  //   productSelected
+  // }, [productSelected])
 
-  useEffect(() => {
-    productSelected.length <= 0 && setShowCart(false)
-  }, [productSelected.length, setShowCart])
+  // useEffect(() => {
+  //   productSelected.length <= 0 && setShowCart(false)
+  // }, [productSelected.length, setShowCart])
 
-  function handleRemove(id: string) {
-    remove(id)
-    toast.success("Produto removido do seu carrinho")
-  }
+  // function handleRemove(id: string) {
+  //   remove(id)
+  //   toast.success("Produto removido do seu carrinho")
+  // }
 
-  function handleAddToCart() {
-    const orderDetails: OrderDetails = {
-      id: productSelected[0]?.id,
-      title: productSelected[0]?.title,
-      coverUrl: productSelected[0]?.coverUrl,
-      productDetail: productSelected[0]?.productDetail,
-    }
-    addOrderDetails(orderDetails)
-    toast.success("Produto adicionado ao seu carrinho")
-  }
+  // function handleAddToCart() {
+  //   const orderDetails: OrderDetails = {
+  //     id: productSelected[0]?.id,
+  //     title: productSelected[0]?.title,
+  //     coverUrl: productSelected[0]?.coverUrl,
+  //     productDetail: productSelected[0]?.productDetail,
+  //   }
+  //   addOrderDetails(orderDetails)
+  //   toast.success("Produto adicionado ao seu carrinho")
+  // }
 
   return (
     <div className="w-full">
@@ -127,7 +128,7 @@ export function Cart() {
             </SheetDescription>
           </SheetHeader>
           <Separator className="my-8" />
-          <Table className="overflow-hidden rounded-t-lg">
+          {/* <Table className="overflow-hidden rounded-t-lg">
             <TableHeader className="bg-zinc-950 text-white rounded-t-lg overflow-hidden">
               <TableRow>
                 <TableHead className="w-64 text-white">Sabor</TableHead>
@@ -152,25 +153,53 @@ export function Cart() {
                 <TableHead className="w-24  text-white">Subtotal</TableHead>
               </TableRow>
             </TableHeader>
-          </Table>
+          </Table> */}
           <ScrollArea className="h-[calc(60vh)] pb-6">
             <div className="p-4">
-              {productSelected.map((product: SelectedProduct) => {
-                return (
-                  <div
-                    className="flex items-center justify-between"
-                    key={product.id}
-                  >
-                    <p>{product.title}</p>
-                    <Button
-                      onClick={() => handleRemove(product.id!)}
-                      variant={"ghost"}
+              {
+                // only show one title of each product
+                items
+                  // .filter(
+                  //   (item, index, self) =>
+                  //     index === self.findIndex((t) => t.title === item.title)
+                  // )
+                  .map((item: SelectedProduct) => (
+                    <div
+                      className="flex items-center p-2 rounded-md border gap-2"
+                      key={item.id}
                     >
-                      Remover
-                    </Button>
-                  </div>
-                )
-              })}
+                      <Image
+                        src={item.coverUrl}
+                        width={40}
+                        height={40}
+                        alt={item.title}
+                      />
+                      <h2>
+                        {item.title}
+                        {item.size}
+                      </h2>
+
+                      <Currency value={(item.price * item.quantity) / 100} />
+                      <button onClick={() => removeItem(item.id, item.size)}>
+                        <MinusCircle />
+                      </button>
+                      <p>{item.quantity}</p>
+                      <button
+                        onClick={() =>
+                          addItem({
+                            ...item,
+                            size: item.size,
+                            price: item.price,
+                          })
+                        }
+                      >
+                        <PlusCircle />
+                      </button>
+                    </div>
+                  ))
+              }
+
+              {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
             </div>
           </ScrollArea>
           <Separator className="mb-4" />

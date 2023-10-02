@@ -12,16 +12,28 @@ import toast from "react-hot-toast"
 import { useOrderStore } from "@/context/orderStore"
 import { use, useEffect, useState } from "react"
 import { useCartStore } from "@/hooks/useCartStore"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
 // import { useCartStore } from "@/context/cartContext"
 
 interface ProductProps {
   product: Product
 }
 
+interface SelectedProduct {
+  id: string
+  title: string
+  price: number
+  weight: string
+  size: string
+  quantity: number
+}
+
 export function Info({ product }: any) {
-  const addItem = useCartStore((state) => state.addItem)
-  const items = useCartStore((state) => state.items)
-  const removeItem = useCartStore((state) => state.removeItem)
+  const { addItem, items, removeItem } = useCartStore()
+  // const addItem = useCartStore((state) => state.addItem)
+  // const items = useCartStore((state) => state.items)
+  // const removeItem = useCartStore((state) => state.removeItem)
+  useLocalStorage()
   // const { add, productSelected } = useOrderStore()
   const [hasProductSelected, setHasProductSelected] = useState<boolean>(false)
   // const { addToCart, cart } = useCartStore()
@@ -30,6 +42,11 @@ export function Info({ product }: any) {
   //   add(product)
   //   toast.success("Produto adicionado ao seu carrinho")
   // }
+
+  function handleRemoveFromCart(size: string) {
+    removeItem(product.id, size)
+    toast.success("Produto removido do seu carrinho")
+  }
 
   // useEffect(() => {
   //   productSelected.some((item: any) => item.id === product.id) &&
@@ -49,48 +66,113 @@ export function Info({ product }: any) {
           </span>
         ))}
       </div>
-      <Separator />
-      <div className="my-4">
+      <Separator className="my-4" />
+      <div>
         <h3 className="font-semibold text-black">Vai bem com:</h3>
         <p className="text-xs tracking-wider leading-relaxed">
           {product.harmonization}
         </p>
       </div>
-      <Separator />
-      <div className="mt-10 flex flex-wrap justify-evenly items-center gap-2"></div>
-      <div className="w-full mt-6 flex items-center justify-center">
-        <div className="flex flex-col items-center">
-          <div>
-            <h2>{product.title}</h2>
-            <button onClick={() => addItem({ ...product, size: "50gr" })}>
-              Adicionar tamanho S ao carrinho
-            </button>
-            <button onClick={() => addItem({ ...product, size: "130gr" })}>
-              Adicionar tamanho M ao carrinho
-            </button>
-            <button onClick={() => addItem({ ...product, size: "250gr" })}>
-              Adicionar tamanho L ao carrinho
-            </button>
-          </div>
-        </div>
+      <Separator className="my-4" />
 
-        <div className="flex flex-col items-center">
-          <div>
-            {items.map((item: any) => (
-              <div className="flex flex-col" key={item.id}>
-                <span>{item.title}</span>
-                <span>{item.size}</span>
-                <button>-</button>
-                <span>{item.quantity}</span>
-                <span>{item.price}</span>
+      <div className="w-full flex flex-col items-center justify-center">
+        <div className="flex flex-col w-full">
+          <h2 className="font-bold text-lg">{product.title}</h2>
+          <div className="flex items-center gap-2">
+            <div className="flex flex-col justify-between gap-1 p-2 rounded-md border">
+              <span className="text-xs">50gr</span>
+              <span className="text-sm font-bold">
+                <Currency value={250 / 100} />
+              </span>
+              <div className="flex items-center">
+                <button onClick={() => removeItem(product.id, "50gr")}>
+                  <MinusCircle />
+                </button>
+                <span className="w-8 text-center">
+                  {items.length
+                    ? items.filter(
+                        (item: SelectedProduct) =>
+                          item.id === product.id && item.size === "50gr"
+                      )[0]?.quantity
+                    : 0}
+                </span>
+                <button
+                  onClick={() =>
+                    addItem({
+                      ...product,
+                      size: "50gr",
+                      price: 250,
+                    })
+                  }
+                >
+                  <PlusCircle />
+                </button>
               </div>
-            ))}
+            </div>
+
+            <div className="flex flex-col justify-between gap-1 p-2 rounded-md border">
+              <span className="text-xs">130gr</span>
+              <span className="text-sm font-bold">
+                <Currency value={400 / 100} />
+              </span>
+              <div className="flex items-center">
+                <button onClick={() => removeItem(product.id, "130gr")}>
+                  <MinusCircle />
+                </button>
+                <span className="w-8 text-center">
+                  {items.length
+                    ? items.filter(
+                        (item: SelectedProduct) =>
+                          item.id === product.id && item.size === "130gr"
+                      )[0]?.quantity
+                    : 0}
+                </span>
+                <button
+                  onClick={() =>
+                    addItem({
+                      ...product,
+                      size: "130gr",
+                      price: 400,
+                    })
+                  }
+                >
+                  <PlusCircle />
+                </button>
+              </div>
+            </div>
+
+            <div className="flex flex-col justify-between gap-1 p-2 rounded-md border">
+              <span className="text-xs">250gr</span>
+              <span className="text-sm font-bold">
+                <Currency value={500 / 100} />
+              </span>
+              <div className="flex items-center">
+                <button onClick={() => removeItem(product.id, "250gr")}>
+                  <MinusCircle />
+                </button>
+                <span className="w-8 text-center">
+                  {items.length
+                    ? items.filter(
+                        (item: SelectedProduct) =>
+                          item.id === product.id && item.size === "250gr"
+                      )[0]?.quantity
+                    : 0}
+                </span>
+                <button
+                  onClick={() =>
+                    addItem({
+                      ...product,
+                      size: "250gr",
+                      price: 500,
+                    })
+                  }
+                >
+                  <PlusCircle />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-        <pre>
-          {JSON.stringify(items, null, 2)}
-          {/* {JSON.stringify(cart, null, 2)} */}
-        </pre>
       </div>
     </div>
   )
