@@ -9,14 +9,13 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
-import { CartItems } from "../CartItems"
-import { useCartStore } from "@/context/cartContext"
 import { ShoppingBag } from "lucide-react"
 import ModalContexts from "../modals/use-modal-store"
 import { Button } from "./button"
 import { use, useEffect, useState } from "react"
 import { Cart } from "../order/Cart"
 import { useOrderStore } from "@/context/orderStore"
+import { useCartStore } from "@/hooks/useCartStore"
 
 interface NavbarProps {
   // products: ProductTypes[]
@@ -25,7 +24,7 @@ interface NavbarProps {
 export function Navbar() {
   const pathName = usePathname()
   const { productSelected } = useOrderStore()
-  const cart = useCartStore()
+  const { items } = useCartStore()
   const { setShowModalProducts, showModalProducts } = ModalContexts()
   const [color, setColor] = useState("transparent")
   const [textColor, setTextColor] = useState("white")

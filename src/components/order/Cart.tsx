@@ -59,36 +59,22 @@ interface OrderDetails {
 }
 
 export function Cart() {
-  // const items = useCartStore((state) => state.items)
   const { items, setShowCart, showCart, removeItem, addItem } = useCartStore()
-  // const { showCart, setShowCart, removeFromCart } = useCartStore()
   const [hasProductSelected, setHasProductSelected] = useState<boolean>(false)
-  // const { productSelected, remove, addOrderDetails, orderDetails } =
-  //   useOrderStore()
   const pathName = usePathname()
-  // useEffect(() => {
-  //   productSelected
-  // }, [productSelected])
+  const [totalItems, setTotalItems] = useState<number>(
+    items.reduce((acc, item) => acc + item.quantity, 0)
+  )
+  const [totalPrice, setTotalPrice] = useState<number>(
+    items.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  )
 
-  // useEffect(() => {
-  //   productSelected.length <= 0 && setShowCart(false)
-  // }, [productSelected.length, setShowCart])
-
-  // function handleRemove(id: string) {
-  //   remove(id)
-  //   toast.success("Produto removido do seu carrinho")
-  // }
-
-  // function handleAddToCart() {
-  //   const orderDetails: OrderDetails = {
-  //     id: productSelected[0]?.id,
-  //     title: productSelected[0]?.title,
-  //     coverUrl: productSelected[0]?.coverUrl,
-  //     productDetail: productSelected[0]?.productDetail,
-  //   }
-  //   addOrderDetails(orderDetails)
-  //   toast.success("Produto adicionado ao seu carrinho")
-  // }
+  useEffect(() => {
+    setTotalItems(items.reduce((acc, item) => acc + item.quantity, 0))
+    setTotalPrice(
+      items.reduce((acc, item) => acc + item.price * item.quantity, 0)
+    )
+  }, [items])
 
   return (
     <div className="w-full">
@@ -101,23 +87,16 @@ export function Cart() {
               hasProductSelected ? "hidden" : "block"
             )}
           >
-            <ShoppingCart
-              strokeWidth={1.2}
-              className={cn(
-                "w-6 h-6 cursor-pointer font-light",
-                pathName === "/" ? "text-white" : "text-zinc-900"
-              )}
-            />
-
-            {/* <div
-              className={cn(
-                "w-6 h-6 cursor-pointer font-light",
-                pathName === "/" ? "text-white" : "text-zinc-900",
-                productSelected.length <= 0 ? "hidden" : "block"
-              )}
-            >
-              {productSelected.length}
-            </div> */}
+            <div className="flex items-center gap-1">
+              <ShoppingCart
+                strokeWidth={1.2}
+                className={cn(
+                  "w-6 h-6 cursor-pointer font-light",
+                  pathName === "/" ? "text-white" : "text-zinc-900"
+                )}
+              />
+              {totalItems}
+            </div>
           </div>
         </SheetTrigger>
         <SheetContent className="w-full sm:max-w-none sm:w-[800px]">
@@ -128,83 +107,60 @@ export function Cart() {
             </SheetDescription>
           </SheetHeader>
           <Separator className="my-8" />
-          {/* <Table className="overflow-hidden rounded-t-lg">
-            <TableHeader className="bg-zinc-950 text-white rounded-t-lg overflow-hidden">
-              <TableRow>
-                <TableHead className="w-64 text-white">Sabor</TableHead>
-                <TableHead>
-                  <div className="flex flex-col items-center w-20 text-white">
-                    <div className="text-xs">50gr</div>
-                    <div className="text-xs font-bold">2,50€</div>
-                  </div>
-                </TableHead>
-                <TableHead>
-                  <div className="flex flex-col items-center w-20 text-white">
-                    <div className="text-xs">130gr</div>
-                    <div className="text-xs font-bold">4,00€</div>
-                  </div>
-                </TableHead>
-                <TableHead>
-                  <div className="flex flex-col items-center w-20 text-white">
-                    <div className="text-xs">250gr</div>
-                    <div className="text-xs font-bold">5,00€</div>
-                  </div>
-                </TableHead>
-                <TableHead className="w-24  text-white">Subtotal</TableHead>
-              </TableRow>
-            </TableHeader>
-          </Table> */}
+
           <ScrollArea className="h-[calc(60vh)] pb-6">
             <div className="p-4">
-              {
-                // only show one title of each product
-                items
-                  // .filter(
-                  //   (item, index, self) =>
-                  //     index === self.findIndex((t) => t.title === item.title)
-                  // )
-                  .map((item: SelectedProduct) => (
-                    <div
-                      className="flex items-center p-2 rounded-md border gap-2"
-                      key={item.id}
-                    >
-                      <Image
-                        src={item.coverUrl}
-                        width={40}
-                        height={40}
-                        alt={item.title}
-                      />
-                      <h2>
-                        {item.title}
-                        {item.size}
-                      </h2>
+              {items
+                // .filter(
+                //   (item, index, self) =>
+                //     index === self.findIndex((t) => t.title === item.title)
+                // )
+                .sort((a, b) => a.title.localeCompare(b.title))
+                .map((item: SelectedProduct) => (
+                  <div
+                    className="flex items-center p-2 rounded-md border gap-2"
+                    key={item.id}
+                  >
+                    <Image
+                      src={item.coverUrl}
+                      width={40}
+                      height={40}
+                      alt={item.title}
+                    />
+                    <h2>
+                      {item.title}
+                      {item.size}
+                    </h2>
 
-                      <Currency value={(item.price * item.quantity) / 100} />
-                      <button onClick={() => removeItem(item.id, item.size)}>
-                        <MinusCircle />
-                      </button>
-                      <p>{item.quantity}</p>
-                      <button
-                        onClick={() =>
-                          addItem({
-                            ...item,
-                            size: item.size,
-                            price: item.price,
-                          })
-                        }
-                      >
-                        <PlusCircle />
-                      </button>
-                    </div>
-                  ))
-              }
+                    <Currency value={(item.price * item.quantity) / 100} />
+                    <button onClick={() => removeItem(item.id, item.size)}>
+                      <MinusCircle />
+                    </button>
+                    <p>{item.quantity}</p>
+                    <button
+                      onClick={() =>
+                        addItem({
+                          ...item,
+                          size: item.size,
+                          price: item.price,
+                        })
+                      }
+                    >
+                      <PlusCircle />
+                    </button>
+                  </div>
+                ))}
 
               {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
             </div>
           </ScrollArea>
           <Separator className="mb-4" />
-          <SheetFooter>
-            <SheetClose asChild className="w-full">
+          <SheetFooter className="w-full">
+            <div className="flex items-center justify-between px-4 py-2 gap-2">
+              <h2 className="font-bold text-lg">Total</h2>
+              <Currency value={totalPrice / 100} />
+            </div>
+            <SheetClose asChild>
               <Link href="/order">
                 <Button className="w-full">Finalizar pedido</Button>
               </Link>

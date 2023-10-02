@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { useEffect } from "react"
+import { use } from "react"
 
 type CartItem = {
   id: string
@@ -24,8 +24,10 @@ export const useCartStore = create<CartStore>((set, get) => {
 
   return {
     items: initialCart ? JSON.parse(initialCart) : [],
+
     showCart: false,
     setShowCart: (showCart) => set({ showCart }),
+
     addItem: (item) =>
       set((state) => {
         const itemExists = state.items.find(
@@ -44,6 +46,7 @@ export const useCartStore = create<CartStore>((set, get) => {
           return { items: [...state.items, { ...item, quantity: 1 }] }
         }
       }),
+
     removeItem: (id, size) =>
       set((state) => {
         const itemExists = state.items.find(
