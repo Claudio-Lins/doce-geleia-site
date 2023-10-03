@@ -1,15 +1,5 @@
 "use client"
-import React, { useEffect, useState } from "react"
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-
+import React, { useEffect } from "react"
 import {
   Sheet,
   SheetClose,
@@ -20,7 +10,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet"
-// import { useCartStore } from "@/context/cartContext"
 import { useCartStore } from "@/hooks/useCartStore"
 import { MinusCircle, PlusCircle, ShoppingCart } from "lucide-react"
 import { Button } from "../ui/button"
@@ -32,7 +21,6 @@ import Link from "next/link"
 import { toast } from "react-hot-toast"
 import Currency from "../currency"
 import Image from "next/image"
-import { it } from "node:test"
 
 interface SelectedProduct {
   id: string
@@ -115,10 +103,10 @@ export function Cart() {
               Make changes to your profile here. Click save when done.
             </SheetDescription>
           </SheetHeader>
-          <Separator className="my-8" />
+          <Separator className="mt-8" />
 
           <ScrollArea className="h-[calc(60vh)] pb-6">
-            <div className="p-4">
+            <div className=" flex flex-wrap gap-4 justify-center mt-4">
               {items
                 // .filter(
                 //   (item, index, self) =>
@@ -127,36 +115,44 @@ export function Cart() {
                 .sort((a, b) => a.title.localeCompare(b.title))
                 .map((item: SelectedProduct) => (
                   <div
-                    className="flex items-center p-2 rounded-md border gap-2"
+                    className="border w-36 p-2 rounded-lg relative bg-white shadow-sm"
                     key={item.id}
                   >
                     <Image
                       src={item.coverUrl}
-                      width={40}
-                      height={40}
+                      width={100}
+                      height={100}
                       alt={item.title}
+                      className="bg-cover bg-center"
                     />
-                    <h2>
+                    <p className="text-xs leading-4 font-semibold text-center w-full">
                       {item.title}
+                    </p>
+                    {/* <div className="text-xs flex items-center justify-center leading-4 w-10 h-10 rounded-full -top-2 -right-3 text-center absolute bg-black text-white">
+                      <p>{item.size}</p>
+                    </div> */}
+                    <p className="w-full text-center text-xs font-bold mt-2">
                       {item.size}
-                    </h2>
-
-                    <Currency value={(item.price * item.quantity) / 100} />
-                    <button onClick={() => removeItem(item.id, item.size)}>
-                      <MinusCircle />
-                    </button>
-                    <p>{item.quantity}</p>
-                    <button
-                      onClick={() =>
-                        addItem({
-                          ...item,
-                          size: item.size,
-                          price: item.price,
-                        })
-                      }
-                    >
-                      <PlusCircle />
-                    </button>
+                    </p>
+                    {/* <Currency value={(item.price * item.quantity) / 100} /> */}
+                    <Separator className="my-2" />
+                    <div className="flex w-full justify-center gap-2 items-center">
+                      <button onClick={() => removeItem(item.id, item.size)}>
+                        <MinusCircle />
+                      </button>
+                      <p className="w-6 text-center">{item.quantity}</p>
+                      <button
+                        onClick={() =>
+                          addItem({
+                            ...item,
+                            size: item.size,
+                            price: item.price,
+                          })
+                        }
+                      >
+                        <PlusCircle />
+                      </button>
+                    </div>
                   </div>
                 ))}
             </div>
