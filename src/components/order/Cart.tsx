@@ -27,7 +27,7 @@ interface SelectedProduct {
   title: string
   coverUrl: string
   price: number
-  weight: string
+  weight: number
   size: string
   quantity: number
 }
@@ -112,6 +112,8 @@ export function Cart() {
                 //   (item, index, self) =>
                 //     index === self.findIndex((t) => t.title === item.title)
                 // )
+                // sort by weight
+                .sort((a, b) => a.weight - b.weight)
                 .sort((a, b) => a.title.localeCompare(b.title))
                 .map((item: SelectedProduct) => (
                   <div
@@ -147,6 +149,7 @@ export function Cart() {
                             ...item,
                             size: item.size,
                             price: item.price,
+                            weight: item.weight,
                           })
                         }
                       >
@@ -156,6 +159,7 @@ export function Cart() {
                   </div>
                 ))}
             </div>
+            {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
           </ScrollArea>
           <Separator className="mb-4" />
           <SheetFooter className="w-full">

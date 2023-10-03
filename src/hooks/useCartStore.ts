@@ -5,7 +5,7 @@ type CartItem = {
   title: string
   coverUrl: string
   price: number
-  weight: string
+  weight: number
   size: string
   quantity: number
 }

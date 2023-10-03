@@ -9,13 +9,14 @@ interface SelectedProduct {
   id: string
   title: string
   price: number
-  weight: string
+  weight: number
   size: string
   quantity: number
 }
 
 export function Info({ product }: any) {
   const { addItem, items, removeItem } = useCartStore()
+
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
@@ -40,7 +41,7 @@ export function Info({ product }: any) {
 
       <div className="w-full flex flex-col items-center justify-center">
         <div className="flex flex-col w-full">
-          <h2 className="font-bold text-lg">{product.title}</h2>
+          <h2 className="font-semibold text-black">Tamanhos</h2>
           <div className="flex items-center gap-2">
             <div className="flex flex-col justify-between gap-1 p-2 rounded-md border">
               <span className="text-xs">50gr</span>
@@ -52,12 +53,10 @@ export function Info({ product }: any) {
                   <MinusCircle />
                 </button>
                 <div className="w-8 text-center">
-                  {items.length
-                    ? items.filter(
-                        (item: SelectedProduct) =>
-                          item.id === product.id && item.size === "50gr"
-                      )[0]?.quantity
-                    : 0}
+                  {items.find(
+                    (item: SelectedProduct) =>
+                      item.id === product.id && item.size === "50gr"
+                  )?.quantity ?? 0}
                 </div>
                 <button
                   onClick={() =>
@@ -65,6 +64,7 @@ export function Info({ product }: any) {
                       ...product,
                       size: "50gr",
                       price: 250,
+                      weight: 50,
                     })
                   }
                 >
@@ -83,12 +83,10 @@ export function Info({ product }: any) {
                   <MinusCircle />
                 </button>
                 <div className="w-8 text-center">
-                  {items.length
-                    ? items.filter(
-                        (item: SelectedProduct) =>
-                          item.id === product.id && item.size === "130gr"
-                      )[0]?.quantity
-                    : 0}
+                  {items.find(
+                    (item: SelectedProduct) =>
+                      item.id === product.id && item.size === "130gr"
+                  )?.quantity ?? 0}
                 </div>
                 <button
                   onClick={() =>
@@ -96,6 +94,7 @@ export function Info({ product }: any) {
                       ...product,
                       size: "130gr",
                       price: 400,
+                      weight: 130,
                     })
                   }
                 >
@@ -114,12 +113,10 @@ export function Info({ product }: any) {
                   <MinusCircle />
                 </button>
                 <div className="w-8 text-center">
-                  {items.length
-                    ? items.filter(
-                        (item: SelectedProduct) =>
-                          item.id === product.id && item.size === "250gr"
-                      )[0]?.quantity
-                    : 0}
+                  {items.find(
+                    (item: SelectedProduct) =>
+                      item.id === product.id && item.size === "250gr"
+                  )?.quantity ?? 0}
                 </div>
                 <button
                   onClick={() =>
@@ -127,6 +124,7 @@ export function Info({ product }: any) {
                       ...product,
                       size: "250gr",
                       price: 500,
+                      weight: 250,
                     })
                   }
                 >
