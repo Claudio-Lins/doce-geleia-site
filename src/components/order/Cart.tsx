@@ -32,6 +32,7 @@ import Link from "next/link"
 import { toast } from "react-hot-toast"
 import Currency from "../currency"
 import Image from "next/image"
+import { it } from "node:test"
 
 interface SelectedProduct {
   id: string
@@ -57,36 +58,42 @@ interface OrderDetails {
 }
 
 export function Cart() {
-  const { items, setShowCart, showCart, removeItem, addItem } = useCartStore()
-  const [hasProductSelected, setHasProductSelected] = useState<boolean>(false)
+  const {
+    items,
+    setShowCart,
+    showCart,
+    removeItem,
+    addItem,
+    setTotalItems,
+    totalItems,
+    setTotalPrice,
+    totalPrice,
+  } = useCartStore()
+
   const pathName = usePathname()
-  const [totalItems, setTotalItems] = useState<number>(
-    items.reduce((acc, item) => acc + item.quantity, 0)
-  )
-  const [totalPrice, setTotalPrice] = useState<number>(
-    items.reduce((acc, item) => acc + item.price * item.quantity, 0)
-  )
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(items))
-  }, [items])
+  }, [items, setShowCart])
 
   useEffect(() => {
     setTotalItems(items.reduce((acc, item) => acc + item.quantity, 0))
     setTotalPrice(
       items.reduce((acc, item) => acc + item.price * item.quantity, 0)
     )
-  }, [items])
+    if (items.length === 0) {
+      setShowCart(false)
+    }
+  }, [items, setShowCart, setTotalItems, setTotalPrice])
 
   return (
-    <div className="w-full">
+    <div className={cn("w-full", totalItems >= 1 ? "flex" : "hidden")}>
       <Sheet onOpenChange={setShowCart} open={showCart}>
         <SheetTrigger>
           <div
             className={cn(
               " flex items-center gap-2 text-zinc-900",
-              pathName === "/" ? "text-white" : "text-zinc-900",
-              hasProductSelected ? "hidden" : "block"
+              pathName === "/" ? "text-white" : "text-zinc-900"
             )}
           >
             <div className="flex items-center gap-1">

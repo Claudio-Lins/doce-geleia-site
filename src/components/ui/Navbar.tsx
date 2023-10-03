@@ -9,33 +9,21 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
-import { ShoppingBag } from "lucide-react"
 import ModalContexts from "../modals/use-modal-store"
-import { Button } from "./button"
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Cart } from "../order/Cart"
 import { useOrderStore } from "@/context/orderStore"
 import { useCartStore } from "@/hooks/useCartStore"
 
-interface NavbarProps {
-  // products: ProductTypes[]
-}
-
 export function Navbar() {
+  const { showCart, setShowCart } = useCartStore()
   const pathName = usePathname()
-  const { productSelected } = useOrderStore()
-  const { items } = useCartStore()
-  const { setShowModalProducts, showModalProducts } = ModalContexts()
   const [color, setColor] = useState("transparent")
   const [textColor, setTextColor] = useState("white")
   const [cartColor, setCartColor] = useState("white")
   const [lgNeg, setLgNeg] = useState(false)
 
   const router = useRouter()
-
-  useEffect(() => {
-    productSelected.length >= 1 && setShowModalProducts(true)
-  }, [productSelected, setShowModalProducts])
 
   useEffect(() => {
     const changeColor = () => {

@@ -11,6 +11,10 @@ type CartItem = {
 }
 
 type CartStore = {
+  totalItems: number
+  setTotalItems: (totalItems: number) => void
+  totalPrice: number
+  setTotalPrice: (totalPrice: number) => void
   showCart: boolean
   setShowCart: (showCart: boolean) => void
   items: CartItem[]
@@ -26,6 +30,12 @@ export const useCartStore = create<CartStore>((set, get) => {
 
   return {
     items: initialCart ? JSON.parse(initialCart) : [],
+
+    totalItems: 0,
+    setTotalItems: (totalItems) => set({ totalItems }),
+
+    totalPrice: 0,
+    setTotalPrice: (totalPrice) => set({ totalPrice }),
 
     showCart: false,
     setShowCart: (showCart) => set({ showCart }),

@@ -1,11 +1,8 @@
 "use client"
-import { MinusCircle, PlusCircle, ShoppingCart } from "lucide-react"
-
-import { ProductDetail, Product, Category, Ingredient } from "@/@types"
+import { MinusCircle, PlusCircle } from "lucide-react"
 import Currency from "./currency"
 
 import { Separator } from "./ui/separator"
-import { use, useEffect, useState } from "react"
 import { useCartStore } from "@/hooks/useCartStore"
 
 interface SelectedProduct {
@@ -19,13 +16,6 @@ interface SelectedProduct {
 
 export function Info({ product }: any) {
   const { addItem, items, removeItem } = useCartStore()
-  // const addItem = useCartStore((state) => state.addItem)
-  // const items = useCartStore((state) => state.items)
-  // const removeItem = useCartStore((state) => state.removeItem)
-  // useLocalStorage()
-  // const { add, productSelected } = useOrderStore()
-  const [hasProductSelected, setHasProductSelected] = useState<boolean>(false)
-
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
@@ -54,9 +44,9 @@ export function Info({ product }: any) {
           <div className="flex items-center gap-2">
             <div className="flex flex-col justify-between gap-1 p-2 rounded-md border">
               <span className="text-xs">50gr</span>
-              <span className="text-sm font-bold">
+              <div className="text-sm font-bold">
                 <Currency value={250 / 100} />
-              </span>
+              </div>
               <div className="flex items-center">
                 <button onClick={() => removeItem(product.id, "50gr")}>
                   <MinusCircle />
@@ -85,9 +75,9 @@ export function Info({ product }: any) {
 
             <div className="flex flex-col justify-between gap-1 p-2 rounded-md border">
               <span className="text-xs">130gr</span>
-              <span className="text-sm font-bold">
+              <div className="text-sm font-bold">
                 <Currency value={400 / 100} />
-              </span>
+              </div>
               <div className="flex items-center">
                 <button onClick={() => removeItem(product.id, "130gr")}>
                   <MinusCircle />
@@ -116,9 +106,9 @@ export function Info({ product }: any) {
 
             <div className="flex flex-col justify-between gap-1 p-2 rounded-md border">
               <span className="text-xs">250gr</span>
-              <span className="text-sm font-bold">
+              <div className="text-sm font-bold">
                 <Currency value={500 / 100} />
-              </span>
+              </div>
               <div className="flex items-center">
                 <button onClick={() => removeItem(product.id, "250gr")}>
                   <MinusCircle />
