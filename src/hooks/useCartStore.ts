@@ -1,5 +1,4 @@
 import { create } from "zustand"
-import { use } from "react"
 
 type CartItem = {
   id: string

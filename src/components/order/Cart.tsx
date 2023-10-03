@@ -28,8 +28,6 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "../ui/scroll-area"
 import { Separator } from "../ui/separator"
-import { useOrderStore } from "@/context/orderStore"
-import { Product } from "@/@types"
 import Link from "next/link"
 import { toast } from "react-hot-toast"
 import Currency from "../currency"
@@ -68,6 +66,10 @@ export function Cart() {
   const [totalPrice, setTotalPrice] = useState<number>(
     items.reduce((acc, item) => acc + item.price * item.quantity, 0)
   )
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(items))
+  }, [items])
 
   useEffect(() => {
     setTotalItems(items.reduce((acc, item) => acc + item.quantity, 0))
@@ -150,8 +152,6 @@ export function Cart() {
                     </button>
                   </div>
                 ))}
-
-              {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
             </div>
           </ScrollArea>
           <Separator className="mb-4" />

@@ -1,23 +1,12 @@
 "use client"
-
 import { MinusCircle, PlusCircle, ShoppingCart } from "lucide-react"
 
 import { ProductDetail, Product, Category, Ingredient } from "@/@types"
 import Currency from "./currency"
 
 import { Separator } from "./ui/separator"
-import { Button } from "./ui/button"
-import { cn } from "@/lib/utils"
-import toast from "react-hot-toast"
-import { useOrderStore } from "@/context/orderStore"
 import { use, useEffect, useState } from "react"
 import { useCartStore } from "@/hooks/useCartStore"
-import { useLocalStorage } from "@/hooks/useLocalStorage"
-// import { useCartStore } from "@/context/cartContext"
-
-interface ProductProps {
-  product: Product
-}
 
 interface SelectedProduct {
   id: string
@@ -72,14 +61,14 @@ export function Info({ product }: any) {
                 <button onClick={() => removeItem(product.id, "50gr")}>
                   <MinusCircle />
                 </button>
-                <span className="w-8 text-center">
+                <div className="w-8 text-center">
                   {items.length
                     ? items.filter(
                         (item: SelectedProduct) =>
                           item.id === product.id && item.size === "50gr"
                       )[0]?.quantity
                     : 0}
-                </span>
+                </div>
                 <button
                   onClick={() =>
                     addItem({
@@ -103,14 +92,14 @@ export function Info({ product }: any) {
                 <button onClick={() => removeItem(product.id, "130gr")}>
                   <MinusCircle />
                 </button>
-                <span className="w-8 text-center">
+                <div className="w-8 text-center">
                   {items.length
                     ? items.filter(
                         (item: SelectedProduct) =>
                           item.id === product.id && item.size === "130gr"
                       )[0]?.quantity
                     : 0}
-                </span>
+                </div>
                 <button
                   onClick={() =>
                     addItem({
@@ -134,14 +123,14 @@ export function Info({ product }: any) {
                 <button onClick={() => removeItem(product.id, "250gr")}>
                   <MinusCircle />
                 </button>
-                <span className="w-8 text-center">
+                <div className="w-8 text-center">
                   {items.length
                     ? items.filter(
                         (item: SelectedProduct) =>
                           item.id === product.id && item.size === "250gr"
                       )[0]?.quantity
                     : 0}
-                </span>
+                </div>
                 <button
                   onClick={() =>
                     addItem({
