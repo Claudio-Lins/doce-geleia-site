@@ -115,41 +115,43 @@ export function Cart() {
                 .sort((a, b) => a.title.localeCompare(b.title))
                 .map((item: SelectedProduct) => (
                   <div
-                    className="border flex flex-col w-36 p-2 rounded-lg justify-between bg-white shadow-sm gap-2"
+                    className="border w-full flex max-w-xs p-2 rounded-lg bg-white shadow-sm gap-2"
                     key={item.id}
                   >
-                    <div className="flex flex-col">
-                      <Image
-                        src={item.coverUrl}
-                        width={100}
-                        height={100}
-                        alt={item.title}
-                        className="bg-cover bg-center"
-                      />
-                      <p className="text-xs leading-4 font-semibold text-center w-full">
-                        {item.title}
-                      </p>
-                      <p className="w-full text-center text-xs font-bold">
-                        {item.size}
-                      </p>
-                    </div>
-                    <div className="flex w-full h-10 border-t justify-center gap-2 items-center">
-                      <button onClick={() => removeItem(item.id, item.size)}>
-                        <MinusCircle />
-                      </button>
-                      <p className="w-6 text-center">{item.quantity}</p>
-                      <button
-                        onClick={() =>
-                          addItem({
-                            ...item,
-                            size: item.size,
-                            price: item.price,
-                            weight: item.weight,
-                          })
-                        }
-                      >
-                        <PlusCircle />
-                      </button>
+                    <Image
+                      src={item.coverUrl}
+                      width={100}
+                      height={100}
+                      alt={item.title}
+                      className="bg-cover bg-center border-r"
+                    />
+                    <div className="flex flex-col w-full justify-between">
+                      <div className="w-full flex flex-col flex-1 gap-2">
+                        <p className=" leading-4 font-bold text-center w-full">
+                          {item.title}
+                        </p>
+                        <p className="w-full text-center text-xs font-bold">
+                          {item.size}
+                        </p>
+                      </div>
+                      <div className="flex w-full h-10 border-t justify-center gap-2 items-center">
+                        <button onClick={() => removeItem(item.id, item.size)}>
+                          <MinusCircle />
+                        </button>
+                        <p className="w-6 text-center">{item.quantity}</p>
+                        <button
+                          onClick={() =>
+                            addItem({
+                              ...item,
+                              size: item.size,
+                              price: item.price,
+                              weight: item.weight,
+                            })
+                          }
+                        >
+                          <PlusCircle />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
