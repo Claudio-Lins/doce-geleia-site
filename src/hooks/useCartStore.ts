@@ -13,8 +13,10 @@ type CartItem = {
 type CartStore = {
   totalItems: number
   setTotalItems: (totalItems: number) => void
-  totalPrice: number
-  setTotalPrice: (totalPrice: number) => void
+  subTotalPrice: number
+  setSubTotalPrice: (subTotalPrice: number) => void
+  shippingPrice: number
+  setShippingPrice: (shippingPrice: number) => void
   showCart: boolean
   setShowCart: (showCart: boolean) => void
   items: CartItem[]
@@ -34,8 +36,11 @@ export const useCartStore = create<CartStore>((set, get) => {
     totalItems: 0,
     setTotalItems: (totalItems) => set({ totalItems }),
 
-    totalPrice: 0,
-    setTotalPrice: (totalPrice) => set({ totalPrice }),
+    subTotalPrice: 0,
+    setSubTotalPrice: (subTotalPrice) => set({ subTotalPrice }),
+
+    shippingPrice: 0,
+    setShippingPrice: (shippingPrice) => set({ shippingPrice }),
 
     showCart: false,
     setShowCart: (showCart) => set({ showCart }),

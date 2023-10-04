@@ -21,6 +21,7 @@ import Link from "next/link"
 import { toast } from "react-hot-toast"
 import Currency from "../currency"
 import Image from "next/image"
+import { Table, TableBody, TableCell, TableRow } from "../ui/table"
 
 interface SelectedProduct {
   id: string
@@ -54,8 +55,10 @@ export function Cart() {
     addItem,
     setTotalItems,
     totalItems,
-    setTotalPrice,
-    totalPrice,
+    subTotalPrice,
+    setSubTotalPrice,
+    setShippingPrice,
+    shippingPrice,
   } = useCartStore()
 
   const pathName = usePathname()
@@ -66,16 +69,16 @@ export function Cart() {
 
   useEffect(() => {
     setTotalItems(items.reduce((acc, item) => acc + item.quantity, 0))
-    setTotalPrice(
+    setSubTotalPrice(
       items.reduce((acc, item) => acc + item.price * item.quantity, 0)
     )
     if (items.length === 0) {
       setShowCart(false)
     }
-  }, [items, setShowCart, setTotalItems, setTotalPrice])
+  }, [items, setShowCart, setTotalItems, setSubTotalPrice])
 
   return (
-    <div className={cn("w-full", totalItems >= 1 ? "flex" : "hidden")}>
+    <div className={cn("", totalItems >= 1 ? "flex" : "hidden")}>
       <Sheet onOpenChange={setShowCart} open={showCart}>
         <SheetTrigger>
           <div
@@ -96,37 +99,41 @@ export function Cart() {
             </div>
           </div>
         </SheetTrigger>
-        <SheetContent className="w-full sm:max-w-none sm:w-[800px]">
+        <SheetContent className="w-full flex flex-col justify-between sm:max-w-none sm:w-[800px]">
           <SheetHeader>
-            <SheetTitle>Carrinho de compras</SheetTitle>
+            <SheetTitle className="flex items-center gap-2">
+              <span className="text-xl font-bold">Carrinho de compras</span>
+              <ShoppingCart strokeWidth={1.5} />
+            </SheetTitle>
+            <Separator className="mt-8" />
           </SheetHeader>
-          <Separator className="mt-8" />
 
-          <ScrollArea className="h-[calc(60vh)] pb-6">
+          <ScrollArea className="flex-1 pb-6">
             <div className=" flex flex-wrap gap-4 justify-center mt-4">
               {items
                 .sort((a, b) => a.weight - b.weight)
                 .sort((a, b) => a.title.localeCompare(b.title))
                 .map((item: SelectedProduct) => (
                   <div
-                    className="border w-36 p-2 rounded-lg relative bg-white shadow-sm"
+                    className="border flex flex-col w-36 p-2 rounded-lg justify-between bg-white shadow-sm gap-2"
                     key={item.id}
                   >
-                    <Image
-                      src={item.coverUrl}
-                      width={100}
-                      height={100}
-                      alt={item.title}
-                      className="bg-cover bg-center"
-                    />
-                    <p className="text-xs leading-4 font-semibold text-center w-full">
-                      {item.title}
-                    </p>
-                    <p className="w-full text-center text-xs font-bold mt-2">
-                      {item.size}
-                    </p>
-                    <Separator className="my-2" />
-                    <div className="flex w-full justify-center gap-2 items-center">
+                    <div className="flex flex-col">
+                      <Image
+                        src={item.coverUrl}
+                        width={100}
+                        height={100}
+                        alt={item.title}
+                        className="bg-cover bg-center"
+                      />
+                      <p className="text-xs leading-4 font-semibold text-center w-full">
+                        {item.title}
+                      </p>
+                      <p className="w-full text-center text-xs font-bold">
+                        {item.size}
+                      </p>
+                    </div>
+                    <div className="flex w-full h-10 border-t justify-center gap-2 items-center">
                       <button onClick={() => removeItem(item.id, item.size)}>
                         <MinusCircle />
                       </button>
@@ -149,18 +156,37 @@ export function Cart() {
             </div>
             {/* <pre>{JSON.stringify(items, null, 2)}</pre> */}
           </ScrollArea>
-          <Separator className="mb-4" />
-          <SheetFooter className="w-full">
-            <div className="flex items-center justify-between px-4 py-2 gap-2">
-              <h2 className="font-bold text-lg">Total</h2>
-              <Currency value={totalPrice / 100} />
-            </div>
+          <Separator />
+          <div className="flex flex-col">
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium">Sub-total</TableCell>
+                  <TableCell className="text-right">
+                    <Currency value={subTotalPrice / 100} />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Frete</TableCell>
+                  <TableCell className="text-right">
+                    <Currency value={shippingPrice} />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-bold text-lg">Total</TableCell>
+                  <TableCell className="text-right font-bold text-lg">
+                    <Currency value={subTotalPrice / 100 + shippingPrice} />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+
             <SheetClose asChild>
               <Link href="/order">
                 <Button className="w-full">Finalizar pedido</Button>
               </Link>
             </SheetClose>
-          </SheetFooter>
+          </div>
         </SheetContent>
       </Sheet>
     </div>
