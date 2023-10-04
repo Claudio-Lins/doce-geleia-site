@@ -98,21 +98,13 @@ export function Cart() {
         </SheetTrigger>
         <SheetContent className="w-full sm:max-w-none sm:w-[800px]">
           <SheetHeader>
-            <SheetTitle>Edit profile</SheetTitle>
-            <SheetDescription>
-              Make changes to your profile here. Click save when done.
-            </SheetDescription>
+            <SheetTitle>Carrinho de compras</SheetTitle>
           </SheetHeader>
           <Separator className="mt-8" />
 
           <ScrollArea className="h-[calc(60vh)] pb-6">
             <div className=" flex flex-wrap gap-4 justify-center mt-4">
               {items
-                // .filter(
-                //   (item, index, self) =>
-                //     index === self.findIndex((t) => t.title === item.title)
-                // )
-                // sort by weight
                 .sort((a, b) => a.weight - b.weight)
                 .sort((a, b) => a.title.localeCompare(b.title))
                 .map((item: SelectedProduct) => (
@@ -130,13 +122,9 @@ export function Cart() {
                     <p className="text-xs leading-4 font-semibold text-center w-full">
                       {item.title}
                     </p>
-                    {/* <div className="text-xs flex items-center justify-center leading-4 w-10 h-10 rounded-full -top-2 -right-3 text-center absolute bg-black text-white">
-                      <p>{item.size}</p>
-                    </div> */}
                     <p className="w-full text-center text-xs font-bold mt-2">
                       {item.size}
                     </p>
-                    {/* <Currency value={(item.price * item.quantity) / 100} /> */}
                     <Separator className="my-2" />
                     <div className="flex w-full justify-center gap-2 items-center">
                       <button onClick={() => removeItem(item.id, item.size)}>
