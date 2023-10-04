@@ -59,6 +59,8 @@ export function Cart() {
     setSubTotalPrice,
     setShippingPrice,
     shippingPrice,
+    setTotalWeight,
+    totalWeight,
   } = useCartStore()
 
   const pathName = usePathname()
@@ -72,10 +74,21 @@ export function Cart() {
     setSubTotalPrice(
       items.reduce((acc, item) => acc + item.price * item.quantity, 0)
     )
+    setTotalWeight(
+      items.reduce((acc, item) => acc + item.weight * item.quantity, 0)
+    )
     if (items.length === 0) {
       setShowCart(false)
     }
-  }, [items, setShowCart, setTotalItems, setSubTotalPrice])
+  }, [items, setShowCart, setTotalItems, setSubTotalPrice, setTotalWeight])
+
+  useEffect(() => {
+    if (totalWeight < 150) {
+      setShippingPrice(6.33)
+    } else if (totalWeight > 151 && totalWeight < 300) {
+      setShippingPrice(8.33)
+    }
+  }, [setShippingPrice, totalWeight])
 
   return (
     <div className={cn("", totalItems >= 1 ? "flex" : "hidden")}>
@@ -171,6 +184,7 @@ export function Cart() {
                 <TableRow>
                   <TableCell className="font-medium">Frete</TableCell>
                   <TableCell className="text-right">
+                    <span>{totalWeight}gr</span>
                     <Currency value={shippingPrice} />
                   </TableCell>
                 </TableRow>
