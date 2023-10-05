@@ -38,8 +38,9 @@ export function Navbar() {
         setLgNeg(false)
       }
     }
+    pathName === "/order" ? setColor("#ffffff") : setColor("transparent")
     window.addEventListener("scroll", changeColor)
-  }, [])
+  }, [pathName])
 
   return (
     <div

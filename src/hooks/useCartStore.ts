@@ -1,5 +1,17 @@
 import { create } from "zustand"
 
+interface InfoClient {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  postalCode: string
+  address: string
+  city: string
+  complement: string
+  observations: string
+}
+
 type CartItem = {
   id: string
   title: string
@@ -24,12 +36,16 @@ type CartStore = {
   items: CartItem[]
   addItem: (item: CartItem) => void
   removeItem: (id: string, size: string) => void
+  infoClient: InfoClient
+  setInfoClient: (infoClient: InfoClient) => void
 }
 
 export const useCartStore = create<CartStore>((set, get) => {
   let initialCart
+  let initialInfoClient
   if (typeof window !== "undefined") {
     initialCart = localStorage.getItem("cart")
+    initialInfoClient = localStorage.getItem("infoClient")
   }
 
   return {
@@ -89,5 +105,8 @@ export const useCartStore = create<CartStore>((set, get) => {
           }
         }
       }),
+
+    infoClient: initialInfoClient ? JSON.parse(initialInfoClient) : {},
+    setInfoClient: (infoClient) => set({ infoClient }),
   }
 })

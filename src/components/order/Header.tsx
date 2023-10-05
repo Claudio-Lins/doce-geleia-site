@@ -1,8 +1,10 @@
 import { useOrderStore } from "@/context/orderStore"
+import { useCartStore } from "@/hooks/useCartStore"
 import React from "react"
 
 export function Header() {
   const { step } = useOrderStore()
+  const { infoClient } = useCartStore()
   return (
     <header>
       {step === 1 && (
@@ -15,8 +17,10 @@ export function Header() {
       )}
       {step === 2 && (
         <div className="">
-          <h2 className="text-2xl font-bold">Confira seus produtos</h2>
-          <span className="text-gray-500">...</span>
+          <h2 className="text-2xl font-bold">
+            Olá {infoClient.firstName}, confira seus produtos
+          </h2>
+          <span className="text-gray-500"></span>
         </div>
       )}
       {step === 3 && (

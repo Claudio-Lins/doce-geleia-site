@@ -1,10 +1,11 @@
-import React from "react"
+import React, { use, useEffect } from "react"
 import PhoneInput from "react-phone-input-2"
 import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import { useCartStore } from "@/hooks/useCartStore"
 
 const formInfoClientSchema = z.object({
   firstName: z.string().min(3),
@@ -21,6 +22,7 @@ const formInfoClientSchema = z.object({
 type FormInfoClientData = z.infer<typeof formInfoClientSchema>
 
 export function FormInfoClient() {
+  const { infoClient, setInfoClient } = useCartStore()
   const {
     control,
     register,
@@ -28,11 +30,29 @@ export function FormInfoClient() {
     formState: { errors },
   } = useForm<FormInfoClientData>({
     resolver: zodResolver(formInfoClientSchema),
+    defaultValues: {
+      firstName: infoClient.firstName,
+      lastName: infoClient.lastName,
+      email: infoClient.email,
+      phone: infoClient.phone,
+      postalCode: infoClient.postalCode,
+      address: infoClient.address,
+      city: infoClient.city,
+      complement: infoClient.complement,
+      observations: infoClient.observations,
+    },
   })
 
+  // persist data in localstorage
+  useEffect(() => {
+    localStorage.setItem("infoClient", JSON.stringify(infoClient))
+  }, [infoClient])
+
   async function handleFormInfoClient(data: FormInfoClientData) {
-    console.log(data)
+    setInfoClient(data)
   }
+
+  console.log({ infoClient })
 
   return (
     <div className="w-full p-2 rounded-md flex flex-col items-center">
@@ -79,6 +99,7 @@ export function FormInfoClient() {
                   width: "100%",
                   borderRadius: "6px",
                   border: "1px solid #e2e8f0",
+                  outline: "none",
                 }}
                 containerStyle={{ margin: "0px" }}
                 buttonStyle={{}}
