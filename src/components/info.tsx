@@ -4,15 +4,7 @@ import Currency from "./currency"
 
 import { Separator } from "./ui/separator"
 import { useCartStore } from "@/hooks/useCartStore"
-
-interface SelectedProduct {
-  id: string
-  title: string
-  price: number
-  weight: number
-  size: string
-  quantity: number
-}
+import { SelectedProduct } from "@/@types"
 
 export function Info({ product }: any) {
   const { addItem, items, removeItem } = useCartStore()

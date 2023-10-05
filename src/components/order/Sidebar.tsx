@@ -7,12 +7,12 @@ interface SidebarProps {
 
 export function Sidebar({ step }: SidebarProps) {
   return (
-    <div className="flex w-full flex-col justify-between rounded-2xl bg-black p-4 md:h-[570px] md:w-80 md:px-8 md:py-9">
+    <div className="flex w-full flex-col justify-between rounded-2xl bg-black p-4 md:h-[570px] md:w-80 md:px-6 md:py-9">
       <div className="flex justify-evenly gap-8 md:flex-col">
         <Step
           currentStep={step === 1 ? true : false}
           step={1}
-          title="Escolha os produtos"
+          title="Informções pessoais"
         />
         <Step
           currentStep={step === 2 ? true : false}

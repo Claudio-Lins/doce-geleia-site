@@ -37,3 +37,13 @@ export interface ProductDetail {
   productId: string
   createdAt: Date
 }
+
+export interface SelectedProduct {
+  id: string
+  title: string
+  coverUrl?: string
+  price: number
+  weight: number
+  size: string
+  quantity: number
+}

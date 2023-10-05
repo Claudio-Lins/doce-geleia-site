@@ -4,8 +4,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -22,29 +20,7 @@ import { toast } from "react-hot-toast"
 import Currency from "../currency"
 import Image from "next/image"
 import { Table, TableBody, TableCell, TableRow } from "../ui/table"
-
-interface SelectedProduct {
-  id: string
-  title: string
-  coverUrl: string
-  price: number
-  weight: number
-  size: string
-  quantity: number
-}
-interface OrderDetails {
-  id: string
-  title: string
-  coverUrl: string
-  productDetail: {
-    id: string
-    weight: string
-    price: number
-    quantity: number
-    productId: string
-    createdAt: string
-  }[]
-}
+import { SelectedProduct } from "@/@types"
 
 export function Cart() {
   const {
@@ -87,6 +63,14 @@ export function Cart() {
       setShippingPrice(6.33)
     } else if (totalWeight > 151 && totalWeight < 300) {
       setShippingPrice(8.33)
+    } else if (totalWeight > 301 && totalWeight < 500) {
+      setShippingPrice(10.33)
+    } else if (totalWeight > 501 && totalWeight < 1000) {
+      setShippingPrice(15.33)
+    } else if (totalWeight > 1001 && totalWeight < 2000) {
+      setShippingPrice(20.33)
+    } else {
+      setShippingPrice(25.33)
     }
   }, [setShippingPrice, totalWeight])
 
@@ -132,7 +116,7 @@ export function Cart() {
                     key={item.id}
                   >
                     <Image
-                      src={item.coverUrl}
+                      src={item.coverUrl ?? "/logo/lg-site.svg"}
                       width={100}
                       height={100}
                       alt={item.title}

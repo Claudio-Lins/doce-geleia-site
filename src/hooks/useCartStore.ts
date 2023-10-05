@@ -3,7 +3,7 @@ import { create } from "zustand"
 type CartItem = {
   id: string
   title: string
-  coverUrl: string
+  coverUrl?: string
   price: number
   weight: number
   size: string

@@ -7,18 +7,16 @@ export function Header() {
     <header>
       {step === 1 && (
         <div className="">
-          <h2 className="text-2xl font-bold">Escolher produtos</h2>
+          <h2 className="text-2xl font-bold">Informções pessoais</h2>
           <span className="text-gray-500">
-            Escolha os produtos que você deseja comprar
+            Preencha seu nome, email, telemóvel e morada
           </span>
         </div>
       )}
       {step === 2 && (
         <div className="">
-          <h2 className="text-2xl font-bold">Informções pessoais</h2>
-          <span className="text-gray-500">
-            Preencha seu nome, email, telemóvel e morada
-          </span>
+          <h2 className="text-2xl font-bold">Confira seus produtos</h2>
+          <span className="text-gray-500">...</span>
         </div>
       )}
       {step === 3 && (

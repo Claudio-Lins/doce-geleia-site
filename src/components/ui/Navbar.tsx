@@ -27,7 +27,7 @@ export function Navbar() {
 
   useEffect(() => {
     const changeColor = () => {
-      if (window.scrollY >= 90) {
+      if (window.scrollY >= 10) {
         setColor("#ffffff")
         setTextColor("#09090b")
         setCartColor("#09090b")
