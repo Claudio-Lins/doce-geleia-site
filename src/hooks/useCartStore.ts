@@ -23,6 +23,9 @@ type CartItem = {
 }
 
 type CartStore = {
+  step: number
+  setStep: (step: number) => void
+  formSubmitted: string
   totalItems: number
   setTotalItems: (totalItems: number) => void
   subTotalPrice: number
@@ -50,6 +53,11 @@ export const useCartStore = create<CartStore>((set, get) => {
 
   return {
     items: initialCart ? JSON.parse(initialCart) : [],
+
+    formSubmitted: "formInfoClient",
+
+    step: 1,
+    setStep: (step) => set({ step }),
 
     totalItems: 0,
     setTotalItems: (totalItems) => set({ totalItems }),

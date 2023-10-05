@@ -7,6 +7,7 @@ import { Sidebar } from "@/components/order/Sidebar"
 import { TableSelectedItems } from "@/components/order/TableSelectedItems"
 import { Separator } from "@/components/ui/separator"
 import { useOrderStore } from "@/context/orderStore"
+import { useCartStore } from "@/hooks/useCartStore"
 import { useEffect, useState } from "react"
 import "react-phone-input-2/lib/bootstrap.css"
 
@@ -19,7 +20,7 @@ export default function OrderPage() {
       .then((data) => setProducts(data))
   }, [])
 
-  const { step, setStep } = useOrderStore()
+  const { step, setStep } = useCartStore()
   return (
     <div className="min-h-screen flex items-center">
       <div className="mx-auto flex w-full max-w-[950px] flex-col items-center rounded-[32px] bg-white px-2 py-4 font-Montserrat shadow-md md:flex-row md:pl-4">

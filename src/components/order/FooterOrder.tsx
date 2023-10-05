@@ -3,9 +3,10 @@ import { ArrowLeft, ArrowRight, Send } from "lucide-react"
 import { Button } from "../ui/button"
 import Link from "next/link"
 import { useOrderStore } from "@/context/orderStore"
+import { useCartStore } from "@/hooks/useCartStore"
 
 export function FooterOrder() {
-  const { step, setStep } = useOrderStore()
+  const { formSubmitted, step, setStep } = useCartStore()
   return (
     <footer className="w-full mt-4">
       {step === 1 && (
@@ -14,11 +15,13 @@ export function FooterOrder() {
             Cancelar
           </Link>
           <Button
-            onClick={() => setStep(step + 1)}
+            form={formSubmitted ? "formInfoClient" : undefined}
+            type="submit"
+            // onClick={() => setStep(step + 1)}
             variant={"default"}
             className="w-full flex items-center gap-2"
           >
-            <span>Continuar</span>
+            <span>Continue</span>
             <ArrowRight size={16} />
           </Button>
         </div>

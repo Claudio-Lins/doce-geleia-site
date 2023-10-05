@@ -3,8 +3,7 @@ import { useCartStore } from "@/hooks/useCartStore"
 import React from "react"
 
 export function Header() {
-  const { step } = useOrderStore()
-  const { infoClient } = useCartStore()
+  const { infoClient, step } = useCartStore()
   return (
     <header>
       {step === 1 && (

@@ -22,7 +22,7 @@ const formInfoClientSchema = z.object({
 type FormInfoClientData = z.infer<typeof formInfoClientSchema>
 
 export function FormInfoClient() {
-  const { infoClient, setInfoClient } = useCartStore()
+  const { infoClient, setInfoClient, setStep, step } = useCartStore()
   const {
     control,
     register,
@@ -50,6 +50,7 @@ export function FormInfoClient() {
 
   async function handleFormInfoClient(data: FormInfoClientData) {
     setInfoClient(data)
+    setStep(step + 1)
   }
 
   console.log({ infoClient })
@@ -57,6 +58,7 @@ export function FormInfoClient() {
   return (
     <div className="w-full p-2 rounded-md flex flex-col items-center">
       <form
+        id="formInfoClient"
         onSubmit={handleSubmit(handleFormInfoClient)}
         className="w-full flex flex-col gap-2"
       >
@@ -150,15 +152,16 @@ export function FormInfoClient() {
             {...register("observations")}
           />
         </div>
-        <div className="flex items-center w-full gap-2">
-          <button
-            type="submit"
-            className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-          >
-            Enviar
-          </button>
-        </div>
       </form>
+      <div className="flex items-center w-full gap-2">
+        <button
+          form="formInfoClient"
+          type="submit"
+          className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+        >
+          Enviar
+        </button>
+      </div>
     </div>
   )
 }
