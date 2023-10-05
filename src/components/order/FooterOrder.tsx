@@ -55,7 +55,7 @@ export function FooterOrder() {
           </Button>
           <Button
             onClick={() => setStep(step + 1)}
-            variant={"tertiary"}
+            variant={"default"}
             className="w-full flex items-center gap-2 hover:bg-blue-700"
           >
             <span>Enviar</span>
