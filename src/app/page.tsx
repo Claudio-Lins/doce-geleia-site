@@ -1,6 +1,5 @@
 import { HeroText } from "@/components/Hero/HeroText"
 import { Slider } from "@/components/Hero/Slider/Slider"
-import { ModalProducts } from "@/components/modals/ModalProducts"
 import { Testimonial } from "@/components/testimonials"
 import prisma from "@/lib/prisma"
 
@@ -33,7 +32,6 @@ export default async function Home() {
         </div>
       </div>
       <Testimonial testimonials={testimonials} />
-      {/* <ModalProducts products={products} /> */}
     </div>
   )
 }
