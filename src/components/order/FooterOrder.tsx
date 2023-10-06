@@ -6,7 +6,7 @@ import { useOrderStore } from "@/context/orderStore"
 import { useCartStore } from "@/hooks/useCartStore"
 
 export function FooterOrder() {
-  const { formSubmitted, step, setStep } = useCartStore()
+  const { formSubmitted, step, setStep, setShowModalOrder } = useCartStore()
   return (
     <footer className="w-full mt-4">
       {step === 1 && (
@@ -37,7 +37,7 @@ export function FooterOrder() {
             <span>Volta</span>
           </Button>
           <Button
-            onClick={() => setStep(step + 1)}
+            onClick={() => setShowModalOrder(true)}
             variant={"default"}
             className="w-full flex items-center gap-2"
           >

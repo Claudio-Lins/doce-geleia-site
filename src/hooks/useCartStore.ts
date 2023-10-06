@@ -41,6 +41,8 @@ type CartStore = {
   removeItem: (id: string, size: string) => void
   infoClient: InfoClient
   setInfoClient: (infoClient: InfoClient) => void
+  showModalOrder: boolean
+  setShowModalOrder: (showModalOrder: boolean) => void
 }
 
 export const useCartStore = create<CartStore>((set, get) => {
@@ -58,6 +60,9 @@ export const useCartStore = create<CartStore>((set, get) => {
 
     step: 1,
     setStep: (step) => set({ step }),
+
+    showModalOrder: false,
+    setShowModalOrder: (showModalOrder) => set({ showModalOrder }),
 
     totalItems: 0,
     setTotalItems: (totalItems) => set({ totalItems }),

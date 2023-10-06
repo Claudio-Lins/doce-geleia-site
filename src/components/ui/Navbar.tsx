@@ -46,7 +46,8 @@ export function Navbar() {
     <div
       className={cn(
         " fixed inset-0 z-10 w-full h-24 bg-transparent px-4",
-        pathName !== "/" ? "bg-white" : "bg-transparent"
+        pathName !== "/" ? "bg-white" : "bg-transparent",
+        pathName === "/order/checkout" ? "hidden" : "block"
       )}
       style={{
         backgroundColor: color,

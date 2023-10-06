@@ -3,6 +3,8 @@
 import { FooterOrder } from "@/components/order/FooterOrder"
 import { FormInfoClient } from "@/components/order/FormInfoClient"
 import { Header } from "@/components/order/Header"
+import { ModalOrder } from "@/components/order/ModalOrder"
+import { ResumeOrder } from "@/components/order/ResumeOrder"
 import { Sidebar } from "@/components/order/Sidebar"
 import { TableSelectedItems } from "@/components/order/TableSelectedItems"
 import { Separator } from "@/components/ui/separator"
@@ -31,12 +33,14 @@ export default function OrderPage() {
           <section className="flex-1">
             {step === 1 && <FormInfoClient />}
             {step === 2 && <TableSelectedItems />}
+            {/* {step === 3 && <ResumeOrder />} */}
           </section>
           <Separator className="my-2" />
           <FooterOrder />
         </div>
         {/* <pre>{JSON.stringify(products, null, 2)}</pre> */}
       </div>
+      <ModalOrder />
     </div>
   )
 }

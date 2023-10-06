@@ -53,8 +53,6 @@ export function FormInfoClient() {
     setStep(step + 1)
   }
 
-  console.log({ infoClient })
-
   return (
     <div className="w-full p-2 rounded-md flex flex-col items-center">
       <form
@@ -153,15 +151,6 @@ export function FormInfoClient() {
           />
         </div>
       </form>
-      <div className="flex items-center w-full gap-2">
-        <button
-          form="formInfoClient"
-          type="submit"
-          className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-        >
-          Enviar
-        </button>
-      </div>
     </div>
   )
 }
