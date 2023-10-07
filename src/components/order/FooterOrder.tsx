@@ -4,6 +4,8 @@ import { Button } from "../ui/button"
 import Link from "next/link"
 import { useOrderStore } from "@/context/orderStore"
 import { useCartStore } from "@/hooks/useCartStore"
+import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 export function FooterOrder() {
   const { formSubmitted, step, setStep, setShowModalOrder } = useCartStore()
@@ -36,14 +38,13 @@ export function FooterOrder() {
             <ArrowLeft size={16} />
             <span>Volta</span>
           </Button>
-          <Button
-            onClick={() => setShowModalOrder(true)}
-            variant={"default"}
-            className="w-full flex items-center gap-2"
+          <Link
+            href="/order/checkout"
+            className={cn("w-full", buttonVariants({ variant: "default" }))}
           >
             <span>Resumo</span>
             <ArrowRight size={16} />
-          </Button>
+          </Link>
         </div>
       )}
       {step === 3 && (
