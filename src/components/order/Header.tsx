@@ -1,6 +1,4 @@
-import { useOrderStore } from "@/context/orderStore"
 import { useCartStore } from "@/hooks/useCartStore"
-import React from "react"
 
 export function Header() {
   const { infoClient, step } = useCartStore()

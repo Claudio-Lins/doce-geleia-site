@@ -1,16 +1,5 @@
+import { InfoClient } from "@/@types"
 import { create } from "zustand"
-
-interface InfoClient {
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
-  postalCode: string
-  address: string
-  city: string
-  complement: string
-  observations: string
-}
 
 type CartItem = {
   id: string

@@ -47,3 +47,15 @@ export interface SelectedProduct {
   size: string
   quantity: number
 }
+
+export interface InfoClient {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  postalCode: string
+  address: string
+  city: string
+  complement: string
+  observations: string
+}

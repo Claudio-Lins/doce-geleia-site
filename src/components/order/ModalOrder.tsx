@@ -21,8 +21,6 @@ import { useState } from "react"
 import { cn } from "@/lib/utils"
 
 export function ModalOrder() {
-  const [print, setPrint] = useState(false)
-
   const {
     showModalOrder,
     setShowModalOrder,
@@ -32,32 +30,55 @@ export function ModalOrder() {
     totalWeight,
     subTotalPrice,
   } = useCartStore()
-
-  async function handlePrint() {
-    await setPrint(true)
-    await window.print()
-    await setPrint(false)
-  }
   return (
     <Dialog open={showModalOrder}>
       <DialogContent className="sm:max-w-5xl">
-        <DialogHeader>
-          <DialogTitle>
-            Resumo da compra de {infoClient.firstName} {infoClient.lastName}
-          </DialogTitle>
-        </DialogHeader>
-        <Separator className="my-2" />
-        <ScrollArea className={cn(!print && "max-h-[350px]")}>
-          <div className="mt-4 w-full rounded-lg border p-4">
-            <h2 className="text-2xl font-bold">Resumo</h2>
-            <table className="mt-4 w-full text-sm text-gray-500">
-              <thead className="border-b">
-                <tr className="text-gray-500">
-                  <th className="text-left">Produto</th>
-                  <th className="text-center">Quantidade</th>
-                  <th className="text-right">Sub-total</th>
-                </tr>
-              </thead>
+        <h2 className="text-2xl font-bold">Resumo</h2>
+        <table className="w-full text-sm text-gray-500">
+          <thead className="border-b">
+            <tr className="text-gray-500">
+              <th className="text-left">Produto</th>
+              <th className="text-right">Quantidade</th>
+              <th className="text-right w-32">Sub-total</th>
+            </tr>
+          </thead>
+        </table>
+        <div className="w-full">
+          <ul>
+            {items?.map((item: SelectedProduct) => {
+              return (
+                <li
+                  key={item.id}
+                  className="flex justify-between items-center border-b"
+                >
+                  <div className="flex items-center gap-2 py-2">
+                    <Image
+                      // @ts-ignore
+                      src={item.coverUrl ?? ""}
+                      alt={item.title}
+                      width={30}
+                      height={30}
+                      className="rounded-md object-fill
+                                "
+                    />
+                    <span>
+                      {item.title} {item.size}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-center">{item.quantity}</span>
+                    <span className="text-right">
+                      <Currency value={(item.price * item.quantity) / 100} />
+                    </span>
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+        {/* <ScrollArea className="max-h-[200px] print:hidden">
+          <div className=" w-full  px-4">
+            <table className="w-full text-sm text-gray-500">
               <tbody>
                 {items?.map((item: SelectedProduct) => {
                   return (
@@ -87,18 +108,18 @@ export function ModalOrder() {
                 })}
               </tbody>
             </table>
-            <div className="mt-4 flex justify-between">
-              <span className="text-gray-500">Frete</span>
-              <strong className="">frete</strong>
-            </div>
-            <div className="mt-4 flex justify-between">
-              <span className="text-gray-500">Total</span>
-              <strong className="text-2xl">
-                <Currency value={subTotalPrice / 100} />
-              </strong>
-            </div>
           </div>
-        </ScrollArea>
+        </ScrollArea> */}
+        <div className="flex justify-between">
+          <span className="text-gray-500">Frete</span>
+          <strong className="">frete</strong>
+        </div>
+        <div className="mt-4 flex justify-between">
+          <span className="text-gray-500">Total</span>
+          <strong className="text-2xl">
+            <Currency value={subTotalPrice / 100} />
+          </strong>
+        </div>
         <Separator className="my-2" />
         <div className="flex flex-col">
           <div className="flex items-center flex-col sm:flex-row w-full gap-2">
@@ -159,7 +180,7 @@ export function ModalOrder() {
           </Button>
 
           <Button
-            onClick={handlePrint}
+            onClick={() => window.print()}
             className="w-1/2 bg-gradient-to-tr from-zinc-500 to-zinc-700 flex items-center gap-2 text-white"
             type="submit"
           >

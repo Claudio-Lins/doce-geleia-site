@@ -1,18 +1,13 @@
-"use client"
-import { useCartStore } from "@/hooks/useCartStore"
-import { useEffect, useState } from "react"
+import { FooterCheckout } from "@/components/order/FooterCheckout"
+import { HeaderCheckout } from "@/components/order/HeaderCheckout"
+import { ResumeOrder } from "@/components/order/ResumeOrder"
 
 export default function Checkout() {
-  const { infoClient } = useCartStore()
-
   return (
-    <div className="w-full max-w-5xl mx-auto fixed inset-0 bg-red-400 flex flex-col justify-center">
-      <header>
-        <h1 className="text-3xl text-center">Checkout</h1>
-        <span>
-          Resumo da compra de {infoClient.firstName} {infoClient.lastName}
-        </span>
-      </header>
+    <div className="w-full max-w-6xl min-h-[calc(100vh_-_120px)] mx-auto mt-24 flex flex-col justify-between pb-10">
+      <HeaderCheckout />
+      <ResumeOrder />
+      <FooterCheckout />
     </div>
   )
 }
