@@ -33,7 +33,7 @@ export function Info({ product }: any) {
 
       <div className="w-full flex flex-col items-center justify-center">
         <div className="flex flex-col w-full">
-          <h2 className="font-semibold text-black">Tamanhos</h2>
+          <h2 className="font-semibold text-black">Adicione ao carrinho</h2>
           <div className="flex items-center gap-2">
             <div className="flex flex-col justify-between gap-1 p-2 rounded-md border">
               <span className="text-xs">50gr</span>
