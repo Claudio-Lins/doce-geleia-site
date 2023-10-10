@@ -15,12 +15,6 @@ interface EmailContactProps {
   firstName: string
   lastName: string
   email: string
-  // phone: string
-  // postalCode: string
-  // address: string
-  // city: string
-  // complement: string
-  // observations: string
   products: SelectedProduct[]
 }
 
@@ -36,7 +30,7 @@ export function EmailOrder({
         Olá, {firstName} {lastName}!
       </h1>
       <p>Obrigado ....!</p>
-      <p>Segue detalhes do seu pedido...</p>
+
       <h2>Detalhes do Pedido</h2>
       <table
         style={{
@@ -101,31 +95,80 @@ export function EmailOrder({
             </tr>
           ))}
         </tbody>
-        <tfoot>
-          <tr style={{ backgroundColor: "#f2f2f2" }}>
-            <td style={{ padding: "10px", borderTop: "1px solid #ddd" }}>
-              Total
-            </td>
-            <td
-              style={{
-                padding: "10px",
-                borderTop: "1px solid #ddd",
-                textAlign: "center",
-              }}
-            ></td>
-            <td
-              style={{
-                padding: "10px",
-                borderTop: "1px solid #ddd",
-                textAlign: "center",
-              }}
-            >
-              {products.reduce((acc, product) => {
-                return acc + product.quantity
-              }, 0)}
-            </td>
-          </tr>
-        </tfoot>
+      </table>
+      <table
+        style={{
+          width: "100%",
+          textAlign: "left",
+          borderCollapse: "collapse",
+          marginTop: "20px",
+          marginLeft: "auto",
+          marginRight: "auto",
+          backgroundColor: "#e0dfdf",
+        }}
+      >
+        <tr style={{ backgroundColor: "#000000" }}>
+          <td
+            style={{
+              padding: "10px",
+              borderBottom: "1px solid #ddd",
+              color: "#fff",
+            }}
+          >
+            Total Items
+          </td>
+          <td
+            style={{
+              padding: "10px",
+              borderBottom: "1px solid #ddd",
+              textAlign: "right",
+            }}
+          >
+            totalItems
+          </td>
+        </tr>
+        <tr>
+          <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+            Shipping
+          </td>
+          <td
+            style={{
+              padding: "10px",
+              borderBottom: "1px solid #ddd",
+              textAlign: "right",
+            }}
+          >
+            shipping
+          </td>
+        </tr>
+        <tr style={{ backgroundColor: "#f2f2f2" }}>
+          <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+            Subtotal
+          </td>
+          <td
+            style={{
+              padding: "10px",
+              borderBottom: "1px solid #ddd",
+              textAlign: "right",
+            }}
+          >
+            subtotal
+          </td>
+        </tr>
+        <tr>
+          <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+            Total
+          </td>
+          <td
+            style={{
+              padding: "10px",
+              borderBottom: "1px solid #ddd",
+              textAlign: "right",
+            }}
+          >
+            total
+          </td>
+        </tr>
       </table>
     </div>
   )
