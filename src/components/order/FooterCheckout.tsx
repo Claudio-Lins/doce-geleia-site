@@ -14,13 +14,11 @@ const EmailOrderSchema = z.object({
   firstName: z.string().min(3),
   lastName: z.string().min(3),
   email: z.string().email(),
+  totalItems: z.number(),
   products: z.array(
     z.object({
       id: z.string(),
       title: z.string(),
-      // coverUrl: z.string(),
-      // price: z.number(),
-      // weight: z.number(),
       size: z.string(),
       quantity: z.number(),
     })
@@ -65,9 +63,6 @@ export function FooterCheckout() {
       const products = {
         id: item.id,
         title: item.title,
-        // coverUrl: item.coverUrl,
-        // price: item.price,
-        // weight: item.weight,
         size: item.size,
         quantity: item.quantity,
       }
@@ -168,6 +163,7 @@ export function FooterCheckout() {
               firstName,
               lastName,
               email,
+              totalItems,
               products: itemsSelected,
             })
           }

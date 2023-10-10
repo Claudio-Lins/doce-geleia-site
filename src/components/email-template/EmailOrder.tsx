@@ -4,9 +4,6 @@ import Currency from "../currency"
 interface SelectedProduct {
   id: string
   title: string
-  // coverUrl?: string
-  // price: number
-  // weight: number
   size: string
   quantity: number
 }
@@ -15,12 +12,14 @@ interface EmailContactProps {
   firstName: string
   lastName: string
   email: string
+  totalItems: number
   products: SelectedProduct[]
 }
 
 export function EmailOrder({
   firstName,
   lastName,
+  totalItems,
   email,
   products,
 }: EmailContactProps) {
@@ -124,7 +123,7 @@ export function EmailOrder({
               textAlign: "right",
             }}
           >
-            totalItems
+            {totalItems}
           </td>
         </tr>
         <tr>
