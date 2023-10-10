@@ -41,7 +41,7 @@ export function EmailOrder({
       <ul>
         {products.map((product) => (
           <li key={product.id}>
-            {product.title}-{product.size} x {product.quantity} ={" "}
+            {product.title}-{product.size} x {product.quantity}
           </li>
         ))}
       </ul>
