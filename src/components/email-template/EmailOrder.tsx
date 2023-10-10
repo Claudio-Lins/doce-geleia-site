@@ -13,6 +13,7 @@ interface EmailContactProps {
   lastName: string
   email: string
   totalItems: number
+  shippingPrice: number
   products: SelectedProduct[]
 }
 
@@ -20,6 +21,7 @@ export function EmailOrder({
   firstName,
   lastName,
   totalItems,
+  shippingPrice,
   email,
   products,
 }: EmailContactProps) {
@@ -128,7 +130,7 @@ export function EmailOrder({
         </tr>
         <tr>
           <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-            Shipping
+            Frete
           </td>
           <td
             style={{
@@ -137,7 +139,7 @@ export function EmailOrder({
               textAlign: "right",
             }}
           >
-            shipping
+            {shippingPrice}
           </td>
         </tr>
         <tr style={{ backgroundColor: "#f2f2f2" }}>

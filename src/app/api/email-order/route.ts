@@ -19,6 +19,7 @@ export async function POST(request: Request) {
         lastName,
         email,
         totalItems: body.totalItems,
+        shippingPrice: body.shippingPrice,
         products: body.products,
       }) as React.ReactElement,
     })

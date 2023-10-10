@@ -15,6 +15,7 @@ const EmailOrderSchema = z.object({
   lastName: z.string().min(3),
   email: z.string().email(),
   totalItems: z.number(),
+  shippingPrice: z.number(),
   products: z.array(
     z.object({
       id: z.string(),
@@ -164,6 +165,7 @@ export function FooterCheckout() {
               lastName,
               email,
               totalItems,
+              shippingPrice,
               products: itemsSelected,
             })
           }
