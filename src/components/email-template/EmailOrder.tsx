@@ -37,14 +37,96 @@ export function EmailOrder({
       </h1>
       <p>Obrigado ....!</p>
       <p>Segue detalhes do seu pedido...</p>
-      <p>Here is a summary of your order:</p>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            {product.title}-{product.size} x {product.quantity}
-          </li>
-        ))}
-      </ul>
+      <h2>Detalhes do Pedido</h2>
+      <table
+        style={{
+          width: "100%",
+          textAlign: "left",
+          borderCollapse: "collapse",
+          marginTop: "20px",
+        }}
+      >
+        <thead>
+          <tr style={{ backgroundColor: "#f2f2f2" }}>
+            <th style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+              Produtos
+            </th>
+            <th
+              style={{
+                padding: "10px",
+                borderBottom: "1px solid #ddd",
+                textAlign: "center",
+              }}
+            >
+              Tamanho
+            </th>
+            <th
+              style={{
+                padding: "10px",
+                borderBottom: "1px solid #ddd",
+                textAlign: "center",
+              }}
+            >
+              Quantidade
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product, index) => (
+            <tr
+              key={product.id}
+              style={{ backgroundColor: index % 2 ? "#f2f2f2" : "#fff" }}
+            >
+              <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                {product.title}
+              </td>
+              <td
+                style={{
+                  padding: "10px",
+                  borderBottom: "1px solid #ddd",
+                  textAlign: "center",
+                }}
+              >
+                {product.size}
+              </td>
+              <td
+                style={{
+                  padding: "10px",
+                  borderBottom: "1px solid #ddd",
+                  textAlign: "center",
+                }}
+              >
+                {product.quantity}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+        <tfoot>
+          <tr style={{ backgroundColor: "#f2f2f2" }}>
+            <td style={{ padding: "10px", borderTop: "1px solid #ddd" }}>
+              Total
+            </td>
+            <td
+              style={{
+                padding: "10px",
+                borderTop: "1px solid #ddd",
+                textAlign: "center",
+              }}
+            ></td>
+            <td
+              style={{
+                padding: "10px",
+                borderTop: "1px solid #ddd",
+                textAlign: "center",
+              }}
+            >
+              {products.reduce((acc, product) => {
+                return acc + product.quantity
+              }, 0)}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   )
 }
