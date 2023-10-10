@@ -43,6 +43,7 @@ export function FooterCheckout() {
     shippingPrice,
     removeItem,
     addItem,
+    resetLocalStorage,
   } = useCartStore()
 
   useEffect(() => {
@@ -81,11 +82,8 @@ export function FooterCheckout() {
     })
 
     if (response.ok) {
-      console.log(data)
-      // reset localstorage
-      // localStorage.removeItem("infoClient")
-      localStorage.removeItem("items")
       alert("Email sent!")
+      resetLocalStorage()
     } else {
       alert("Something went wrong!")
     }

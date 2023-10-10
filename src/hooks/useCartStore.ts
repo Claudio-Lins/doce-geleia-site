@@ -32,6 +32,8 @@ type CartStore = {
   setInfoClient: (infoClient: InfoClient) => void
   showModalOrder: boolean
   setShowModalOrder: (showModalOrder: boolean) => void
+  // reset localStorage
+  resetLocalStorage: () => void
 }
 
 export const useCartStore = create<CartStore>((set, get) => {
@@ -44,6 +46,25 @@ export const useCartStore = create<CartStore>((set, get) => {
 
   return {
     items: initialCart ? JSON.parse(initialCart) : [],
+
+    resetLocalStorage: () => {
+      localStorage.removeItem("cart")
+      localStorage.removeItem("infoClient")
+      set({
+        items: [],
+        infoClient: {
+          firstName: "",
+          lastName: "",
+          email: "",
+          address: "",
+          city: "",
+          postalCode: "",
+          phone: "",
+          observations: "",
+          complement: "",
+        },
+      })
+    },
 
     formSubmitted: "formInfoClient",
 
