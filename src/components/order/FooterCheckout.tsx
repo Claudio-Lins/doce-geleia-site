@@ -2,13 +2,14 @@
 import { InfoClient, SelectedProduct } from "@/@types"
 import { useCartStore } from "@/hooks/useCartStore"
 import Image from "next/image"
-import { MouseEvent, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "../ui/button"
 import { Mail, Printer } from "lucide-react"
 import { z } from "zod"
 import Link from "next/link"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { useRouter } from "next/navigation"
 
 const EmailOrderSchema = z.object({
   firstName: z.string().min(3),
@@ -16,6 +17,7 @@ const EmailOrderSchema = z.object({
   email: z.string().email(),
   totalItems: z.number(),
   shippingPrice: z.number(),
+  subTotalPrice: z.number(),
   products: z.array(
     z.object({
       id: z.string(),
@@ -29,6 +31,7 @@ const EmailOrderSchema = z.object({
 export type EmailContactProps = z.infer<typeof EmailOrderSchema>
 
 export function FooterCheckout() {
+  const router = useRouter()
   const [client, setClient] = useState({} as InfoClient)
   const [itemsSelected, setItemsSelected] = useState([] as SelectedProduct[])
   const [firstName, setFirstName] = useState("")
@@ -81,8 +84,9 @@ export function FooterCheckout() {
     })
 
     if (response.ok) {
-      alert("Email sent!")
-      // resetLocalStorage()
+      alert("Pedido enviado com sucesso!")
+      resetLocalStorage()
+      router.push("/")
     } else {
       alert("Something went wrong!")
     }
@@ -166,6 +170,7 @@ export function FooterCheckout() {
               email,
               totalItems,
               shippingPrice,
+              subTotalPrice,
               products: itemsSelected,
             })
           }

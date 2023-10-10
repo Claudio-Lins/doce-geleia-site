@@ -14,6 +14,7 @@ interface EmailContactProps {
   email: string
   totalItems: number
   shippingPrice: number
+  subTotalPrice: number
   products: SelectedProduct[]
 }
 
@@ -22,6 +23,7 @@ export function EmailOrder({
   lastName,
   totalItems,
   shippingPrice,
+  subTotalPrice,
   email,
   products,
 }: EmailContactProps) {
@@ -108,12 +110,12 @@ export function EmailOrder({
           backgroundColor: "#e0dfdf",
         }}
       >
-        <tr style={{ backgroundColor: "#000000" }}>
+        <tr style={{ backgroundColor: "#f6f2f2" }}>
           <td
             style={{
               padding: "10px",
               borderBottom: "1px solid #ddd",
-              color: "#fff",
+              color: "#000000",
             }}
           >
             Total Items
@@ -139,7 +141,10 @@ export function EmailOrder({
               textAlign: "right",
             }}
           >
-            {shippingPrice}
+            {new Intl.NumberFormat("pt-PT", {
+              style: "currency",
+              currency: "EUR",
+            }).format(shippingPrice)}
           </td>
         </tr>
         <tr style={{ backgroundColor: "#f2f2f2" }}>
@@ -153,11 +158,21 @@ export function EmailOrder({
               textAlign: "right",
             }}
           >
-            subtotal
+            {new Intl.NumberFormat("pt-PT", {
+              style: "currency",
+              currency: "EUR",
+            }).format(subTotalPrice / 100)}
           </td>
         </tr>
         <tr>
-          <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+          <td
+            style={{
+              padding: "10px",
+              borderBottom: "1px solid #ddd",
+              background: "#000",
+              color: "#fff",
+            }}
+          >
             Total
           </td>
           <td
@@ -165,9 +180,16 @@ export function EmailOrder({
               padding: "10px",
               borderBottom: "1px solid #ddd",
               textAlign: "right",
+              fontSize: "20px",
+              fontWeight: "bold",
+              background: "#000",
+              color: "#fff",
             }}
           >
-            total
+            {new Intl.NumberFormat("pt-PT", {
+              style: "currency",
+              currency: "EUR",
+            }).format(subTotalPrice / 100 + shippingPrice)}
           </td>
         </tr>
       </table>
