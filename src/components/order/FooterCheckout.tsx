@@ -6,6 +6,9 @@ import { MouseEvent, useEffect, useState } from "react"
 import { Button } from "../ui/button"
 import { Mail, Printer } from "lucide-react"
 import { z } from "zod"
+import Link from "next/link"
+import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 const EmailOrderSchema = z.object({
   firstName: z.string().min(3),
@@ -83,7 +86,7 @@ export function FooterCheckout() {
 
     if (response.ok) {
       alert("Email sent!")
-      resetLocalStorage()
+      // resetLocalStorage()
     } else {
       alert("Something went wrong!")
     }
@@ -140,14 +143,15 @@ export function FooterCheckout() {
         </div>
       </div>
       <div className="flex items-center gap-4 mt-10 w-full print:hidden">
-        <Button
-          onClick={() => setShowModalOrder(false)}
-          variant={"destructive"}
-          className="w-1/2 "
-          type="submit"
+        <Link
+          href="/"
+          className={cn(
+            buttonVariants({ variant: "outline" }),
+            "w-1/2 flex items-center gap-2 text-zinc-50 bg-red-500"
+          )}
         >
           <span>Cancelar</span>
-        </Button>
+        </Link>
 
         <Button
           onClick={() => window.print()}
