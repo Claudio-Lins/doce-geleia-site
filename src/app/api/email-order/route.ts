@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     const data = await resend.emails.send({
       from: "Order - Carrinho de compras <order@docegeleia.pt>",
       to: email,
-      cc: ["klaulins@gmail.com"],
+      cc: process.env.EMAIL_DOCE,
       subject: "Order - Carrinho de compras",
       react: EmailOrder({
         firstName,
