@@ -132,10 +132,10 @@ export function FooterCheckout() {
                 <Image
                   src={"/assets/activoBank.png"}
                   alt="MBWay"
-                  width={120}
+                  width={100}
                   height={40}
                 />
-                <strong className=" text-zinc-900">
+                <strong className=" text-zinc-900 print:text-xs">
                   IBAN PT50 0002 0123 1234 5678 9015 4
                 </strong>
               </div>

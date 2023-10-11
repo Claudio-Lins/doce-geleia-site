@@ -3,6 +3,7 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Montserrat, Old_Standard_TT } from "next/font/google"
 import { Navbar } from "@/components/ui/Navbar"
+import { Footer } from "@/components/Footer"
 
 const montserrat = Montserrat({ subsets: ["latin"] })
 const oldStandardTT = Old_Standard_TT({
@@ -31,6 +32,7 @@ export default async function RootLayout({
         <Navbar />
         <ToastProvider />
         <main className="grow">{children}</main>
+        <Footer />
       </body>
     </html>
   )

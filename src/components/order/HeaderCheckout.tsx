@@ -23,11 +23,8 @@ export function HeaderCheckout() {
 
   useEffect(() => {
     setItemsSelected(items)
-  }, [items])
-
-  useEffect(() => {
     setClient(infoClient)
-  }, [infoClient])
+  }, [items, infoClient])
 
   return (
     <header className="border-b pb-2 fixed w-full max-w-6xl bg-white z-10 ">
@@ -39,7 +36,7 @@ export function HeaderCheckout() {
           <span>Resumo da compra</span>
         </div>
         <div className="flex items-center gap-4">
-          {infoClient.phone.slice(0, 3) === "351" ? (
+          {infoClient && infoClient?.phone.slice(0, 3) === "351" ? (
             <div className="flex items-center gap-2">
               <span className="text-gray-500">Frete:</span>
               <strong className="">
