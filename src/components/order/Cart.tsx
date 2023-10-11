@@ -21,6 +21,7 @@ import Currency from "../currency"
 import Image from "next/image"
 import { Table, TableBody, TableCell, TableRow } from "../ui/table"
 import { SelectedProduct } from "@/@types"
+import { useShippingPriceCalculator } from "@/utils/useShippingPriceCalculator"
 
 export function Cart() {
   const {
@@ -58,21 +59,7 @@ export function Cart() {
     }
   }, [items, setShowCart, setTotalItems, setSubTotalPrice, setTotalWeight])
 
-  useEffect(() => {
-    if (totalWeight < 150) {
-      setShippingPrice(6.33)
-    } else if (totalWeight > 151 && totalWeight < 300) {
-      setShippingPrice(8.33)
-    } else if (totalWeight > 301 && totalWeight < 500) {
-      setShippingPrice(10.33)
-    } else if (totalWeight > 501 && totalWeight < 1000) {
-      setShippingPrice(15.33)
-    } else if (totalWeight > 1001 && totalWeight < 2000) {
-      setShippingPrice(20.33)
-    } else {
-      setShippingPrice(25.33)
-    }
-  }, [setShippingPrice, totalWeight])
+  useShippingPriceCalculator(totalWeight)
 
   return (
     <div className={cn("", totalItems >= 1 ? "flex" : "hidden")}>
@@ -96,7 +83,7 @@ export function Cart() {
             </div>
           </div>
         </SheetTrigger>
-        <SheetContent className="w-full flex flex-col justify-between sm:max-w-none sm:w-[800px]">
+        <SheetContent className="w-full flex flex-col justify-between">
           <SheetHeader>
             <SheetTitle className="flex items-center gap-2">
               <span className="text-xl font-bold">Carrinho de compras</span>

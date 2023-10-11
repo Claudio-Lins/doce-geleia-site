@@ -10,8 +10,6 @@ import {
 } from "../ui/table"
 import { ScrollArea } from "../ui/scroll-area"
 import { useCartStore } from "@/hooks/useCartStore"
-import { SelectedProduct } from "@/@types"
-import Image from "next/image"
 import Currency from "../currency"
 
 export function TableSelectedItems() {
