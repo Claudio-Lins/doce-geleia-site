@@ -24,7 +24,7 @@ export default function OrderPage() {
 
   const { step, setStep } = useCartStore()
   return (
-    <div className="min-h-screen flex items-center">
+    <div className="sm:min-h-screen pb-12 pt-24 flex items-center">
       <div className="mx-auto flex w-full max-w-[950px] flex-col items-center rounded-[32px] bg-white px-2 py-4 font-Montserrat shadow-md md:flex-row md:pl-4">
         <Sidebar step={step} />
         <div className="w-full h-auto p-2 sm:p-10 flex flex-col justify-between ">
@@ -33,7 +33,6 @@ export default function OrderPage() {
           <section className="flex-1">
             {step === 1 && <FormInfoClient />}
             {step === 2 && <TableSelectedItems />}
-            {/* {step === 3 && <ResumeOrder />} */}
           </section>
           <Separator className="my-2" />
           <FooterOrder />

@@ -9,6 +9,7 @@ import { z } from "zod"
 import Link from "next/link"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { toast } from "react-hot-toast"
 import { useRouter } from "next/navigation"
 
 const EmailOrderSchema = z.object({
@@ -84,11 +85,11 @@ export function FooterCheckout() {
     })
 
     if (response.ok) {
-      alert("Pedido enviado com sucesso!")
+      toast.success("Pedido enviado com sucesso!")
       resetLocalStorage()
       router.push("/")
     } else {
-      alert("Something went wrong!")
+      toast.error("Erro ao enviar o pedido")
     }
   }
 

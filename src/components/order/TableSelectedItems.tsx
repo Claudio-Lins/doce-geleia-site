@@ -1,5 +1,5 @@
 "use client"
-import React from "react"
+import React, { useEffect } from "react"
 import {
   Table,
   TableBody,
@@ -13,7 +13,10 @@ import { useCartStore } from "@/hooks/useCartStore"
 import Currency from "../currency"
 
 export function TableSelectedItems() {
-  const { items, totalItems } = useCartStore()
+  const { items, infoClient } = useCartStore()
+  useEffect(() => {
+    localStorage.setItem("infoClient", JSON.stringify(infoClient))
+  }, [infoClient])
   return (
     <Table className="px-2">
       <ScrollArea className="h-[400px]">

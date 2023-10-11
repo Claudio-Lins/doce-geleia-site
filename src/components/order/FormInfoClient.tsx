@@ -44,12 +44,12 @@ export function FormInfoClient() {
   })
 
   // persist data in localstorage
-  useEffect(() => {
-    localStorage.setItem("infoClient", JSON.stringify(infoClient))
-  }, [infoClient])
+  // useEffect(() => {
+  //   localStorage.setItem("infoClient", JSON.stringify(infoClient))
+  // }, [infoClient])
 
   async function handleFormInfoClient(data: FormInfoClientData) {
-    setInfoClient(data)
+    await setInfoClient(data)
     setStep(step + 1)
   }
 
