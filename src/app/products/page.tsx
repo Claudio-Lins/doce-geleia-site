@@ -4,9 +4,6 @@ import prisma from "@/lib/prisma"
 import { Separator } from "@/components/ui/separator"
 
 export default async function Products() {
-  // const products = await fetch(
-  //   `${process.env.NEXT_PUBLIC_API_URL}/products`
-  // ).then((res) => res.json())
   const products = await prisma.product.findMany({
     include: {
       productDetail: true,
@@ -15,7 +12,7 @@ export default async function Products() {
     },
   })
   return (
-    <div className="flex flex-col w-full max-w-6xl mx-auto pt-24 sm:mt-16 min-h-screen px-2 ">
+    <div className="flex flex-col w-full md:h-screen pb-12 pt-24 px-2 sm:p-0 max-w-6xl mx-auto justify-center">
       <h1 className="font-bold text-2xl">Sabores</h1>
       <span>Escolha aqui os sabores</span>
       <Separator className="my-4" />
