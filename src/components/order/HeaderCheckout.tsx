@@ -8,6 +8,7 @@ import Currency from "../currency"
 export function HeaderCheckout() {
   const [client, setClient] = useState({} as InfoClient)
   const [itemsSelected, setItemsSelected] = useState([] as SelectedProduct[])
+  const [isPortugal, setIsPortugal] = useState(false)
   const {
     showModalOrder,
     setShowModalOrder,
@@ -26,6 +27,14 @@ export function HeaderCheckout() {
     setClient(infoClient)
   }, [items, infoClient])
 
+  useEffect(() => {
+    if (infoClient && infoClient?.phone.slice(0, 3) === "351") {
+      setIsPortugal(true)
+    } else {
+      setIsPortugal(false)
+    }
+  }, [infoClient])
+
   return (
     <header className="border-b pb-2 fixed w-full max-w-6xl bg-white z-10 ">
       <div className="flex items-center justify-between">
@@ -36,7 +45,7 @@ export function HeaderCheckout() {
           <span>Resumo da compra</span>
         </div>
         <div className="flex items-center gap-4">
-          {infoClient && infoClient?.phone.slice(0, 3) === "351" ? (
+          {isPortugal ? (
             <div className="flex items-center gap-2">
               <span className="text-gray-500">Frete:</span>
               <strong className="">
