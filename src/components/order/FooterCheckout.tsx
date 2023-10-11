@@ -105,7 +105,7 @@ export function FooterCheckout() {
             <strong> {client.lastName}</strong>
             <br />
             <span>{client.email} - </span>
-            <span>{client.phone}</span>
+            <span>Telemóvel: +{client.phone}</span>
             <p>{client.address}</p>
             <span>{client.city} - </span>
             <span>{client.postalCode}</span>

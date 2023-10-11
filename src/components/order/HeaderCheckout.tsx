@@ -39,14 +39,21 @@ export function HeaderCheckout() {
           <span>Resumo da compra</span>
         </div>
         <div className="flex items-center gap-4">
+          {infoClient.phone.slice(0, 3) === "351" ? (
+            <div className="flex items-center gap-2">
+              <span className="text-gray-500">Frete:</span>
+              <strong className="">
+                <Currency value={shippingPrice} />
+              </strong>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <span className="text-gray-500">Frete:</span>
+              <strong className="">Consultar</strong>
+            </div>
+          )}
           <div className="flex items-center gap-2">
-            <span className="text-gray-500">Frete:</span>
-            <strong className="">
-              <Currency value={shippingPrice} />
-            </strong>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-gray-500">Total</span>
+            <span className="text-gray-500">Subtotal</span>
             <strong className="text-2xl">
               <Currency value={subTotalPrice / 100} />
             </strong>
