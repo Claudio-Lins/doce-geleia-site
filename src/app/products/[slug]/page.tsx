@@ -1,10 +1,8 @@
 import { Info } from "@/components/info"
-import Container from "@/components/ui/Container"
 import Image from "next/image"
 import prisma from "@/lib/prisma"
 import { ProductList } from "@/components/ProductList"
 import { Separator } from "@/components/ui/separator"
-import { useOrderStore } from "@/context/orderStore"
 
 export default async function ProductPage({
   params,
@@ -52,6 +50,7 @@ export default async function ProductPage({
         <h2 className="text-gray-900 text-xl text-center font-medium mt-10 mb-4">
           Productos relacionados
         </h2>
+        {/* @ts-ignore */}
         <ProductList products={products} />
       </div>
     </div>

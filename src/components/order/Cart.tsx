@@ -115,11 +115,13 @@ export function Cart() {
                           {item.title}
                         </p>
                         <p className="w-full text-center text-xs font-bold">
-                          {item.size}
+                          {item.weight}gr
                         </p>
                       </div>
                       <div className="flex w-full h-10 border-t justify-center gap-2 items-center">
-                        <button onClick={() => removeItem(item.id, item.size)}>
+                        <button
+                          onClick={() => removeItem(item.id, item.weight)}
+                        >
                           <MinusCircle />
                         </button>
                         <p className="w-6 text-center">{item.quantity}</p>
@@ -127,7 +129,6 @@ export function Cart() {
                           onClick={() =>
                             addItem({
                               ...item,
-                              size: item.size,
                               price: item.price,
                               weight: item.weight,
                             })

@@ -11,6 +11,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { toast } from "react-hot-toast"
 import { useRouter } from "next/navigation"
+import Currency from "../currency"
 
 const EmailOrderSchema = z.object({
   firstName: z.string().min(3),
@@ -23,7 +24,7 @@ const EmailOrderSchema = z.object({
     z.object({
       id: z.string(),
       title: z.string(),
-      size: z.string(),
+      weight: z.number(),
       quantity: z.number(),
     })
   ),
@@ -35,6 +36,7 @@ export function FooterCheckout() {
   const router = useRouter()
   const [client, setClient] = useState({} as InfoClient)
   const [itemsSelected, setItemsSelected] = useState([] as SelectedProduct[])
+  const [isPortugal, setIsPortugal] = useState(false)
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
@@ -68,7 +70,7 @@ export function FooterCheckout() {
       const products = {
         id: item.id,
         title: item.title,
-        size: item.size,
+        weight: item.weight,
         quantity: item.quantity,
       }
       return products
@@ -93,8 +95,43 @@ export function FooterCheckout() {
     }
   }
 
+  useEffect(() => {
+    if (infoClient && infoClient?.phone.slice(0, 3) === "351") {
+      setIsPortugal(true)
+    } else {
+      setIsPortugal(false)
+    }
+  }, [infoClient])
+
   return (
     <div className="py-4 border-t-4">
+      <div className="flex items-center gap-4 divide-x-2 justify-end">
+        {isPortugal ? (
+          <div className="flex items-center gap-2">
+            <span className="text-gray-500">Frete:</span>
+            <strong className="">
+              <Currency value={shippingPrice} />
+            </strong>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <span className="text-gray-500">Frete:</span>
+            <strong className="">Consultar</strong>
+          </div>
+        )}
+        <div className="flex items-center gap-2">
+          <span className="text-gray-500 ml-4">Subtotal</span>
+          <strong className="text-2xl">
+            <Currency value={subTotalPrice / 100} />
+          </strong>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-gray-950 font-bold text-lg ml-4">Total</span>
+          <strong className="text-2xl">
+            <Currency value={subTotalPrice / 100 + shippingPrice} />
+          </strong>
+        </div>
+      </div>
       <div className="flex flex-col w-full">
         <div className="flex items-center flex-col sm:flex-row w-full gap-2">
           <div className="mt-4 rounded-lg border-[1px] p-2 text-xs text-gray-500 md:w-1/2 h-40">

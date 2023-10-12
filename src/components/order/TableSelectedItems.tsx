@@ -36,7 +36,7 @@ export function TableSelectedItems() {
           {items.map((item) => (
             <TableRow key={item.id}>
               <TableCell className="font-bold">{item.title}</TableCell>
-              <TableCell className="text-center">{item.size}</TableCell>
+              <TableCell className="text-center">{item.weight}gr</TableCell>
               <TableCell className="text-center">{item.quantity}</TableCell>
               <TableCell className="text-right">
                 <Currency value={(item.quantity * item.price) / 100} />

@@ -3,8 +3,7 @@
 import { useCartStore } from "@/hooks/useCartStore"
 import Currency from "../currency"
 import { SelectedProduct } from "@/@types"
-import Image from "next/image"
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Table,
   TableBody,
@@ -45,7 +44,7 @@ export function ResumeOrder() {
               Quantidade
             </TableHead>
             <TableHead className="text-right font-bold w-32 text-white">
-              Sub-total
+              Valor
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -54,19 +53,16 @@ export function ResumeOrder() {
             <TableRow key={item.id}>
               <TableCell className="text-left">
                 <div className="flex items-center gap-2 py-2 font-bold">
-                  {/* <Image
-                    src={item.coverUrl ?? ""}
-                    alt={item.title}
-                    width={30}
-                    height={30}
-                  /> */}
                   <span>{item.title}</span>
-                  <span>{item.size}</span>
+                  <span>{item.weight}gr | </span>
+                  <span>
+                    <Currency value={item.price / 100} />
+                  </span>
                 </div>
               </TableCell>
               <TableCell className="w-32">
                 <div className="flex items-center justify-between gap-1">
-                  <button onClick={() => removeItem(item.id, item.size)}>
+                  <button onClick={() => removeItem(item.id, item.weight)}>
                     <Minus size={16} />
                   </button>
                   <span>{item.quantity}</span>

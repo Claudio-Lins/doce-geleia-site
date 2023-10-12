@@ -8,49 +8,53 @@ import { SelectedProduct } from "@/@types"
 import { Button } from "./ui/button"
 
 interface ProductOption {
-  size: string
+  id: string
   price: number
   weight: number
 }
 
-const productOptions: ProductOption[] = [
-  { size: "50gr", price: 250, weight: 50 },
-  { size: "130gr", price: 500, weight: 130 },
-  { size: "250gr", price: 700, weight: 250 },
-]
+// const productOptions: ProductOption[] = [
+//   { size: "50gr", price: 250, weight: 50 },
+//   { size: "130gr", price: 500, weight: 130 },
+//   { size: "250gr", price: 700, weight: 250 },
+// ]
 
 function CartItem({
   product,
-  option,
+  detail,
 }: {
   product: any
-  option: ProductOption
+  detail: ProductOption
 }) {
   const { addItem, items, removeItem } = useCartStore()
 
   return (
     <div className="flex flex-col justify-between gap-1 p-2 rounded-md border">
-      <span className="text-xs">{option.size}</span>
+      <span className="text-xs">{detail.weight}gr</span>
       <div className="text-sm font-bold">
-        <Currency value={option.price / 100} />
+        <Currency value={detail.price / 100} />
       </div>
       <div className="flex items-center">
-        <button onClick={() => removeItem(product.id, option.size)}>
+        <button onClick={() => removeItem(product.id, detail.weight)}>
           <MinusCircle />
         </button>
         <div className="w-8 text-center">
           {items.find(
             (item: SelectedProduct) =>
-              item.id === product.id && item.size === option.size
-          )?.quantity ?? 0}
+              item.id === product.id && item.weight === detail.weight
+          )?.quantity !== undefined
+            ? items.find(
+                (item: SelectedProduct) =>
+                  item.id === product.id && item.weight === detail.weight
+              )?.quantity
+            : 0}
         </div>
         <button
           onClick={() =>
             addItem({
               ...product,
-              size: option.size,
-              price: option.price,
-              weight: option.weight,
+              price: detail.price,
+              weight: detail.weight,
             })
           }
         >
@@ -90,9 +94,11 @@ export function Info({ product }: any) {
         <div className="flex flex-col w-full">
           <h2 className="font-semibold text-black">Adicione ao carrinho</h2>
           <div className="flex items-center justify-evenly gap-2">
-            {productOptions.map((option) => (
-              <CartItem key={option.size} product={product} option={option} />
-            ))}
+            {product.productDetail
+              .sort((a: ProductOption, b: ProductOption) => a.price - b.price)
+              ?.map((detail: ProductOption) => (
+                <CartItem key={detail.id} product={product} detail={detail} />
+              ))}
           </div>
           {totalItems > 0 && (
             <Button

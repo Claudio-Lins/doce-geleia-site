@@ -26,7 +26,8 @@ model Product {
 
 model ProductDetail {
   id              String   @id @default(uuid())
-  weight          String
+  weight          Int
+  discount        Int?     @default(0)
   price           Int
   qunatityInStock Int
   productId       String

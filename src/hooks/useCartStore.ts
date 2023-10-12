@@ -7,7 +7,6 @@ type CartItem = {
   coverUrl?: string
   price: number
   weight: number
-  size: string
   quantity: number
 }
 
@@ -27,7 +26,7 @@ type CartStore = {
   setShowCart: (showCart: boolean) => void
   items: CartItem[]
   addItem: (item: CartItem) => void
-  removeItem: (id: string, size: string) => void
+  removeItem: (id: string, weight: number) => void
   infoClient: InfoClient
   setInfoClient: (infoClient: InfoClient) => void
   showModalOrder: boolean
@@ -83,7 +82,7 @@ export const useCartStore = create<CartStore>((set, get) => {
     shippingPrice: 6.33,
     setShippingPrice: (shippingPrice) => set({ shippingPrice }),
 
-    totalWeight: 50,
+    totalWeight: 0,
     setTotalWeight: (totalWeight) => set({ totalWeight }),
 
     showCart: false,
@@ -92,13 +91,13 @@ export const useCartStore = create<CartStore>((set, get) => {
     addItem: (item) =>
       set((state) => {
         const itemExists = state.items.find(
-          (i) => i.id === item.id && i.size === item.size
+          (i) => i.id === item.id && i.weight === item.weight
         )
 
         if (itemExists) {
           return {
             items: state.items.map((i) =>
-              i.id === item.id && i.size === item.size
+              i.id === item.id && i.weight === item.weight
                 ? { ...i, quantity: i.quantity + 1 }
                 : i
             ),
@@ -108,20 +107,22 @@ export const useCartStore = create<CartStore>((set, get) => {
         }
       }),
 
-    removeItem: (id, size) =>
+    removeItem: (id, weight: number) =>
       set((state) => {
         const itemExists = state.items.find(
-          (i) => i.id === id && i.size === size
+          (i) => i.id === id && i.weight === weight
         )
 
         if (itemExists?.quantity === 1) {
           return {
-            items: state.items.filter((i) => !(i.id === id && i.size === size)),
+            items: state.items.filter(
+              (i) => !(i.id === id && i.weight === weight)
+            ),
           }
         } else {
           return {
             items: state.items.map((i) =>
-              i.id === id && i.size === size
+              i.id === id && i.weight === weight
                 ? { ...i, quantity: i.quantity - 1 }
                 : i
             ),

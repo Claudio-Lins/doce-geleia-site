@@ -31,7 +31,8 @@ export interface Ingredient {
 
 export interface ProductDetail {
   id: string
-  weight: string
+  weight: number
+  discount?: number
   price: number
   qunatityInStock: number
   productId: string
@@ -44,7 +45,6 @@ export interface SelectedProduct {
   coverUrl?: string
   price: number
   weight: number
-  size: string
   quantity: number
 }
 

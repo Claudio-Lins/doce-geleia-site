@@ -3,7 +3,7 @@ import { MinusCircle, PlusCircle } from "lucide-react"
 import Currency from "./currency"
 
 interface ProductSizeProps {
-  weight: string
+  weight: number
   price: number
   quantity: number
   setQuantity: (quantity: number) => void
