@@ -62,7 +62,7 @@ export function ModalOrder() {
                                 "
                     />
                     <span>
-                      {item.title} {item.size}
+                      {item.title} {item.weight}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -76,40 +76,7 @@ export function ModalOrder() {
             })}
           </ul>
         </div>
-        {/* <ScrollArea className="max-h-[200px] print:hidden">
-          <div className=" w-full  px-4">
-            <table className="w-full text-sm text-gray-500">
-              <tbody>
-                {items?.map((item: SelectedProduct) => {
-                  return (
-                    <tr key={item.id} className="border-b">
-                      <td className="text-left">
-                        <div className="flex items-center gap-2 py-2">
-                          <Image
-                            // @ts-ignore
-                            src={item.coverUrl ?? ""}
-                            alt={item.title}
-                            width={30}
-                            height={30}
-                            className="rounded-md object-fill
-                                "
-                          />
-                          <span>
-                            {item.title} {item.size}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="text-center">{item.quantity}</td>
-                      <td className="text-right">
-                        <Currency value={(item.price * item.quantity) / 100} />
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
-        </ScrollArea> */}
+
         <div className="flex justify-between">
           <span className="text-gray-500">Frete</span>
           <strong className="">frete</strong>

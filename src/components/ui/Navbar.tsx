@@ -9,14 +9,10 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
-import ModalContexts from "../modals/use-modal-store"
 import { useEffect, useState } from "react"
 import { Cart } from "../order/Cart"
-import { useOrderStore } from "@/context/orderStore"
-import { useCartStore } from "@/hooks/useCartStore"
 
 export function Navbar() {
-  const { showCart, setShowCart } = useCartStore()
   const pathName = usePathname()
   const [color, setColor] = useState("transparent")
   const [textColor, setTextColor] = useState("white")
