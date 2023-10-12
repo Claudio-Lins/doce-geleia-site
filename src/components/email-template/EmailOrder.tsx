@@ -4,7 +4,7 @@ import Currency from "../currency"
 interface SelectedProduct {
   id: string
   title: string
-  size: string
+  weight: number
   quantity: number
 }
 
@@ -84,7 +84,7 @@ export function EmailOrder({
                   textAlign: "center",
                 }}
               >
-                {product.size}
+                {product.weight}gr
               </td>
               <td
                 style={{

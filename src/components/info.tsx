@@ -13,12 +13,6 @@ interface ProductOption {
   weight: number
 }
 
-// const productOptions: ProductOption[] = [
-//   { size: "50gr", price: 250, weight: 50 },
-//   { size: "130gr", price: 500, weight: 130 },
-//   { size: "250gr", price: 700, weight: 250 },
-// ]
-
 function CartItem({
   product,
   detail,
