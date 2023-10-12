@@ -2,7 +2,6 @@
 import { ArrowLeft, ArrowRight, Send } from "lucide-react"
 import { Button } from "../ui/button"
 import Link from "next/link"
-import { useOrderStore } from "@/context/orderStore"
 import { useCartStore } from "@/hooks/useCartStore"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
