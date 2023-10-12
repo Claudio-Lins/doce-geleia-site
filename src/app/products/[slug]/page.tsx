@@ -19,6 +19,12 @@ export default async function ProductPage({
       ingredients: true,
     },
   })
+  if (product && product.productDetail) {
+    product.productDetail = product.productDetail.map((detail) => ({
+      ...detail,
+      price: detail.price - (detail.price * detail.discount!) / 100,
+    }))
+  }
 
   const products = await prisma.product.findMany({
     include: {
@@ -27,7 +33,6 @@ export default async function ProductPage({
       ingredients: true,
     },
   })
-
   return (
     <div className="mt-20 sm:mt-10 min-h-screen flex items-center justify-center max-w-4xl mx-auto">
       <div className="px-4 py-6 sm:px-6 lg:px-8">

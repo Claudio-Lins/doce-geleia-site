@@ -6,11 +6,14 @@ import { Separator } from "./ui/separator"
 import { useCartStore } from "@/hooks/useCartStore"
 import { SelectedProduct } from "@/@types"
 import { Button } from "./ui/button"
+import { use, useEffect, useState } from "react"
+import { SplashDiscount } from "./SplashDiscount"
 
 interface ProductOption {
   id: string
   price: number
   weight: number
+  discount: number
 }
 
 function CartItem({
@@ -21,9 +24,20 @@ function CartItem({
   detail: ProductOption
 }) {
   const { addItem, items, removeItem } = useCartStore()
+  const [hasDiscount, setHasDiscount] = useState(false)
+  // const price = detail.price / 100
+  // const discount = detail.discount
+  // const discountedPrice = price - (price * discount) / 100
+
+  useEffect(() => {
+    if (detail.discount > 0) {
+      setHasDiscount(true)
+    }
+  }, [detail.discount])
 
   return (
-    <div className="flex flex-col justify-between gap-1 p-2 rounded-md border">
+    <div className="flex flex-col justify-between gap-1 p-2 rounded-md border relative">
+      {hasDiscount && <SplashDiscount discount={detail.discount} />}
       <span className="text-xs">{detail.weight}gr</span>
       <div className="text-sm font-bold">
         <Currency value={detail.price / 100} />
@@ -61,7 +75,6 @@ function CartItem({
 
 export function Info({ product }: any) {
   const { addItem, items, removeItem, totalItems, setShowCart } = useCartStore()
-
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
@@ -87,7 +100,7 @@ export function Info({ product }: any) {
       <div className="w-full flex flex-col items-center justify-center">
         <div className="flex flex-col w-full">
           <h2 className="font-semibold text-black">Adicione ao carrinho</h2>
-          <div className="flex items-center justify-evenly gap-2">
+          <div className="flex items-center justify-evenly gap-2 mt-2">
             {product.productDetail
               .sort((a: ProductOption, b: ProductOption) => a.price - b.price)
               ?.map((detail: ProductOption) => (
