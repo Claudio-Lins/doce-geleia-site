@@ -1,7 +1,8 @@
 "use client"
-import { ProductCard } from "./ProductCard"
+
 import { usePathname } from "next/navigation"
 import { Product } from "@/@types"
+import { ProductCard } from "./ProductCard"
 
 interface ProductListProps {
   products: Product[]
