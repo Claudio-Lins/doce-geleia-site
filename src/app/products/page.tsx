@@ -1,4 +1,4 @@
-import ProductCard from "@/components/ProductCard"
+import { ProductCard } from "@/components/ProductCard"
 import React from "react"
 import prisma from "@/lib/prisma"
 import { Separator } from "@/components/ui/separator"
