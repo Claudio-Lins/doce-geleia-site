@@ -152,9 +152,15 @@ export function FooterCheckout() {
               </h3>
               <strong>Doce Geleia</strong>
               <br />
-              <span>Email: docegeleia@gmail.com - </span>
-              <span>Telemóvel: +351 910 344 904</span>
-              <p>Morada: Estrada de Mem Martins, 168A</p>
+              <span>
+                <b>Email:</b> docegeleia@gmail.com -{" "}
+              </span>
+              <span>
+                <b>Telemóvel:</b> +351 910 344 904
+              </span>
+              <p>
+                <b>Morada:</b> Estrada de Mem Martins, 168A
+              </p>
               <span>Mem Martins - Sintra</span>
               <span>2725-381</span>
               <hr className="my-1" />
