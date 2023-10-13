@@ -1,6 +1,6 @@
-import { FooterCheckout } from "@/components/order/FooterCheckout"
-import { HeaderCheckout } from "@/components/order/HeaderCheckout"
-import { ResumeOrder } from "@/components/order/ResumeOrder"
+import { FooterCheckout } from "@/components/order/FooterCheckout";
+import { HeaderCheckout } from "@/components/order/HeaderCheckout";
+import { ResumeOrder } from "@/components/order/ResumeOrder";
 
 export default function Checkout() {
   return (
@@ -9,5 +9,5 @@ export default function Checkout() {
       <ResumeOrder />
       <FooterCheckout />
     </div>
-  )
+  );
 }

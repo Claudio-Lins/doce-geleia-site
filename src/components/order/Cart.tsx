@@ -1,5 +1,18 @@
-"use client"
-import React, { useEffect } from "react"
+"use client";
+import { SelectedProduct } from "@/@types";
+import { useCartStore } from "@/hooks/useCartStore";
+import { cn } from "@/lib/utils";
+import { useShippingPriceCalculator } from "@/utils/useShippingPriceCalculator";
+import { MinusCircle, PlusCircle, ShoppingCart } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import Currency from "../currency";
+import { BtnToggleShip } from "../shipping/BtnToggleShip";
+import { Button } from "../ui/button";
+import { ScrollArea } from "../ui/scroll-area";
+import { Separator } from "../ui/separator";
 import {
   Sheet,
   SheetClose,
@@ -7,21 +20,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../ui/sheet"
-import { useCartStore } from "@/hooks/useCartStore"
-import { MinusCircle, PlusCircle, ShoppingCart } from "lucide-react"
-import { Button } from "../ui/button"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { ScrollArea } from "../ui/scroll-area"
-import { Separator } from "../ui/separator"
-import Link from "next/link"
-import { toast } from "react-hot-toast"
-import Currency from "../currency"
-import Image from "next/image"
-import { Table, TableBody, TableCell, TableRow } from "../ui/table"
-import { SelectedProduct } from "@/@types"
-import { useShippingPriceCalculator } from "@/utils/useShippingPriceCalculator"
+} from "../ui/sheet";
+import { Table, TableBody, TableCell, TableRow } from "../ui/table";
 
 export function Cart() {
   const {
@@ -35,31 +35,34 @@ export function Cart() {
     subTotalPrice,
     setSubTotalPrice,
     setShippingPrice,
+    totalShippingPrice,
     shippingPrice,
     setTotalWeight,
     totalWeight,
-  } = useCartStore()
+    isPickup,
+    freeShipping,
+  } = useCartStore();
 
-  const pathName = usePathname()
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(items))
-  }, [items, setShowCart])
+  const pathName = usePathname();
 
   useEffect(() => {
-    setTotalItems(items.reduce((acc, item) => acc + item.quantity, 0))
+    localStorage.setItem("cart", JSON.stringify(items));
+  }, [items, setShowCart]);
+
+  useEffect(() => {
+    setTotalItems(items.reduce((acc, item) => acc + item.quantity, 0));
     setSubTotalPrice(
       items.reduce((acc, item) => acc + item.price * item.quantity, 0)
-    )
+    );
     setTotalWeight(
       items.reduce((acc, item) => acc + item.weight * item.quantity, 0)
-    )
+    );
     if (items.length === 0) {
-      setShowCart(false)
+      setShowCart(false);
     }
-  }, [items, setShowCart, setTotalItems, setSubTotalPrice, setTotalWeight])
+  }, [items, setShowCart, setTotalItems, setSubTotalPrice, setTotalWeight]);
 
-  useShippingPriceCalculator(totalWeight)
+  useShippingPriceCalculator(totalWeight);
 
   return (
     <div className={cn("", totalItems >= 1 ? "flex" : "hidden")}>
@@ -153,17 +156,25 @@ export function Cart() {
                     <Currency value={subTotalPrice / 100} />
                   </TableCell>
                 </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">Frete</TableCell>
+                <TableRow className="">
+                  <TableCell className=" w-[240px]">
+                    <BtnToggleShip />
+                  </TableCell>
                   <TableCell className="text-right">
                     <span>{totalWeight}gr</span>
-                    <Currency value={shippingPrice} />
+                    <Currency value={isPickup ? 0 : shippingPrice} />
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell className="font-bold text-lg">Total</TableCell>
                   <TableCell className="text-right font-bold text-lg">
-                    <Currency value={subTotalPrice / 100 + shippingPrice} />
+                    <Currency
+                      value={
+                        isPickup
+                          ? subTotalPrice / 100
+                          : subTotalPrice / 100 + shippingPrice
+                      }
+                    />
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -178,5 +189,5 @@ export function Cart() {
         </SheetContent>
       </Sheet>
     </div>
-  )
+  );
 }

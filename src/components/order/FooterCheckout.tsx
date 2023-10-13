@@ -1,17 +1,18 @@
-"use client"
-import { InfoClient, SelectedProduct } from "@/@types"
-import { useCartStore } from "@/hooks/useCartStore"
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import { Button } from "../ui/button"
-import { Mail, Printer } from "lucide-react"
-import { z } from "zod"
-import Link from "next/link"
-import { buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import { toast } from "react-hot-toast"
-import { useRouter } from "next/navigation"
-import Currency from "../currency"
+"use client";
+import { InfoClient, SelectedProduct } from "@/@types";
+import { buttonVariants } from "@/components/ui/button";
+import { useCartStore } from "@/hooks/useCartStore";
+import { cn } from "@/lib/utils";
+import { Mail, Printer } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { z } from "zod";
+import Currency from "../currency";
+import { BtnToggleShip } from "../shipping/BtnToggleShip";
+import { Button } from "../ui/button";
 
 const EmailOrderSchema = z.object({
   firstName: z.string().min(3),
@@ -28,18 +29,18 @@ const EmailOrderSchema = z.object({
       quantity: z.number(),
     })
   ),
-})
+});
 
-export type EmailContactProps = z.infer<typeof EmailOrderSchema>
+export type EmailContactProps = z.infer<typeof EmailOrderSchema>;
 
 export function FooterCheckout() {
-  const router = useRouter()
-  const [client, setClient] = useState({} as InfoClient)
-  const [itemsSelected, setItemsSelected] = useState([] as SelectedProduct[])
-  const [isPortugal, setIsPortugal] = useState(false)
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
+  const router = useRouter();
+  const [client, setClient] = useState({} as InfoClient);
+  const [itemsSelected, setItemsSelected] = useState([] as SelectedProduct[]);
+  const [isPortugal, setIsPortugal] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const {
     showModalOrder,
     setShowModalOrder,
@@ -51,31 +52,32 @@ export function FooterCheckout() {
     shippingPrice,
     removeItem,
     addItem,
+    isPickup,
     resetLocalStorage,
-  } = useCartStore()
+  } = useCartStore();
 
   useEffect(() => {
-    setItemsSelected(items)
-  }, [items])
+    setItemsSelected(items);
+  }, [items]);
 
   useEffect(() => {
-    setClient(infoClient)
-  }, [infoClient])
+    setClient(infoClient);
+  }, [infoClient]);
 
   useEffect(() => {
-    setFirstName(client.firstName)
-    setLastName(client.lastName)
-    setEmail(client.email)
+    setFirstName(client.firstName);
+    setLastName(client.lastName);
+    setEmail(client.email);
     itemsSelected.map((item) => {
       const products = {
         id: item.id,
         title: item.title,
         weight: item.weight,
         quantity: item.quantity,
-      }
-      return products
-    })
-  }, [client, itemsSelected])
+      };
+      return products;
+    });
+  }, [client, itemsSelected]);
 
   async function sendEmail(data: EmailContactProps) {
     const response = await fetch("/api/email-order", {
@@ -84,33 +86,35 @@ export function FooterCheckout() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    })
+    });
 
     if (response.ok) {
-      toast.success("Pedido enviado com sucesso!")
-      resetLocalStorage()
-      router.push("/")
+      toast.success("Pedido enviado com sucesso!");
+      resetLocalStorage();
+      router.push("/");
     } else {
-      toast.error("Erro ao enviar o pedido")
+      toast.error("Erro ao enviar o pedido");
     }
   }
 
   useEffect(() => {
     if (infoClient && infoClient?.phone.slice(0, 3) === "351") {
-      setIsPortugal(true)
+      setIsPortugal(true);
     } else {
-      setIsPortugal(false)
+      setIsPortugal(false);
     }
-  }, [infoClient])
+  }, [infoClient]);
 
   return (
     <div className="py-4 border-t-4">
-      <div className="flex items-center gap-4 divide-x-2 justify-end">
+      <div className="flex w-full items-center gap-4 divide-x-2 justify-end">
         {isPortugal ? (
-          <div className="flex items-center gap-2">
-            <span className="text-gray-500">Frete:</span>
+          <div className="flex w-full justify-end items-center gap-2">
+            <div className="w-1/2">
+              <BtnToggleShip />
+            </div>
             <strong className="">
-              <Currency value={shippingPrice} />
+              <Currency value={isPickup ? 0 : shippingPrice} />
             </strong>
           </div>
         ) : (
@@ -119,6 +123,7 @@ export function FooterCheckout() {
             <strong className="">Consultar</strong>
           </div>
         )}
+
         <div className="flex items-center gap-2">
           <span className="text-gray-500 ml-4">Subtotal</span>
           <strong className="text-2xl">
@@ -128,7 +133,13 @@ export function FooterCheckout() {
         <div className="flex items-center gap-2">
           <span className="text-gray-950 font-bold text-lg ml-4">Total</span>
           <strong className="text-2xl">
-            <Currency value={subTotalPrice / 100 + shippingPrice} />
+            <Currency
+              value={
+                isPickup
+                  ? subTotalPrice / 100
+                  : subTotalPrice / 100 + shippingPrice
+              }
+            />
           </strong>
         </div>
       </div>
@@ -220,5 +231,5 @@ export function FooterCheckout() {
         </Button>
       </div>
     </div>
-  )
+  );
 }

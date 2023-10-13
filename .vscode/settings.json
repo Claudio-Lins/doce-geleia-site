@@ -2,19 +2,27 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
 
-   // editor
-   "editor.wordWrap": "on",
-   "editor.fontSize": 16,
-   "editor.lineHeight": 30,
-   "editor.tabSize": 2,
-   "editor.bracketPairColorization.enabled": true,
-   "editor.guides.bracketPairs": true,
-   "editor.minimap.enabled": false,
-   "editor.formatOnSave": true,
-   "editor.formatOnPaste": true,
-    "editor.formatOnType": true, 
+  // editor
+  "editor.wordWrap": "on",
+  "editor.fontSize": 16,
+  "editor.lineHeight": 30,
+  "editor.tabSize": 2,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.minimap.enabled": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
 
-    // explorer
+  // on save
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.addMissingImports": true,
+    "source.sortImports": true,
+    "source.sortImportsByMembers": true
+  },
+
+  // explorer
   "explorer.compactFolders": false,
 
   // workbench
@@ -40,6 +48,6 @@
   "window.zoomLevel": 0,
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma",
-		"editor.formatOnSave": true
+    "editor.formatOnSave": true
   }
 }

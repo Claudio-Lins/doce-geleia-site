@@ -1,54 +1,59 @@
-import { InfoClient } from "@/@types"
-import { create } from "zustand"
+import { InfoClient } from "@/@types";
+import { create } from "zustand";
 
 type CartItem = {
-  id: string
-  title: string
-  coverUrl?: string
-  price: number
-  weight: number
-  quantity: number
-}
+  id: string;
+  title: string;
+  coverUrl?: string;
+  price: number;
+  weight: number;
+  quantity: number;
+};
 
 type CartStore = {
-  step: number
-  setStep: (step: number) => void
-  formSubmitted: string
-  totalItems: number
-  setTotalItems: (totalItems: number) => void
-  subTotalPrice: number
-  setSubTotalPrice: (subTotalPrice: number) => void
-  shippingPrice: number
-  setShippingPrice: (shippingPrice: number) => void
-  totalWeight: number
-  setTotalWeight: (totalWeight: number) => void
-  showCart: boolean
-  setShowCart: (showCart: boolean) => void
-  items: CartItem[]
-  addItem: (item: CartItem) => void
-  removeItem: (id: string, weight: number) => void
-  infoClient: InfoClient
-  setInfoClient: (infoClient: InfoClient) => void
-  showModalOrder: boolean
-  setShowModalOrder: (showModalOrder: boolean) => void
+  step: number;
+  setStep: (step: number) => void;
+  formSubmitted: string;
+  totalItems: number;
+  setTotalItems: (totalItems: number) => void;
+  subTotalPrice: number;
+  setSubTotalPrice: (subTotalPrice: number) => void;
+  shippingPrice: number;
+  setShippingPrice: (shippingPrice: number) => void;
+  isPickup: boolean;
+  setIsPickup: (isPickup: boolean) => void;
+  freeShipping: number;
+  totalShippingPrice: number;
+  setTotalShippingPrice: (totalShippingPrice: number) => void;
+  totalWeight: number;
+  setTotalWeight: (totalWeight: number) => void;
+  showCart: boolean;
+  setShowCart: (showCart: boolean) => void;
+  items: CartItem[];
+  addItem: (item: CartItem) => void;
+  removeItem: (id: string, weight: number) => void;
+  infoClient: InfoClient;
+  setInfoClient: (infoClient: InfoClient) => void;
+  showModalOrder: boolean;
+  setShowModalOrder: (showModalOrder: boolean) => void;
   // reset localStorage
-  resetLocalStorage: () => void
-}
+  resetLocalStorage: () => void;
+};
 
 export const useCartStore = create<CartStore>((set, get) => {
-  let initialCart
-  let initialInfoClient
+  let initialCart;
+  let initialInfoClient;
   if (typeof window !== "undefined") {
-    initialCart = localStorage.getItem("cart")
-    initialInfoClient = localStorage.getItem("infoClient")
+    initialCart = localStorage.getItem("cart");
+    initialInfoClient = localStorage.getItem("infoClient");
   }
 
   return {
     items: initialCart ? JSON.parse(initialCart) : [],
 
     resetLocalStorage: () => {
-      localStorage.removeItem("cart")
-      localStorage.removeItem("infoClient")
+      localStorage.removeItem("cart");
+      localStorage.removeItem("infoClient");
       set({
         items: [],
         infoClient: {
@@ -62,7 +67,7 @@ export const useCartStore = create<CartStore>((set, get) => {
           observations: "",
           complement: "",
         },
-      })
+      });
     },
 
     formSubmitted: "formInfoClient",
@@ -82,6 +87,14 @@ export const useCartStore = create<CartStore>((set, get) => {
     shippingPrice: 6.33,
     setShippingPrice: (shippingPrice) => set({ shippingPrice }),
 
+    isPickup: false,
+    setIsPickup: (isPickup) => set({ isPickup }),
+
+    freeShipping: 0,
+
+    totalShippingPrice: 6.33,
+    setTotalShippingPrice: (totalShippingPrice) => set({ totalShippingPrice }),
+
     totalWeight: 0,
     setTotalWeight: (totalWeight) => set({ totalWeight }),
 
@@ -92,7 +105,7 @@ export const useCartStore = create<CartStore>((set, get) => {
       set((state) => {
         const itemExists = state.items.find(
           (i) => i.id === item.id && i.weight === item.weight
-        )
+        );
 
         if (itemExists) {
           return {
@@ -101,9 +114,9 @@ export const useCartStore = create<CartStore>((set, get) => {
                 ? { ...i, quantity: i.quantity + 1 }
                 : i
             ),
-          }
+          };
         } else {
-          return { items: [...state.items, { ...item, quantity: 1 }] }
+          return { items: [...state.items, { ...item, quantity: 1 }] };
         }
       }),
 
@@ -111,14 +124,14 @@ export const useCartStore = create<CartStore>((set, get) => {
       set((state) => {
         const itemExists = state.items.find(
           (i) => i.id === id && i.weight === weight
-        )
+        );
 
         if (itemExists?.quantity === 1) {
           return {
             items: state.items.filter(
               (i) => !(i.id === id && i.weight === weight)
             ),
-          }
+          };
         } else {
           return {
             items: state.items.map((i) =>
@@ -126,11 +139,11 @@ export const useCartStore = create<CartStore>((set, get) => {
                 ? { ...i, quantity: i.quantity - 1 }
                 : i
             ),
-          }
+          };
         }
       }),
 
     infoClient: initialInfoClient ? JSON.parse(initialInfoClient) : {},
     setInfoClient: (infoClient) => set({ infoClient }),
-  }
-})
+  };
+});

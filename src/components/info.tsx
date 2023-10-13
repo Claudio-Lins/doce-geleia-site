@@ -1,39 +1,38 @@
-"use client"
-import { MinusCircle, PlusCircle, ShoppingCart } from "lucide-react"
-import Currency from "./currency"
-
-import { Separator } from "./ui/separator"
-import { useCartStore } from "@/hooks/useCartStore"
-import { SelectedProduct } from "@/@types"
-import { Button } from "./ui/button"
-import { use, useEffect, useState } from "react"
-import { SplashDiscount } from "./SplashDiscount"
+"use client";
+import { SelectedProduct } from "@/@types";
+import { useCartStore } from "@/hooks/useCartStore";
+import { MinusCircle, PlusCircle, ShoppingCart } from "lucide-react";
+import { useEffect, useState } from "react";
+import { SplashDiscount } from "./SplashDiscount";
+import Currency from "./currency";
+import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 
 interface ProductOption {
-  id: string
-  price: number
-  weight: number
-  discount: number
+  id: string;
+  price: number;
+  weight: number;
+  discount: number;
 }
 
 function CartItem({
   product,
   detail,
 }: {
-  product: any
-  detail: ProductOption
+  product: any;
+  detail: ProductOption;
 }) {
-  const { addItem, items, removeItem } = useCartStore()
-  const [hasDiscount, setHasDiscount] = useState(false)
+  const { addItem, items, removeItem } = useCartStore();
+  const [hasDiscount, setHasDiscount] = useState(false);
   // const price = detail.price / 100
   // const discount = detail.discount
   // const discountedPrice = price - (price * discount) / 100
 
   useEffect(() => {
     if (detail.discount > 0) {
-      setHasDiscount(true)
+      setHasDiscount(true);
     }
-  }, [detail.discount])
+  }, [detail.discount]);
 
   return (
     <div className="flex flex-col justify-between gap-1 p-2 rounded-md border relative">
@@ -70,11 +69,12 @@ function CartItem({
         </button>
       </div>
     </div>
-  )
+  );
 }
 
 export function Info({ product }: any) {
-  const { addItem, items, removeItem, totalItems, setShowCart } = useCartStore()
+  const { addItem, items, removeItem, totalItems, setShowCart } =
+    useCartStore();
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
@@ -119,5 +119,5 @@ export function Info({ product }: any) {
         </div>
       </div>
     </div>
-  )
+  );
 }
