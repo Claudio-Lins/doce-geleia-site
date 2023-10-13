@@ -145,26 +145,45 @@ export function FooterCheckout() {
       </div>
       <div className="flex flex-col w-full">
         <div className="flex items-center flex-col sm:flex-row w-full gap-2">
-          <div className="mt-4 rounded-lg border-[1px] p-2 text-xs text-gray-500 md:w-1/2 h-40">
-            <h3 className="mb-2 border-b font-bold text-lg text-gray-500">
-              Dados de entrega
-            </h3>
-            <strong>{client.firstName}</strong>
-            <strong> {client.lastName}</strong>
-            <br />
-            <span>{client.email} - </span>
-            <span>Telemóvel: +{client.phone}</span>
-            <p>{client.address}</p>
-            <span>{client.city} - </span>
-            <span>{client.postalCode}</span>
-            <hr className="my-1" />
-            <small>Nota</small>
-            <p>{client.observations}</p>
-          </div>
+          {isPickup ? (
+            <div className="mt-4 rounded-lg border-[1px] p-2 text-xs text-gray-500 md:w-1/2 h-40">
+              <h3 className="mb-2 border-b font-bold text-lg text-gray-500">
+                Dados de Recolha
+              </h3>
+              <strong>Doce Geleia</strong>
+              <br />
+              <span>Email: docegeleia@gmail.com - </span>
+              <span>Telemóvel: +351 910 344 904</span>
+              <p>Morada: Estrada de Mem Martins, 168A</p>
+              <span>Mem Martins - Sintra</span>
+              <span>2725-381</span>
+              <hr className="my-1" />
+              <small>
+                <strong>Nota:</strong> Próximo ao Cruzeiro
+              </small>
+            </div>
+          ) : (
+            <div className="mt-4 rounded-lg border-[1px] p-2 text-xs text-gray-500 md:w-1/2 h-40">
+              <h3 className="mb-2 border-b font-bold text-lg text-gray-500">
+                Dados de Entrega
+              </h3>
+              <strong>{client.firstName}</strong>
+              <strong> {client.lastName}</strong>
+              <br />
+              <span>{client.email} - </span>
+              <span>Telemóvel: +{client.phone}</span>
+              <p>{client.address}</p>
+              <span>{client.city} - </span>
+              <span>{client.postalCode}</span>
+              <hr className="my-1" />
+              <small>Nota</small>
+              <p>{client.observations}</p>
+            </div>
+          )}
 
           <div className="mt-4 rounded-lg border-[1px] p-2 text-xs text-gray-500 md:w-1/2 h-40">
             <h3 className="mb-2 border-b font-bold text-lg text-gray-500">
-              Dados de pagamento
+              Dados de Pagamento
             </h3>
             <div className="w-full rounded-lg p-2 flex flex-col justify-center items-center">
               <div className="flex items-center gap-2">
