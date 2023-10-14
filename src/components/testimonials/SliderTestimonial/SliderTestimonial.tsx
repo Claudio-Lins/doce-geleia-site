@@ -1,16 +1,15 @@
-"use client"
+"use client";
 
-import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules"
-import { Swiper, SwiperProps, SwiperSlide } from "swiper/react"
-import "swiper/css"
-import "swiper/css/pagination"
-import Image from "next/image"
-import { CardTestimonial } from "./CardTestimonial"
-import { Testimonial } from "@prisma/client"
+import { Testimonial } from "@prisma/client";
+import "swiper/css";
+import "swiper/css/pagination";
+import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
+import { CardTestimonial } from "./CardTestimonial";
 
 interface SliderProps {
-  numSlides: number
-  testimonials: Testimonial[]
+  numSlides: number;
+  testimonials: Testimonial[];
 }
 
 export function SliderTestimonial({ numSlides, testimonials }: SliderProps) {
@@ -27,7 +26,7 @@ export function SliderTestimonial({ numSlides, testimonials }: SliderProps) {
       disableOnInteraction: false,
     },
     draggable: true,
-  }
+  };
   return (
     <Swiper
       className="w-full max-w-xs flex flex-col"
@@ -52,8 +51,8 @@ export function SliderTestimonial({ numSlides, testimonials }: SliderProps) {
               testimonial={testimonial.testimonial}
             />
           </SwiperSlide>
-        )
+        );
       })}
     </Swiper>
-  )
+  );
 }
