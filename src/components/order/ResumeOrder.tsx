@@ -3,7 +3,9 @@
 import { SelectedProduct } from "@/@types";
 import { useCartStore } from "@/hooks/useCartStore";
 import { Minus, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import Currency from "../currency";
 import {
   Table,
@@ -15,6 +17,7 @@ import {
 } from "../ui/table";
 
 export function ResumeOrder() {
+  const router = useRouter();
   const [itemsSelected, setItemsSelected] = useState([] as SelectedProduct[]);
   const {
     showModalOrder,
@@ -30,7 +33,11 @@ export function ResumeOrder() {
 
   useEffect(() => {
     setItemsSelected(items);
-  }, [items]);
+    if (totalItems === 0) {
+      toast.error("Seu carrinho está vazio");
+      router.push("/products");
+    }
+  }, [items, router, totalItems]);
 
   return (
     <div className=" w-full flex-1 p-2 sm:max-w-6xl mt-20">
