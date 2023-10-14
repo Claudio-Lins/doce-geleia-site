@@ -13,6 +13,7 @@ import { z } from "zod";
 import Currency from "../currency";
 import { BtnToggleShip } from "../shipping/BtnToggleShip";
 import { Button } from "../ui/button";
+import { Table, TableCell, TableRow } from "../ui/table";
 import { DataPickupShip } from "./DataPickupShip";
 
 const EmailOrderSchema = z.object({
@@ -108,7 +109,7 @@ export function FooterCheckout() {
 
   return (
     <div className="py-4 border-t-4">
-      <div className="flex w-full items-center gap-4 divide-x-2 justify-end">
+      {/* <div className="flex w-full items-center gap-4 divide-x-2 justify-end">
         {isPortugal ? (
           <div className="flex w-full justify-end items-center gap-2">
             <div className="w-1/2">
@@ -143,7 +144,38 @@ export function FooterCheckout() {
             />
           </strong>
         </div>
-      </div>
+      </div> */}
+      <Table className="w-full text-sm text-zinc-950">
+        <TableRow>
+          <TableCell className="text-right font-bold"></TableCell>
+          <TableCell className="text-right font-bold">Subtotal</TableCell>
+          <TableCell className="text-right text-lg w-56">
+            <Currency value={subTotalPrice / 100} />
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className="text-right font-bold">Frete</TableCell>
+          <TableCell className="text-right text-lg w-72">
+            <BtnToggleShip />
+          </TableCell>
+          <TableCell className="text-right text-lg w-56">
+            <Currency value={isPickup ? 0 : shippingPrice} />
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className="text-right"></TableCell>
+          <TableCell className="text-right text-lg font-bold">Total</TableCell>
+          <TableCell className="text-right font-extrabold text-xl w-56">
+            <Currency
+              value={
+                isPickup
+                  ? subTotalPrice / 100
+                  : subTotalPrice / 100 + shippingPrice
+              }
+            />
+          </TableCell>
+        </TableRow>
+      </Table>
       <div className="flex flex-col w-full">
         <div className="flex items-center flex-col sm:flex-row w-full gap-2 px-2">
           <DataPickupShip />

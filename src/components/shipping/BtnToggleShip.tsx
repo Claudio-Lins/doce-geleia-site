@@ -1,7 +1,8 @@
 "use client";
 
 import { useCartStore } from "@/hooks/useCartStore";
-import { cn } from "@/lib/utils";
+import { CheckCircle } from "lucide-react";
+import { useState } from "react";
 
 export function BtnToggleShip() {
   const {
@@ -13,40 +14,59 @@ export function BtnToggleShip() {
     setIsPickup,
     setTotalShippingPrice,
   } = useCartStore();
-
-  function toggleShip() {
-    setIsPickup(!isPickup);
-  }
+  const [deliveryOption, setDeliveryOption] = useState("Shipping");
 
   return (
-    <div className=" relative border rounded-full overflow-hidden">
-      <div
-        className="absolute w-full flex items-center font-bold justify-center p-2 gap-1  cursor-pointer"
-        onClick={toggleShip}
-      >
-        <p
-          className={cn(
-            "w-1/2 text-center text-sm",
-            isPickup ? "text-zinc-50" : "text-zinc-300"
-          )}
+    <fieldset className="flex items-center gap-2">
+      <legend className="sr-only">Recolha</legend>
+
+      <div className="w-full max-w-xs md:max-w-[130px]">
+        <input
+          type="radio"
+          name="ShipOption"
+          value="Shipping"
+          id="Shipping"
+          className="peer hidden [&:checked_+_label_svg]:block"
+          checked={isPickup}
+          onChange={() => setIsPickup(true)}
+        />
+
+        <label
+          htmlFor="Shipping"
+          className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-2 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-zinc-500 peer-checked:ring-1 peer-checked:ring-zinc-500"
         >
-          Recolha
-        </p>
-        <p
-          className={cn(
-            "w-1/2 text-center text-sm",
-            isPickup ? "text-zinc-300" : "text-zinc-50"
-          )}
-        >
-          Entrega
-        </p>
+          <div className="flex items-center justify-between">
+            <p className="text-zinc-900 text-xs md:text-base">Recolha</p>
+            {isPickup && (
+              <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-zinc-700" />
+            )}
+          </div>
+        </label>
       </div>
-      <div
-        className={cn(
-          " w-1/2 h-10 transition-all duration-500 bg-zinc-900",
-          isPickup ? " ml-0" : " ml-auto"
-        )}
-      />
-    </div>
+
+      <div className="w-full max-w-xs md:max-w-[130px]">
+        <input
+          type="radio"
+          name="ShipOption"
+          value="Pickup"
+          id="Pickup"
+          className="peer hidden [&:checked_+_label_svg]:block"
+          checked={!isPickup}
+          onChange={() => setIsPickup(false)}
+        />
+
+        <label
+          htmlFor="Pickup"
+          className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-2 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-zinc-500 peer-checked:ring-1 peer-checked:ring-zinc-500"
+        >
+          <div className="flex items-center justify-between">
+            <p className="text-zinc-900 text-xs md:text-base">Entrega</p>
+            {!isPickup && (
+              <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-zinc-700" />
+            )}
+          </div>
+        </label>
+      </div>
+    </fieldset>
   );
 }
