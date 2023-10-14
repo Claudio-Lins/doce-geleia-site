@@ -25,13 +25,6 @@ export function CardTestimonial({
   }
   return (
     <div className="flex w-full max-w-xs flex-col items-center justify-center rounded-lg pt-24 relative">
-      {/* <Image
-        src={img}
-        alt={alt}
-        width={100}
-        height={100}
-        className="rounded-full absolute top-12"
-      /> */}
       <Avatar className="absolute top-12 w-20 h-20">
         <AvatarImage src={img} />
         <AvatarFallback className="font-bold text-xl">
@@ -39,7 +32,7 @@ export function CardTestimonial({
         </AvatarFallback>
       </Avatar>
 
-      <div className="bg-zinc-50 w-full pt-16 pb-6 px-4">
+      <div className="bg-zinc-50 w-full pt-16 pb-6 px-4 h-60">
         <p className="text-sm text-center italic leading-relaxed">
           {testimonial}
         </p>
