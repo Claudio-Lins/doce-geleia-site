@@ -1,9 +1,10 @@
-"use client"
+"use client";
 
-import { useCartStore } from "@/hooks/useCartStore"
-import Currency from "../currency"
-import { SelectedProduct } from "@/@types"
-import { useEffect, useState } from "react"
+import { SelectedProduct } from "@/@types";
+import { useCartStore } from "@/hooks/useCartStore";
+import { Minus, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import Currency from "../currency";
 import {
   Table,
   TableBody,
@@ -11,11 +12,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table"
-import { Minus, Plus } from "lucide-react"
+} from "../ui/table";
 
 export function ResumeOrder() {
-  const [itemsSelected, setItemsSelected] = useState([] as SelectedProduct[])
+  const [itemsSelected, setItemsSelected] = useState([] as SelectedProduct[]);
   const {
     showModalOrder,
     setShowModalOrder,
@@ -26,11 +26,11 @@ export function ResumeOrder() {
     subTotalPrice,
     removeItem,
     addItem,
-  } = useCartStore()
+  } = useCartStore();
 
   useEffect(() => {
-    setItemsSelected(items)
-  }, [items])
+    setItemsSelected(items);
+  }, [items]);
 
   return (
     <div className=" w-full flex-1 p-2 sm:max-w-6xl mt-20">
@@ -52,12 +52,14 @@ export function ResumeOrder() {
           {itemsSelected?.map((item: SelectedProduct) => (
             <TableRow key={item.id}>
               <TableCell className="text-left">
-                <div className="flex items-center gap-2 py-2 font-bold">
-                  <span>{item.title}</span>
-                  <span>{item.weight}gr | </span>
-                  <span>
+                <div className="flex items-center text-xs md:text-base md:gap-2 md:py-2 ">
+                  <div className="flex flex-col md:flex-row md:gap-2">
+                    <span className="md:font-bold">{item.title}</span>
+                    <span>{item.weight}gr </span>
+                  </div>
+                  {/* <span>
                     <Currency value={item.price / 100} />
-                  </span>
+                  </span> */}
                 </div>
               </TableCell>
               <TableCell className="w-32">
@@ -86,5 +88,5 @@ export function ResumeOrder() {
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }

@@ -1,5 +1,8 @@
-"use client"
-import React, { useEffect } from "react"
+"use client";
+import { useCartStore } from "@/hooks/useCartStore";
+import { useEffect } from "react";
+import Currency from "../currency";
+import { ScrollArea } from "../ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -7,16 +10,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table"
-import { ScrollArea } from "../ui/scroll-area"
-import { useCartStore } from "@/hooks/useCartStore"
-import Currency from "../currency"
+} from "../ui/table";
 
 export function TableSelectedItems() {
-  const { items, infoClient } = useCartStore()
+  const { items, infoClient } = useCartStore();
   useEffect(() => {
-    localStorage.setItem("infoClient", JSON.stringify(infoClient))
-  }, [infoClient])
+    localStorage.setItem("infoClient", JSON.stringify(infoClient));
+  }, [infoClient]);
   return (
     <Table className="px-2">
       <ScrollArea className="h-[400px]">
@@ -46,5 +46,5 @@ export function TableSelectedItems() {
         </TableBody>
       </ScrollArea>
     </Table>
-  )
+  );
 }

@@ -13,6 +13,7 @@ import { z } from "zod";
 import Currency from "../currency";
 import { BtnToggleShip } from "../shipping/BtnToggleShip";
 import { Button } from "../ui/button";
+import { DataPickupShip } from "./DataPickupShip";
 
 const EmailOrderSchema = z.object({
   firstName: z.string().min(3),
@@ -144,79 +145,41 @@ export function FooterCheckout() {
         </div>
       </div>
       <div className="flex flex-col w-full">
-        <div className="flex items-center flex-col sm:flex-row w-full gap-2">
-          {isPickup ? (
-            <div className="mt-4 rounded-lg border-[1px] p-2 text-xs text-gray-500 md:w-1/2 h-40">
-              <h3 className="mb-2 border-b font-bold text-lg text-gray-500">
-                Dados de Recolha
-              </h3>
-              <strong>Doce Geleia</strong>
-              <br />
-              <span>
-                <b>Email:</b> docegeleia@gmail.com -{" "}
-              </span>
-              <span>
-                <b>Telemóvel:</b> +351 910 344 904
-              </span>
-              <p>
-                <b>Morada:</b> Estrada de Mem Martins, 168A
-              </p>
-              <span>Mem Martins - Sintra</span>
-              <span>2725-381</span>
-              <hr className="my-1" />
-              <small>
-                <strong>Nota:</strong> Próximo ao Cruzeiro
-              </small>
-            </div>
-          ) : (
-            <div className="mt-4 rounded-lg border-[1px] p-2 text-xs text-gray-500 md:w-1/2 h-40">
-              <h3 className="mb-2 border-b font-bold text-lg text-gray-500">
-                Dados de Entrega
-              </h3>
-              <strong>{client.firstName}</strong>
-              <strong> {client.lastName}</strong>
-              <br />
-              <span>{client.email} - </span>
-              <span>Telemóvel: +{client.phone}</span>
-              <p>{client.address}</p>
-              <span>{client.city} - </span>
-              <span>{client.postalCode}</span>
-              <hr className="my-1" />
-              <small>Nota</small>
-              <p>{client.observations}</p>
-            </div>
-          )}
+        <div className="flex items-center flex-col sm:flex-row w-full gap-2 px-2">
+          <DataPickupShip />
 
-          <div className="mt-4 rounded-lg border-[1px] p-2 text-xs text-gray-500 md:w-1/2 h-40">
-            <h3 className="mb-2 border-b font-bold text-lg text-gray-500">
+          <div className="mt-4 rounded-lg border-[1px] p-2 text-x w-full text-gray-500 print:w-1/2 md:w-1/2 h-48">
+            <h3 className=" border-b font-bold text-lg text-gray-500">
               Dados de Pagamento
             </h3>
-            <div className="w-full rounded-lg p-2 flex flex-col justify-center items-center">
-              <div className="flex items-center gap-2">
-                <Image
-                  src={"/assets/mbway_logo.svg"}
-                  alt="MBWay"
-                  width={60}
-                  height={30}
-                />
-                <strong className="text-lg text-zinc-900">910 344 904</strong>
-              </div>
-              <div className="flex items-center gap-2">
-                <Image
-                  src={"/assets/activoBank.png"}
-                  alt="MBWay"
-                  width={100}
-                  height={40}
-                />
-                <strong className=" text-zinc-900 print:text-xs">
-                  IBAN PT50 0002 0123 1234 5678 9015 4
-                </strong>
+            <div className="flex items-center justify-center pt-2">
+              <div className="w-full rounded-lg flex flex-col justify-center items-center gap-4">
+                <div className="flex flex-col items-center">
+                  <Image
+                    src={"/assets/mbway_logo.svg"}
+                    alt="MBWay"
+                    width={60}
+                    height={30}
+                  />
+                  <strong className="text-lg text-zinc-900">910 344 904</strong>
+                </div>
+                <div className="flex flex-col items-center">
+                  <Image
+                    src={"/assets/activoBank.jpg"}
+                    alt="MBWay"
+                    width={90}
+                    height={40}
+                  />
+                  <strong className=" text-zinc-900 print:text-[10px]">
+                    IBAN PT50 0002 0123 1234 5678 9015 4
+                  </strong>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-4 mt-10 w-full print:hidden">
+      <div className="flex items-center gap-4 px-2 mt-10 w-full print:hidden">
         <Link
           href="/"
           className={cn(
