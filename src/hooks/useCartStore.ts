@@ -7,6 +7,7 @@ type CartItem = {
   coverUrl?: string;
   price: number;
   weight: number;
+  netWeight: number;
   quantity: number;
 };
 
@@ -27,6 +28,7 @@ type CartStore = {
   setTotalShippingPrice: (totalShippingPrice: number) => void;
   totalWeight: number;
   setTotalWeight: (totalWeight: number) => void;
+  packageWeight: number;
   showCart: boolean;
   setShowCart: (showCart: boolean) => void;
   items: CartItem[];
@@ -36,7 +38,6 @@ type CartStore = {
   setInfoClient: (infoClient: InfoClient) => void;
   showModalOrder: boolean;
   setShowModalOrder: (showModalOrder: boolean) => void;
-  // reset localStorage
   resetLocalStorage: () => void;
 };
 
@@ -53,20 +54,20 @@ export const useCartStore = create<CartStore>((set, get) => {
 
     resetLocalStorage: () => {
       localStorage.removeItem("cart");
-      localStorage.removeItem("infoClient");
+      // localStorage.removeItem("infoClient");
       set({
         items: [],
-        infoClient: {
-          firstName: "",
-          lastName: "",
-          email: "",
-          address: "",
-          city: "",
-          postalCode: "",
-          phone: "",
-          observations: "",
-          complement: "",
-        },
+        // infoClient: {
+        //   firstName: "",
+        //   lastName: "",
+        //   email: "",
+        //   address: "",
+        //   city: "",
+        //   postalCode: "",
+        //   phone: "",
+        //   observations: "",
+        //   complement: "",
+        // },
       });
     },
 
@@ -91,6 +92,8 @@ export const useCartStore = create<CartStore>((set, get) => {
     setIsPickup: (isPickup) => set({ isPickup }),
 
     freeShipping: 0,
+
+    packageWeight: 150,
 
     totalShippingPrice: 6.33,
     setTotalShippingPrice: (totalShippingPrice) => set({ totalShippingPrice }),

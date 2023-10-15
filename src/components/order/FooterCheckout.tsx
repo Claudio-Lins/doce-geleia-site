@@ -28,6 +28,7 @@ const EmailOrderSchema = z.object({
       id: z.string(),
       title: z.string(),
       weight: z.number(),
+      netWeight: z.number(),
       quantity: z.number(),
     })
   ),
@@ -75,6 +76,7 @@ export function FooterCheckout() {
         id: item.id,
         title: item.title,
         weight: item.weight,
+        netWeight: item.netWeight,
         quantity: item.quantity,
       };
       return products;
@@ -109,42 +111,6 @@ export function FooterCheckout() {
 
   return (
     <div className="py-4 border-t-4">
-      {/* <div className="flex w-full items-center gap-4 divide-x-2 justify-end">
-        {isPortugal ? (
-          <div className="flex w-full justify-end items-center gap-2">
-            <div className="w-1/2">
-              <BtnToggleShip />
-            </div>
-            <strong className="">
-              <Currency value={isPickup ? 0 : shippingPrice} />
-            </strong>
-          </div>
-        ) : (
-          <div className="flex items-center gap-2">
-            <span className="text-gray-500">Frete:</span>
-            <strong className="">Consultar</strong>
-          </div>
-        )}
-
-        <div className="flex items-center gap-2">
-          <span className="text-gray-500 ml-4">Subtotal</span>
-          <strong className="text-2xl">
-            <Currency value={subTotalPrice / 100} />
-          </strong>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-gray-950 font-bold text-lg ml-4">Total</span>
-          <strong className="text-2xl">
-            <Currency
-              value={
-                isPickup
-                  ? subTotalPrice / 100
-                  : subTotalPrice / 100 + shippingPrice
-              }
-            />
-          </strong>
-        </div>
-      </div> */}
       <Table className="w-full text-sm text-zinc-950">
         <TableRow>
           <TableCell className="text-right font-bold"></TableCell>

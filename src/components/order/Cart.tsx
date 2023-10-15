@@ -41,6 +41,7 @@ export function Cart() {
     totalWeight,
     isPickup,
     freeShipping,
+    packageWeight,
   } = useCartStore();
 
   const pathName = usePathname();
@@ -55,7 +56,10 @@ export function Cart() {
       items.reduce((acc, item) => acc + item.price * item.quantity, 0)
     );
     setTotalWeight(
-      items.reduce((acc, item) => acc + item.weight * item.quantity, 0)
+      items.reduce(
+        (acc, item) => acc + item.netWeight * item.quantity + packageWeight,
+        0
+      )
     );
     if (items.length === 0) {
       setShowCart(false);

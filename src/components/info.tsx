@@ -12,6 +12,7 @@ interface ProductOption {
   id: string;
   price: number;
   weight: number;
+  netWeight: number;
   discount: number;
 }
 
@@ -62,6 +63,7 @@ function CartItem({
               ...product,
               price: detail.price,
               weight: detail.weight,
+              netWeight: detail.netWeight,
             })
           }
         >
