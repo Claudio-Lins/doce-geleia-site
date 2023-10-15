@@ -159,7 +159,7 @@ export function FooterCheckout() {
                     width={60}
                     height={30}
                   />
-                  <strong className="text-lg text-zinc-900">910 344 904</strong>
+                  <strong className="text-lg text-zinc-900">966 835 913</strong>
                 </div>
                 <div className="flex flex-col items-center">
                   <Image
@@ -169,7 +169,7 @@ export function FooterCheckout() {
                     height={40}
                   />
                   <strong className=" text-zinc-900 print:text-[10px]">
-                    IBAN PT50 0002 0123 1234 5678 9015 4
+                    IBAN PT50 0023 0000 4555 8724 6799 4
                   </strong>
                 </div>
               </div>

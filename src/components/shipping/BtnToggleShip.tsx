@@ -36,7 +36,7 @@ export function BtnToggleShip() {
           className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-2 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-zinc-500 peer-checked:ring-1 peer-checked:ring-zinc-500"
         >
           <div className="flex items-center justify-between">
-            <p className="text-zinc-900 text-xs md:text-base">Recolha</p>
+            <p className="text-zinc-900 text-xs md:text-sm">Recolha</p>
             {isPickup && (
               <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-zinc-700" />
             )}
@@ -60,7 +60,7 @@ export function BtnToggleShip() {
           className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-2 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-zinc-500 peer-checked:ring-1 peer-checked:ring-zinc-500"
         >
           <div className="flex items-center justify-between">
-            <p className="text-zinc-900 text-xs md:text-base">Entrega</p>
+            <p className="text-zinc-900 text-xs md:text-sm">Entrega</p>
             {!isPickup && (
               <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-zinc-700" />
             )}

@@ -93,7 +93,7 @@ export const useCartStore = create<CartStore>((set, get) => {
 
     freeShipping: 0,
 
-    packageWeight: 150,
+    packageWeight: 300,
 
     totalShippingPrice: 6.33,
     setTotalShippingPrice: (totalShippingPrice) => set({ totalShippingPrice }),
