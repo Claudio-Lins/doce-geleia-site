@@ -5,6 +5,7 @@ import { MinusCircle, PlusCircle, ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SplashDiscount } from "./SplashDiscount";
 import Currency from "./currency";
+import { Deadline } from "./shipping/Deadline";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 
@@ -14,6 +15,7 @@ interface ProductOption {
   weight: number;
   netWeight: number;
   discount: number;
+  qunatityInStock: number;
 }
 
 function CartItem({
@@ -25,24 +27,23 @@ function CartItem({
 }) {
   const { addItem, items, removeItem } = useCartStore();
   const [hasDiscount, setHasDiscount] = useState(false);
-  // const price = detail.price / 100
-  // const discount = detail.discount
-  // const discountedPrice = price - (price * discount) / 100
+  const [isInStock, setIsInStock] = useState(false);
 
   useEffect(() => {
     if (detail.discount > 0) {
       setHasDiscount(true);
     }
-  }, [detail.discount]);
+    detail.qunatityInStock === 0 ? setIsInStock(false) : setIsInStock(true);
+  }, [detail.discount, detail.qunatityInStock, isInStock]);
 
   return (
-    <div className="flex flex-col justify-between gap-1 p-2 rounded-md border relative">
+    <div className="flex flex-col justify-between gap-1 p-2 rounded-md border relative w-28">
       {hasDiscount && <SplashDiscount discount={detail.discount} />}
       <span className="text-xs">{detail.weight}gr</span>
       <div className="text-sm font-bold">
         <Currency value={detail.price / 100} />
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center justify-center">
         <button onClick={() => removeItem(product.id, detail.weight)}>
           <MinusCircle />
         </button>
@@ -70,6 +71,7 @@ function CartItem({
           <PlusCircle />
         </button>
       </div>
+      {<Deadline isInStock={detail.qunatityInStock > 0 ? true : false} />}
     </div>
   );
 }

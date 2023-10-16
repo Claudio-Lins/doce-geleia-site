@@ -66,3 +66,50 @@ model Testimonial {
   updatedAt   DateTime @updatedAt
   imageUrl    String?
 }
+
+model Order {
+  id              String            @id @default(uuid())
+  orderNumber     String            @unique
+  statusPayment   StatusPayment     @default(PENDING)
+  statusOrder     StatusOrder       @default(PENDING)
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  postalCode      String
+  address         String
+  city            String
+  country         String
+  complement      String
+  observations    String
+  totalAmount     Int
+  delivered       Boolean           @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  selectedProduct SelectedProduct[]
+}
+
+model SelectedProduct {
+  id        String  @id @default(uuid())
+  title     String
+  coverUrl  String?
+  price     Int
+  weight    Int
+  netWeight Int?
+  quantity  Int
+  Order     Order?  @relation(fields: [orderId], references: [id])
+  orderId   String?
+}
+
+enum StatusPayment {
+  PENDING
+  PAID
+  CANCELED
+}
+
+enum StatusOrder {
+  PENDING
+  PREPERING
+  CANCELED
+  DELIVERED
+}

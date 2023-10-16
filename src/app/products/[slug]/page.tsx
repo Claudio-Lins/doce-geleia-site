@@ -1,13 +1,13 @@
-import { Info } from "@/components/info"
-import Image from "next/image"
-import prisma from "@/lib/prisma"
-import { ProductList } from "@/components/ProductList"
-import { Separator } from "@/components/ui/separator"
+import { ProductList } from "@/components/ProductList";
+import { Info } from "@/components/info";
+import { Separator } from "@/components/ui/separator";
+import prisma from "@/lib/prisma";
+import Image from "next/image";
 
 export default async function ProductPage({
   params,
 }: {
-  params: { slug: string }
+  params: { slug: string };
 }) {
   const product = await prisma.product.findUnique({
     where: {
@@ -18,12 +18,12 @@ export default async function ProductPage({
       category: true,
       ingredients: true,
     },
-  })
+  });
   if (product && product.productDetail) {
     product.productDetail = product.productDetail.map((detail) => ({
       ...detail,
       price: detail.price - (detail.price * detail.discount!) / 100,
-    }))
+    }));
   }
 
   const products = await prisma.product.findMany({
@@ -32,7 +32,7 @@ export default async function ProductPage({
       category: true,
       ingredients: true,
     },
-  })
+  });
   return (
     <div className="mt-20 sm:mt-10 min-h-screen flex items-center justify-center max-w-4xl mx-auto">
       <div className="px-4 py-6 sm:px-6 lg:px-8">
@@ -59,5 +59,5 @@ export default async function ProductPage({
         <ProductList products={products} />
       </div>
     </div>
-  )
+  );
 }

@@ -2,6 +2,7 @@
 
 import { InfoClient, SelectedProduct } from "@/@types";
 import { useCartStore } from "@/hooks/useCartStore";
+import { useOrderNumber } from "@/utils/useOrderNumber";
 import { useEffect, useState } from "react";
 
 export function HeaderCheckout() {
@@ -19,7 +20,10 @@ export function HeaderCheckout() {
     shippingPrice,
     removeItem,
     addItem,
+    orderNumber,
   } = useCartStore();
+
+  useOrderNumber();
 
   useEffect(() => {
     setItemsSelected(items);
@@ -34,6 +38,10 @@ export function HeaderCheckout() {
             {client?.firstName} {client.lastName},
           </h1>
           <span>Resumo da compra</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span>DC</span>
+          <span>{orderNumber}</span>
         </div>
       </div>
     </header>
