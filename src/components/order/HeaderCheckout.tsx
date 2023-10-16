@@ -2,6 +2,7 @@
 
 import { InfoClient, SelectedProduct } from "@/@types";
 import { useCartStore } from "@/hooks/useCartStore";
+import { createOrderNumber } from "@/utils/useCreateOrderNumber";
 import { useEffect, useState } from "react";
 
 export function HeaderCheckout() {
@@ -19,12 +20,15 @@ export function HeaderCheckout() {
     shippingPrice,
     removeItem,
     addItem,
+    setOrderNumber,
+    orderNumber,
   } = useCartStore();
 
   useEffect(() => {
     setItemsSelected(items);
     setClient(infoClient);
-  }, [items, infoClient]);
+    setOrderNumber(createOrderNumber());
+  }, [items, infoClient, setOrderNumber]);
 
   return (
     <header className="border-b pb-2 px-2 md:px-0 fixed w-full max-w-6xl bg-white z-10 ">
@@ -35,6 +39,10 @@ export function HeaderCheckout() {
           </h1>
           <span>Resumo da compra</span>
         </div>
+        <span>
+          <strong>Número do pedido: </strong>
+          {orderNumber}
+        </span>
       </div>
     </header>
   );
