@@ -39,8 +39,6 @@ type CartStore = {
   showModalOrder: boolean;
   setShowModalOrder: (showModalOrder: boolean) => void;
   resetLocalStorage: () => void;
-  orderNumber: string;
-  setOrderNumber: (orderNumber: string) => void;
 };
 
 export const useCartStore = create<CartStore>((set, get) => {
@@ -147,9 +145,6 @@ export const useCartStore = create<CartStore>((set, get) => {
           };
         }
       }),
-
-    orderNumber: "",
-    setOrderNumber: (orderNumber) => set({ orderNumber }),
 
     infoClient: initialInfoClient ? JSON.parse(initialInfoClient) : {},
     setInfoClient: (infoClient) => set({ infoClient }),
