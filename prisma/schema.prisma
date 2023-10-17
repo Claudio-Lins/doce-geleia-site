@@ -82,7 +82,7 @@ model Order {
   country         String
   complement      String?
   observations    String?
-  totalAmount     Int
+  totalAmount     Decimal
   delivered       Boolean           @default(false)
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt

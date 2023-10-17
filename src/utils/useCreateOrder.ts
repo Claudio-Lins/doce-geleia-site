@@ -35,7 +35,15 @@ type OrderData = z.infer<typeof orderSchema>;
 
 export function useCreateOrder() {
   const { order, setOrder } = useOrderStore();
-  const { items, infoClient, orderNumber, totalShippingPrice } = useCartStore();
+  const {
+    items,
+    infoClient,
+    orderNumber,
+    totalShippingPrice,
+    isPickup,
+    subTotalPrice,
+    shippingPrice,
+  } = useCartStore();
 
   async function handleFormOrder() {
     const order: OrderData = {
@@ -45,9 +53,9 @@ export function useCreateOrder() {
       statusPayment: "PENDING",
       statusOrder: "PENDING",
       // totalAmount + totalShippingPrice
-      totalAmount: items.reduce((acc, item) => {
-        return acc + (item.price * item.quantity) / 100;
-      }, totalShippingPrice),
+      totalAmount: isPickup
+        ? subTotalPrice / 100
+        : subTotalPrice / 100 + shippingPrice,
       delivered: false,
     };
     localStorage.setItem("order", JSON.stringify(order));
