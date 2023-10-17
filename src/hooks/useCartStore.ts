@@ -4,7 +4,7 @@ import { create } from "zustand";
 type CartItem = {
   id: string;
   title: string;
-  coverUrl?: string;
+  coverUrl: string;
   price: number;
   weight: number;
   netWeight: number;
@@ -65,6 +65,7 @@ export const useCartStore = create<CartStore>((set, get) => {
         //   email: "",
         //   address: "",
         //   city: "",
+        //   country: "",
         //   postalCode: "",
         //   phone: "",
         //   observations: "",
@@ -78,7 +79,7 @@ export const useCartStore = create<CartStore>((set, get) => {
     step: 1,
     setStep: (step) => set({ step }),
 
-    showModalOrder: false,
+    showModalOrder: true,
     setShowModalOrder: (showModalOrder) => set({ showModalOrder }),
 
     totalItems: 0,

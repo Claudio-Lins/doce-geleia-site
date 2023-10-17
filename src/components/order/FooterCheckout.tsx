@@ -3,6 +3,7 @@ import { InfoClient, SelectedProduct } from "@/@types";
 import { buttonVariants } from "@/components/ui/button";
 import { useCartStore } from "@/hooks/useCartStore";
 import { cn } from "@/lib/utils";
+import { useCreateOrder } from "@/utils/useCreateOrder";
 import { Mail, Printer } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,6 +38,7 @@ const EmailOrderSchema = z.object({
 export type EmailContactProps = z.infer<typeof EmailOrderSchema>;
 
 export function FooterCheckout() {
+  const { handleFormOrder } = useCreateOrder();
   const router = useRouter();
   const [client, setClient] = useState({} as InfoClient);
   const [itemsSelected, setItemsSelected] = useState([] as SelectedProduct[]);
@@ -189,9 +191,10 @@ export function FooterCheckout() {
         </Link>
 
         <Button
-          onClick={() => window.print()}
+          // onClick={() => window.print()}
+          onClick={handleFormOrder}
           className="w-1/2 bg-gradient-to-tr from-zinc-500 to-zinc-700 flex items-center gap-2 text-white"
-          type="submit"
+          type="button"
         >
           <span>Imprimir</span>
           <Printer size={16} />

@@ -43,7 +43,7 @@ export interface ProductDetail {
 export interface SelectedProduct {
   id: string;
   title: string;
-  coverUrl?: string;
+  coverUrl: string;
   price: number;
   weight: number;
   netWeight: number;
@@ -58,6 +58,26 @@ export interface InfoClient {
   postalCode: string;
   address: string;
   city: string;
+  country: string;
   complement: string;
   observations: string;
+}
+
+export interface OrderProps {
+  orderNumber: string;
+  statusPayment: "PENDING" | "PAID" | "CANCELED";
+  statusOrder: "PENDING" | "PREPERING" | "CANCELED" | "DELIVERED";
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  postalCode: string;
+  address: string;
+  city: string;
+  country: string;
+  complement?: string;
+  observations?: string;
+  totalAmount: number;
+  delivered: boolean;
+  selectedProduct: SelectedProduct[];
 }

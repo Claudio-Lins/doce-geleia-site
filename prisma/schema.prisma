@@ -80,8 +80,8 @@ model Order {
   address         String
   city            String
   country         String
-  complement      String
-  observations    String
+  complement      String?
+  observations    String?
   totalAmount     Int
   delivered       Boolean           @default(false)
   createdAt       DateTime          @default(now())
@@ -92,10 +92,10 @@ model Order {
 model SelectedProduct {
   id        String  @id @default(uuid())
   title     String
-  coverUrl  String?
+  coverUrl  String  @default("/assets/placeholder-image.svg")
   price     Int
   weight    Int
-  netWeight Int?
+  netWeight Int
   quantity  Int
   Order     Order?  @relation(fields: [orderId], references: [id])
   orderId   String?

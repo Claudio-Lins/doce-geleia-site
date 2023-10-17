@@ -1,11 +1,10 @@
-import React, { use, useEffect } from "react"
-import PhoneInput from "react-phone-input-2"
-import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
-import { useForm, Controller } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { useCartStore } from "@/hooks/useCartStore"
+import { useCartStore } from "@/hooks/useCartStore";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import PhoneInput from "react-phone-input-2";
+import { z } from "zod";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
 const formInfoClientSchema = z.object({
   firstName: z.string().min(3),
@@ -15,14 +14,15 @@ const formInfoClientSchema = z.object({
   postalCode: z.string(),
   address: z.string(),
   city: z.string(),
+  country: z.string(),
   complement: z.string(),
   observations: z.string(),
-})
+});
 
-type FormInfoClientData = z.infer<typeof formInfoClientSchema>
+type FormInfoClientData = z.infer<typeof formInfoClientSchema>;
 
 export function FormInfoClient() {
-  const { infoClient, setInfoClient, setStep, step } = useCartStore()
+  const { infoClient, setInfoClient, setStep, step } = useCartStore();
   const {
     control,
     register,
@@ -38,10 +38,11 @@ export function FormInfoClient() {
       postalCode: infoClient.postalCode,
       address: infoClient.address,
       city: infoClient.city,
+      country: infoClient.country,
       complement: infoClient.complement,
       observations: infoClient.observations,
     },
-  })
+  });
 
   // persist data in localstorage
   // useEffect(() => {
@@ -49,8 +50,8 @@ export function FormInfoClient() {
   // }, [infoClient])
 
   async function handleFormInfoClient(data: FormInfoClientData) {
-    await setInfoClient(data)
-    setStep(step + 1)
+    await setInfoClient(data);
+    setStep(step + 1);
   }
 
   return (
@@ -81,8 +82,6 @@ export function FormInfoClient() {
             className="w-full"
             {...register("email")}
           />
-        </div>
-        <div className="flex flex-col md:flex-row items-center w-full gap-2">
           <Controller
             control={control}
             name="phone"
@@ -114,13 +113,8 @@ export function FormInfoClient() {
               />
             )}
           />
-          <Input
-            type="text"
-            placeholder="Código Postal"
-            className="w-full"
-            {...register("postalCode")}
-          />
         </div>
+
         <div className="flex items-center w-full gap-2">
           <Input
             type="text"
@@ -135,6 +129,22 @@ export function FormInfoClient() {
             placeholder="Conselho"
             className="w-full"
             {...register("city")}
+          />
+          <select
+            placeholder="País"
+            className="w-full rounded-md border text-sm border-gray-300 p-2"
+            {...register("country")}
+          >
+            <option value="portugal">Portugal</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+        <div className="flex flex-col md:flex-row items-center w-full gap-2">
+          <Input
+            type="text"
+            placeholder="Código Postal"
+            className="w-full"
+            {...register("postalCode")}
           />
           <Input
             type="text"
@@ -152,5 +162,5 @@ export function FormInfoClient() {
         </div>
       </form>
     </div>
-  )
+  );
 }
