@@ -39,6 +39,7 @@ export type EmailContactProps = z.infer<typeof EmailOrderSchema>;
 
 export function FooterCheckout() {
   const { handleFormOrder } = useCreateOrder();
+  const [sending, setSending] = useState(false);
   const router = useRouter();
   const [client, setClient] = useState({} as InfoClient);
   const [itemsSelected, setItemsSelected] = useState([] as SelectedProduct[]);
@@ -104,6 +105,7 @@ export function FooterCheckout() {
   }
 
   async function handleSend() {
+    setSending(true);
     await handleFormOrder();
     sendEmail({
       firstName,
@@ -114,10 +116,11 @@ export function FooterCheckout() {
       subTotalPrice,
       products: itemsSelected,
     });
+    setSending(false);
   }
 
   useEffect(() => {
-    if (infoClient && infoClient?.phone.slice(0, 3) === "351") {
+    if (infoClient && infoClient?.country === "Portugal") {
       setIsPortugal(true);
     } else {
       setIsPortugal(false);
@@ -214,6 +217,7 @@ export function FooterCheckout() {
 
         <Button
           onClick={handleSend}
+          disabled={sending}
           className="w-1/2 bg-gradient-to-tr from-blue-500 to-blue-700 flex items-center gap-2 text-white"
         >
           <span>Enviar</span>
