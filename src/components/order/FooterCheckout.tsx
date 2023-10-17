@@ -95,12 +95,25 @@ export function FooterCheckout() {
     });
 
     if (response.ok) {
-      toast.success("Pedido enviado com sucesso!");
       resetLocalStorage();
+      toast.success("Pedido enviado com sucesso!");
       router.push("/");
     } else {
       toast.error("Erro ao enviar o pedido");
     }
+  }
+
+  async function handleSend() {
+    await handleFormOrder();
+    sendEmail({
+      firstName,
+      lastName,
+      email,
+      totalItems,
+      shippingPrice,
+      subTotalPrice,
+      products: itemsSelected,
+    });
   }
 
   useEffect(() => {
@@ -191,8 +204,7 @@ export function FooterCheckout() {
         </Link>
 
         <Button
-          // onClick={() => window.print()}
-          onClick={handleFormOrder}
+          onClick={() => window.print()}
           className="w-1/2 bg-gradient-to-tr from-zinc-500 to-zinc-700 flex items-center gap-2 text-white"
           type="button"
         >
@@ -201,19 +213,8 @@ export function FooterCheckout() {
         </Button>
 
         <Button
-          onClick={() =>
-            sendEmail({
-              firstName,
-              lastName,
-              email,
-              totalItems,
-              shippingPrice,
-              subTotalPrice,
-              products: itemsSelected,
-            })
-          }
+          onClick={handleSend}
           className="w-1/2 bg-gradient-to-tr from-blue-500 to-blue-700 flex items-center gap-2 text-white"
-          type="button"
         >
           <span>Enviar</span>
           <Mail size={16} />

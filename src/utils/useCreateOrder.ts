@@ -4,8 +4,8 @@ import { z } from "zod";
 
 const orderSchema = z.object({
   orderNumber: z.string(),
-  statusPayment: z.enum(["pending", "paid", "canceled"]),
-  statusOrder: z.enum(["pending", "preparing", "canceled", "delivered"]),
+  statusPayment: z.enum(["PENDING", "PAID", "CANCELED"]),
+  statusOrder: z.enum(["PENDING", "PREPERING", "CANCELED", "DELIVERED"]),
   firstName: z.string().min(3),
   lastName: z.string().min(3),
   email: z.string().email(),
@@ -42,8 +42,8 @@ export function useCreateOrder() {
       ...infoClient,
       selectedProducts: items,
       orderNumber: orderNumber,
-      statusPayment: "pending",
-      statusOrder: "pending",
+      statusPayment: "PENDING",
+      statusOrder: "PENDING",
       // totalAmount + totalShippingPrice
       totalAmount: items.reduce((acc, item) => {
         return acc + (item.price * item.quantity) / 100;
@@ -51,6 +51,10 @@ export function useCreateOrder() {
       delivered: false,
     };
     localStorage.setItem("order", JSON.stringify(order));
+    await fetch("/api/order", {
+      method: "POST",
+      body: JSON.stringify(order),
+    });
   }
 
   return { order, setOrder, handleFormOrder };
