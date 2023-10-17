@@ -39,7 +39,6 @@ export function useCreateOrder() {
     items,
     infoClient,
     orderNumber,
-    totalShippingPrice,
     isPickup,
     subTotalPrice,
     shippingPrice,
@@ -52,7 +51,6 @@ export function useCreateOrder() {
       orderNumber: orderNumber,
       statusPayment: "PENDING",
       statusOrder: "PENDING",
-      // totalAmount + totalShippingPrice
       totalAmount: isPickup
         ? subTotalPrice / 100
         : subTotalPrice / 100 + shippingPrice,

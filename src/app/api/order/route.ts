@@ -18,7 +18,7 @@ interface OrderProps {
   observations?: string;
   totalAmount: number;
   delivered: boolean;
-  selectedProduct: SelectedProduct[];
+  selectedProducts: SelectedProduct[];
 }
 
 export async function POST(request: Request, response: Response) {
@@ -40,7 +40,7 @@ export async function POST(request: Request, response: Response) {
     observations: body.observations,
     totalAmount: body.totalAmount,
     delivered: body.delivered,
-    selectedProduct: body.selectedProduct,
+    selectedProducts: body.selectedProducts,
   };
 
   try {
@@ -61,8 +61,16 @@ export async function POST(request: Request, response: Response) {
         observations: order.observations,
         totalAmount: order.totalAmount,
         delivered: order.delivered,
-        selectedProduct: {
-          create: order.selectedProduct,
+        selectedProducts: {
+          create: order.selectedProducts.map((product) => ({
+            id: product.id,
+            title: product.title,
+            coverUrl: product.coverUrl,
+            price: product.price,
+            weight: product.weight,
+            netWeight: product.netWeight,
+            quantity: product.quantity,
+          })),
         },
       },
     });

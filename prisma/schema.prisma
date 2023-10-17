@@ -68,25 +68,25 @@ model Testimonial {
 }
 
 model Order {
-  id              String            @id @default(uuid())
-  orderNumber     String            @unique
-  statusPayment   StatusPayment     @default(PENDING)
-  statusOrder     StatusOrder       @default(PENDING)
-  firstName       String
-  lastName        String
-  email           String
-  phone           String
-  postalCode      String
-  address         String
-  city            String
-  country         String
-  complement      String?
-  observations    String?
-  totalAmount     Decimal
-  delivered       Boolean           @default(false)
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  selectedProduct SelectedProduct[]
+  id               String            @id @default(uuid())
+  orderNumber      String            @unique
+  statusPayment    StatusPayment     @default(PENDING)
+  statusOrder      StatusOrder       @default(PENDING)
+  firstName        String
+  lastName         String
+  email            String
+  phone            String
+  postalCode       String
+  address          String
+  city             String
+  country          String
+  complement       String?
+  observations     String?
+  totalAmount      Decimal
+  delivered        Boolean           @default(false)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  selectedProducts SelectedProduct[]
 }
 
 model SelectedProduct {

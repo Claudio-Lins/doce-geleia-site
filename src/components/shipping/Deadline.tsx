@@ -20,10 +20,10 @@ export function Deadline({ isInStock }: HoverCardProps) {
           </span>
         ) : (
           <div className="flex items-center gap-1 justify-center">
-            <span className="text-[10px] block text-center font-bold text-red-600">
+            <span className="text-[10px] block text-center text-zinc-900">
               8 - 10 dias
             </span>
-            <AlertCircle className="w-3 h-3 text-rose-600" />
+            <AlertCircle className="w-3 h-3 text-zinc-900" />
           </div>
         )}
       </HoverCardTrigger>
