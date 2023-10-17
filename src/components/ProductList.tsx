@@ -1,15 +1,15 @@
-"use client"
-import { Key } from "react"
-import { ProductCard } from "./_ProductCard"
-import { useRouter, usePathname, useSearchParams } from "next/navigation"
-import { Product } from "@/@types"
+"use client";
+import { Product } from "@/@types";
+import { usePathname } from "next/navigation";
+import { Key } from "react";
+import { ProductCard } from "./_ProductCard";
 
 interface ProductListProps {
-  products: Product[]
+  products: Product[];
 }
 
 export function ProductList({ products }: ProductListProps) {
-  const pathname = usePathname()
+  const pathname = usePathname();
   return (
     <div className="flex flex-wrap gap-2 items-center justify-center">
       {products
@@ -18,5 +18,5 @@ export function ProductList({ products }: ProductListProps) {
           <ProductCard key={product.id} product={product} />
         ))}
     </div>
-  )
+  );
 }

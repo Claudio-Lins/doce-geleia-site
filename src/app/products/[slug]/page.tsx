@@ -34,7 +34,7 @@ export default async function ProductPage({
     },
   });
   return (
-    <div className="mt-20 sm:mt-10 min-h-screen flex items-center justify-center max-w-4xl mx-auto">
+    <div className="mt-20 sm:mt-10 min-h-screen flex items-center justify-center max-w-5xl mx-auto">
       <div className="px-4 py-6 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
           <div className="flex items-center justify-center sm:rounded-lg overflow-hidden">
