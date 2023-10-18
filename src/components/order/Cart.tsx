@@ -64,7 +64,14 @@ export function Cart() {
     if (items.length === 0) {
       setShowCart(false);
     }
-  }, [items, setShowCart, setTotalItems, setSubTotalPrice, setTotalWeight]);
+  }, [
+    items,
+    setShowCart,
+    setTotalItems,
+    setSubTotalPrice,
+    setTotalWeight,
+    packageWeight,
+  ]);
 
   useShippingPriceCalculator(totalWeight);
 
