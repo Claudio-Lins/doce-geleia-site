@@ -21,6 +21,20 @@ interface OrderProps {
   selectedProducts: SelectedProduct[];
 }
 
+export async function GET(request: Request, response: Response) {
+  try {
+    const data = await prisma.order.findMany({
+      include: {
+        selectedProducts: true,
+      },
+    });
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error });
+  }
+}
+
 export async function POST(request: Request, response: Response) {
   const body = await request.json();
 

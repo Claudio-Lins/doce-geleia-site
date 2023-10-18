@@ -1,11 +1,26 @@
-import prisma from "@/lib/prisma";
+import { Payment, columns } from "./columns";
+import { DataTable } from "./data-table";
 
-export default async function page() {
-  const orders = await prisma.order.findMany({
-    include: {
-      selectedProducts: true,
+async function getData(): Promise<Payment[]> {
+  // Fetch data from your API here.
+  return [
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      email: "m@example.com",
+      order: "123",
     },
-  });
+    // ...
+  ];
+}
 
-  return <pre>{JSON.stringify(orders, null, 2)}</pre>;
+export default async function DemoPage() {
+  const data = await getData();
+
+  return (
+    <div className="container mx-auto py-32">
+      <DataTable columns={columns} data={data} />
+    </div>
+  );
 }
