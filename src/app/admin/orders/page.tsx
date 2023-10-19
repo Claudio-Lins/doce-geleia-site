@@ -1,28 +1,27 @@
-import prisma from "@/lib/prisma";
-import { NextApiRequest, NextApiResponse } from "next";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
-export default async function Orders(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (res) {
-    res.setHeader("Cache-Control", "no-store");
-  }
+export default async function Orders() {
+  // const data = await prisma?.order.findMany({
+  //   include: {
+  //     selectedProducts: true,
+  //   },
+  // });
 
-  const data = await prisma?.order.findMany({
-    include: {
-      selectedProducts: true,
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
     },
-  });
+    cache: "no-cache",
+  }).then((res) => res.json());
 
   return (
     <div className="container mx-auto py-32">
       <DataTable
         columns={columns}
         data={
-          data?.map((order) => ({
+          data?.map((order: any) => ({
             ...order,
             date: new Date(order.createdAt).toLocaleDateString("pt-BR"),
             orderNumber: order.orderNumber,
@@ -31,7 +30,7 @@ export default async function Orders(
             firstName: order.firstName,
             lastName: order.lastName,
             email: order.email,
-            totalAmount: order.totalAmount.toNumber(),
+            totalAmount: order.totalAmount,
           })) || []
         }
       />
