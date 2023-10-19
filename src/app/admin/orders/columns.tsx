@@ -1,18 +1,16 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
-import { z } from "zod";
-
-import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { ColumnDef } from "@tanstack/react-table";
+import { EyeIcon } from "lucide-react";
+import { z } from "zod";
 
 const orderSchema = z.object({
   id: z.string(),
@@ -131,29 +129,30 @@ export const columns: ColumnDef<Order>[] = [
       const order = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(order.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => alert(order.id)}>
-              Editar
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => alert(order.id)}>
-              Deletar
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex flex-col gap-2">
+          <div className="">
+            <Dialog>
+              <DialogTrigger>
+                <EyeIcon className="h-5 w-5" />
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>
+                    <div className="flex flex-col gap-2">
+                      <div className="text-lg font-medium">
+                        {order.firstName} {order.lastName}
+                      </div>
+                      <div className="text-sm font-medium">{order.email}</div>
+                    </div>
+                  </DialogTitle>
+                  <DialogDescription>
+                    <pre>{JSON.stringify(order, null, 2)}</pre>
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
       );
     },
   },

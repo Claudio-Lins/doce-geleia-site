@@ -24,6 +24,9 @@ interface OrderProps {
 export async function GET(request: Request, response: Response) {
   try {
     const data = await prisma.order.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
       include: {
         selectedProducts: true,
       },
