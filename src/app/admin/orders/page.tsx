@@ -1,8 +1,16 @@
 import prisma from "@/lib/prisma";
+import { NextApiRequest, NextApiResponse } from "next";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
-export default async function DemoPage() {
+export default async function Orders(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (res) {
+    res.setHeader("Cache-Control", "no-store");
+  }
+
   const data = await prisma?.order.findMany({
     include: {
       selectedProducts: true,
