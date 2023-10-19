@@ -96,7 +96,6 @@ export function FooterCheckout() {
     });
 
     if (response.ok) {
-      resetLocalStorage();
       toast.success("Pedido enviado com sucesso!");
       router.push("/");
     } else {
@@ -106,8 +105,7 @@ export function FooterCheckout() {
 
   async function handleSend() {
     setSending(true);
-    await handleFormOrder();
-    sendEmail({
+    await sendEmail({
       firstName,
       lastName,
       email,
@@ -116,7 +114,10 @@ export function FooterCheckout() {
       subTotalPrice,
       products: itemsSelected,
     });
+    await handleFormOrder();
     setSending(false);
+    resetLocalStorage();
+    localStorage.removeItem("order");
   }
 
   useEffect(() => {

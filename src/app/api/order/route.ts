@@ -34,7 +34,6 @@ export async function GET(request: Request, response: Response) {
     return NextResponse.json({ error });
   }
 }
-
 export async function POST(request: Request, response: Response) {
   const body = await request.json();
 
@@ -58,26 +57,11 @@ export async function POST(request: Request, response: Response) {
   };
 
   try {
-    const data = await prisma.order.create({
+    const createdOrder = await prisma.order.create({
       data: {
-        orderNumber: order.orderNumber,
-        statusPayment: order.statusPayment,
-        statusOrder: order.statusOrder,
-        firstName: order.firstName,
-        lastName: order.lastName,
-        email: order.email,
-        phone: order.phone,
-        postalCode: order.postalCode,
-        address: order.address,
-        city: order.city,
-        country: order.country,
-        complement: order.complement,
-        observations: order.observations,
-        totalAmount: order.totalAmount,
-        delivered: order.delivered,
+        ...order,
         selectedProducts: {
           create: order.selectedProducts.map((product) => ({
-            id: product.id,
             title: product.title,
             coverUrl: product.coverUrl,
             price: product.price,
@@ -88,8 +72,8 @@ export async function POST(request: Request, response: Response) {
         },
       },
     });
-    console.log(data);
-    return NextResponse.json(data);
+    console.log(createdOrder);
+    return NextResponse.json(createdOrder);
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error });

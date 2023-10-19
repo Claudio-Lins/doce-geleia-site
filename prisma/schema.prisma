@@ -69,7 +69,7 @@ model Testimonial {
 
 model Order {
   id               String            @id @default(uuid())
-  orderNumber      String            @unique
+  orderNumber      String
   statusPayment    StatusPayment     @default(PENDING)
   statusOrder      StatusOrder       @default(PENDING)
   firstName        String

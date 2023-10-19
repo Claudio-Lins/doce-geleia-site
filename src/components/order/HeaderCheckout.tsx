@@ -41,7 +41,7 @@ export function HeaderCheckout() {
         </div>
         <span>
           <strong>Número do pedido: </strong>
-          {orderNumber}
+          {orderNumber.slice(-7, -3) + " " + orderNumber.slice(-3)}
         </span>
       </div>
     </header>
