@@ -20,6 +20,12 @@ interface OrderProps {
   delivered: boolean;
   selectedProducts: SelectedProduct[];
 }
+interface OrderStatusProps {
+  id: string;
+  statusPayment: "PENDING" | "PAID" | "CANCELED";
+  statusOrder: "PENDING" | "PREPERING" | "CANCELED" | "DELIVERED";
+  delivered: boolean;
+}
 
 export async function GET(request: Request, response: Response) {
   try {
@@ -77,6 +83,34 @@ export async function POST(request: Request, response: Response) {
     });
     console.log(createdOrder);
     return NextResponse.json(createdOrder);
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error });
+  }
+}
+
+export async function PUT(request: Request, response: Response) {
+  const body = await request.json();
+
+  const statusOrder: OrderStatusProps = {
+    id: body.id,
+    statusPayment: body.statusPayment,
+    statusOrder: body.statusOrder,
+    delivered: body.delivered,
+  };
+  try {
+    const updatedOrder = await prisma.order.update({
+      where: {
+        id: body.id,
+      },
+      data: {
+        statusPayment: statusOrder.statusPayment,
+        statusOrder: statusOrder.statusOrder,
+        delivered: statusOrder.delivered,
+      },
+    });
+    console.log(updatedOrder);
+    return NextResponse.json(updatedOrder);
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error });

@@ -1,5 +1,7 @@
 "use client";
 
+import { DataPickupShip } from "@/components/order/DataPickupShip";
+import { FormStatus } from "@/components/order/FormStatus";
 import {
   Dialog,
   DialogContent,
@@ -8,6 +10,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { ColumnDef } from "@tanstack/react-table";
 import { EyeIcon } from "lucide-react";
 import { z } from "zod";
@@ -27,6 +38,19 @@ const orderSchema = z.object({
   country: z.string(),
   totalAmount: z.number(),
   email: z.string(),
+  complement: z.string(),
+  observations: z.string(),
+  delivered: z.boolean(),
+  selectedProducts: z.array(
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      weight: z.number(),
+      coverUrl: z.string(),
+      price: z.number(),
+      quantity: z.number(),
+    })
+  ),
 });
 
 export type Order = z.infer<typeof orderSchema>;
@@ -127,7 +151,7 @@ export const columns: ColumnDef<Order>[] = [
     id: "actions",
     cell: ({ row }) => {
       const order = row.original;
-
+      console.log(order.selectedProducts);
       return (
         <div className="flex flex-col gap-2">
           <div className="">
@@ -135,18 +159,57 @@ export const columns: ColumnDef<Order>[] = [
               <DialogTrigger>
                 <EyeIcon className="h-5 w-5" />
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="h-[calc(90vh)] max-w-none md:max-w-4xl w-full">
                 <DialogHeader>
                   <DialogTitle>
-                    <div className="flex flex-col gap-2">
-                      <div className="text-lg font-medium">
-                        {order.firstName} {order.lastName}
+                    <div className="flex items-center">
+                      <div className="flex flex-col gap-0">
+                        <div className="text-lg font-medium">
+                          {order.firstName} {order.lastName}
+                        </div>
+                        <div className="text-sm font-medium">
+                          Pedido #:{order.orderNumber}
+                        </div>
                       </div>
-                      <div className="text-sm font-medium">{order.email}</div>
+                      <div className="ml-auto">
+                        <div className="text-sm font-medium">
+                          {order.statusOrder}
+                        </div>
+                      </div>
                     </div>
+                    <Separator className="my-2" />
                   </DialogTitle>
                   <DialogDescription>
-                    <pre>{JSON.stringify(order, null, 2)}</pre>
+                    <div className="">
+                      <FormStatus order={order} />
+                    </div>
+                    <div className="">
+                      <DataPickupShip />
+                    </div>
+                    <div className="mt-4">
+                      <Table className="w-full">
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Produto</TableHead>
+                            <TableHead>Peso</TableHead>
+                            <TableHead className="text-right">
+                              Quantidade
+                            </TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {order.selectedProducts.map((product) => (
+                            <TableRow key={product.id}>
+                              <TableCell>{product.title}</TableCell>
+                              <TableCell>{product.weight}gr</TableCell>
+                              <TableCell className="text-right">
+                                {product.quantity}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
                   </DialogDescription>
                 </DialogHeader>
               </DialogContent>

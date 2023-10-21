@@ -31,6 +31,7 @@ export default async function Orders() {
             lastName: order.lastName,
             email: order.email,
             totalAmount: order.totalAmount,
+            selectedProducts: order.selectedProducts,
           })) || []
         }
       />
