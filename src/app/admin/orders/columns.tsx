@@ -19,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { EyeIcon } from "lucide-react";
 import { z } from "zod";
@@ -99,25 +100,25 @@ export const columns: ColumnDef<Order>[] = [
     accessorKey: "lastName",
     header: "Apelido",
   },
-  {
-    accessorKey: "email",
-    header: "Email",
-    // header: ({ column }) => {
-    //   return (
-    //     <Button
-    //       variant="ghost"
-    //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //     >
-    //       Email
-    //       <ArrowUpDown className="ml-2 h-4 w-4" />
-    //     </Button>
-    //   );
-    // },
-  },
   // {
-  //   accessorKey: "phone",
-  //   header: "Phone",
+  //   accessorKey: "email",
+  //   header: "Email",
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         variant="ghost"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         Email
+  //         <ArrowUpDown className="ml-2 h-4 w-4" />
+  //       </Button>
+  //     );
+  //   },
   // },
+  {
+    accessorKey: "phone",
+    header: "Phone",
+  },
   // {
   //   accessorKey: "postalCode",
   //   header: "Código Postal",
@@ -151,7 +152,6 @@ export const columns: ColumnDef<Order>[] = [
     id: "actions",
     cell: ({ row }) => {
       const order = row.original;
-      console.log(order.selectedProducts);
       return (
         <div className="flex flex-col gap-2">
           <div className="">
@@ -172,7 +172,7 @@ export const columns: ColumnDef<Order>[] = [
                         </div>
                       </div>
                       <div className="ml-auto">
-                        <div className="text-sm font-medium">
+                        <div className={cn("text-sm font-medium")}>
                           {order.statusOrder}
                         </div>
                       </div>

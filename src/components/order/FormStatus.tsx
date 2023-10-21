@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
@@ -43,7 +44,7 @@ export function FormStatus({ order }: FormStatusProps) {
       body: JSON.stringify(data),
     });
     route.refresh();
-    console.log(data, order.id);
+    toast.success("Pedido atualizado com sucesso");
   }
 
   return (
