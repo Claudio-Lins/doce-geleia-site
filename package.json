@@ -65,6 +65,7 @@
     "zustand": "^4.4.0"
   },
   "devDependencies": {
+    "prettier-plugin-tailwindcss": "^0.5.6",
     "prisma": "^5.4.2"
   }
 }
