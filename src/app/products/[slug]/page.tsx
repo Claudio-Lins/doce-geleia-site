@@ -1,7 +1,7 @@
 import { ProductList } from "@/components/ProductList";
 import { Info } from "@/components/info";
 import { Separator } from "@/components/ui/separator";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 
 export default async function ProductPage({
@@ -34,10 +34,10 @@ export default async function ProductPage({
     },
   });
   return (
-    <div className="mt-20 sm:mt-10 min-h-screen flex items-center justify-center max-w-5xl mx-auto">
+    <div className="mx-auto mt-20 flex min-h-screen max-w-5xl items-center justify-center sm:mt-10">
       <div className="px-4 py-6 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
-          <div className="flex items-center justify-center sm:rounded-lg overflow-hidden">
+          <div className="flex items-center justify-center overflow-hidden sm:rounded-lg">
             <Image
               width={400}
               height={300}
@@ -47,12 +47,12 @@ export default async function ProductPage({
             />
           </div>
 
-          <div className="mt-6 px-4 sm:mt-16 sm:px-0 lg:mt-0 sm:h-full sm:flex items-center">
+          <div className="mt-6 items-center px-4 sm:mt-16 sm:flex sm:h-full sm:px-0 lg:mt-0">
             <Info product={product} />
           </div>
         </div>
         <Separator className="mt-6" />
-        <h2 className="text-gray-900 text-xl text-center font-medium mt-10 mb-4">
+        <h2 className="mb-4 mt-10 text-center text-xl font-medium text-gray-900">
           Productos relacionados
         </h2>
         {/* @ts-ignore */}

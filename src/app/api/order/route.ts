@@ -1,5 +1,5 @@
 import { SelectedProduct } from "@/@types";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 interface OrderProps {
