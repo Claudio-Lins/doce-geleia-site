@@ -4,7 +4,7 @@ import { ResumeOrder } from "@/components/order/ResumeOrder";
 
 export default function Checkout() {
   return (
-    <div className="w-full max-w-6xl min-h-[calc(100vh_-_120px)] print:min-h-screen print:mt-0 mx-auto mt-24 flex flex-col justify-between pb-10">
+    <div className="mx-auto mt-24 flex min-h-[calc(100vh_-_120px)] w-full  max-w-6xl flex-col justify-between pb-10 print:mt-0 print:min-h-screen">
       <HeaderCheckout />
       <ResumeOrder />
       <FooterCheckout />
