@@ -1,6 +1,7 @@
 import { CookieConsentPolicy } from "@/components/CookieConcernPolicy";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/ui/Navbar";
+import { AuthProvider } from "@/providers/auth";
 import ToastProvider from "@/providers/toast-provider";
 import type { Metadata } from "next";
 import { Montserrat, Old_Standard_TT } from "next/font/google";
@@ -30,11 +31,13 @@ export default async function RootLayout({
       ${montserrat.className}
       `}
       >
-        <Navbar />
-        <ToastProvider />
-        <main className="grow">{children}</main>
-        <Footer />
-        <CookieConsentPolicy />
+        <AuthProvider>
+          <Navbar />
+          <ToastProvider />
+          <main className="grow">{children}</main>
+          <Footer />
+          <CookieConsentPolicy />
+        </AuthProvider>
       </body>
     </html>
   );
