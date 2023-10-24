@@ -12,6 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Profile } from "../Profile";
 import { Cart } from "../order/Cart";
 import { Button } from "./button";
 
@@ -116,10 +117,13 @@ export function Navbar() {
               </NavigationMenuLink>
             </Link>
             <Cart />
-            <Button onClick={handleLogin} variant={"ghost"} size={"icon"}>
-              <User size={24} />
-            </Button>
-            {data?.user?.name}
+            {data ? (
+              <Profile />
+            ) : (
+              <Button onClick={handleLogin} variant={"ghost"} size={"icon"}>
+                <User size={24} />
+              </Button>
+            )}
           </NavigationMenuItem>
         </NavigationMenu>
       </div>
