@@ -2,10 +2,12 @@ import { HeroText } from "@/components/Hero/HeroText";
 import { Slider } from "@/components/Hero/Slider/Slider";
 import { Testimonial } from "@/components/testimonials";
 import { prisma } from "@/lib/prisma";
+import { getSession } from "@/lib/session";
 
 export const revalidate = 0;
 
 export default async function Home() {
+  const session = await getSession();
   const products = await prisma.product.findMany({
     include: {
       productDetail: true,
@@ -30,6 +32,10 @@ export default async function Home() {
             <Slider numSlides={1} />
           </div>
         </div>
+      </div>
+      <div className="">
+        <h1 className="text-center text-4xl">Session</h1>
+        <pre>{JSON.stringify(session, null, 2)}</pre>
       </div>
       <Testimonial testimonials={testimonials} />
     </div>

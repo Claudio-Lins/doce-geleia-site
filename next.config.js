@@ -7,8 +7,9 @@ const nextConfig = {
       "github.com",
       "www.google.com",
       "docegeleia.pt",
+      "source.unsplash.com",
     ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
