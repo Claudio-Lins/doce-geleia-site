@@ -1,14 +1,13 @@
-"use client"
+"use client";
 
-import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules"
-import { Swiper, SwiperProps, SwiperSlide } from "swiper/react"
-import "swiper/css"
-import "swiper/css/pagination"
-import { CardInstagram } from "../CardInstagram"
-import Image from "next/image"
+import "swiper/css";
+import "swiper/css/pagination";
+import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperProps, SwiperSlide } from "swiper/react";
+import { CardInstagram } from "../CardInstagram";
 
 interface SliderProps {
-  numSlides: number
+  numSlides: number;
 }
 
 const instagramImgs = [
@@ -52,7 +51,7 @@ const instagramImgs = [
     name: "img08",
     src: "/instamImages/instamImage_08.jpeg",
   },
-]
+];
 
 export function Slider({ numSlides }: SliderProps) {
   const settings: SwiperProps = {
@@ -68,20 +67,20 @@ export function Slider({ numSlides }: SliderProps) {
       disableOnInteraction: false,
     },
     draggable: true,
-  }
+  };
   return (
     <>
       <div className="flex h-[40px] w-full items-center gap-4 rounded-t-lg bg-white pl-4">
-        <Image
+        {/* <Image
           src="/assets/logos/lg_doceGeleia_20x20.svg"
           alt="Instagram"
           width={18}
           height={18}
-        />
+        /> */}
         <p className="text-sm font-semibold">docegeleia.pt</p>
       </div>
       <Swiper
-        className="w-full max-w-xs flex flex-col"
+        className="flex w-full max-w-xs flex-col"
         modules={[Autoplay, Navigation, Pagination, A11y]}
         {...settings}
         style={{
@@ -98,9 +97,9 @@ export function Slider({ numSlides }: SliderProps) {
             <SwiperSlide key={img.id}>
               <CardInstagram img={img.src} alt={img.name} />
             </SwiperSlide>
-          )
+          );
         })}
       </Swiper>
     </>
-  )
+  );
 }

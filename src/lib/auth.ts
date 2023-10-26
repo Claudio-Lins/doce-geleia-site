@@ -6,11 +6,24 @@ import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "./prisma";
 
 export const authOptions: AuthOptions = {
+  secret: process.env.SECRET,
+  session: {
+    strategy: "jwt",
+  },
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          role: profile.role ? profile.role : "USER",
+        };
+      },
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -42,17 +55,28 @@ export const authOptions: AuthOptions = {
           user.hashedPassword,
         );
         if (!isPasswordValid) throw new Error("Senha inválida");
-
+        console.log("Autorized", user);
         return user;
       },
     }),
   ],
+
+  jwt: {
+    secret: process.env.SECRET,
+  },
+
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token }) {
+      session.user.role = token.role;
+      return session;
+    },
+  },
+
   pages: {
-    signIn: "/admin/login",
+    signIn: "/auth/login",
   },
-  session: {
-    strategy: "jwt",
-  },
-  secret: process.env.SECRET,
   debug: process.env.NODE_ENV === "development",
 };

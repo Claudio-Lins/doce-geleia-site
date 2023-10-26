@@ -1,13 +1,13 @@
 "use client";
-import { useToast } from "@/components/ui/use-toast";
+
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { ToastAction } from "./ui/toast";
 
 interface UserLoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface IUserProps {
@@ -18,7 +18,7 @@ interface IUserProps {
 
 export function UserRegisterForm({ className, ...props }: UserLoginFormProps) {
   const router = useRouter();
-  const { toast } = useToast();
+  // const { toast } = useToast();
   const [data, setData] = useState<IUserProps>({
     name: "",
     email: "",
@@ -44,16 +44,9 @@ export function UserRegisterForm({ className, ...props }: UserLoginFormProps) {
     console.log("USER REGISTER FORM", response);
 
     if (!request.ok) {
-      toast({
-        title: "Erro ao registrar",
-        description: response.message,
-        variant: "destructive",
-        action: (
-          <ToastAction altText="Tente novamente">Tente novamente</ToastAction>
-        ),
-      });
+      toast.error("Erro ao registrar o usuário");
     } else {
-      router.push("/admin/login");
+      router.push("/auth/login");
     }
 
     setData({

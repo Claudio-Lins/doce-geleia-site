@@ -26,7 +26,7 @@ export default async function Home() {
     <div className="">
       <div className=" flex min-h-screen w-full flex-col items-center justify-center bg-[url('/img01.jpg')] bg-cover bg-right bg-no-repeat">
         <div className=" absolute  min-h-screen w-full bg-zinc-950 opacity-70" />
-        <div className="z-[1] flex min-h-screen w-full flex-col items-center justify-center gap-4 md:flex-row md:justify-evenly">
+        <div className="z-[1] mt-0 flex min-h-screen w-full flex-col items-center justify-center md:flex-row md:justify-evenly">
           <HeroText />
           <div className="hidden md:block">
             <Slider numSlides={1} />
@@ -34,7 +34,6 @@ export default async function Home() {
         </div>
       </div>
       <div className="">
-        <h1 className="text-center text-4xl">Session</h1>
         <pre>{JSON.stringify(session, null, 2)}</pre>
       </div>
       <Testimonial testimonials={testimonials} />

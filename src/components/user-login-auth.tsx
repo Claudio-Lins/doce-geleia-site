@@ -1,15 +1,16 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { GoogleLogo } from "@phosphor-icons/react";
 import { Loader2 } from "lucide-react";
 import { signIn } from "next-auth/react";
+import React, { useState } from "react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
 import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "./ui/toast";
 import { useRouter } from "next/navigation";
+import { ToastAction } from "./ui/toast";
 
 interface UserLoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface IUserProps {
@@ -75,7 +76,7 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
               type="email"
               placeholder="Email"
               autoCapitalize="none"
-              autoComplete="email"
+              autoComplete="off"
               autoCorrect="off"
               disabled={isLoading}
               name="email"
@@ -91,7 +92,7 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
               id="password"
               type="password"
               placeholder="Password"
-              autoComplete="current-password"
+              autoComplete="off"
               autoCorrect="off"
               disabled={isLoading}
               name="password"
@@ -105,6 +106,18 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
           </Button>
         </div>
       </form>
+      <div className="flex w-full flex-col items-center justify-center gap-2">
+        <span>ou</span>
+        <Button
+          className="flex w-full items-center gap-2"
+          type="button"
+          onClick={() => signIn("google")}
+          variant="secondary"
+        >
+          Entrar com Google
+          <GoogleLogo className="text-red-500" size={24} weight="bold" />
+        </Button>
+      </div>
     </div>
   );
 }

@@ -29,15 +29,32 @@ export function Profile() {
             <small className="text-center text-zinc-900">
               {data?.user?.name}
             </small>
-            <Link
-              href="/profile"
-              className={buttonVariants({ variant: "outline" })}
-            >
-              Minha conta
-            </Link>
+            {data?.user.role === "ADMIN" ? (
+              <div className="flex flex-col gap-2">
+                <Link
+                  href="/admin"
+                  className={buttonVariants({ variant: "outline" })}
+                >
+                  Dashboard Admin
+                </Link>
+                <Link
+                  href="/admin/orders"
+                  className={buttonVariants({ variant: "outline" })}
+                >
+                  Pedidos
+                </Link>
+              </div>
+            ) : (
+              <Link
+                href="/profile"
+                className={buttonVariants({ variant: "outline" })}
+              >
+                Conta Usuário
+              </Link>
+            )}
 
             <Button
-              onClick={() => signOut({ callbackUrl: "/admin/login" })}
+              onClick={() => signOut({ callbackUrl: "/auth/login" })}
               variant="destructive"
               className="text-left"
             >

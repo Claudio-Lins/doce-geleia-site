@@ -1,7 +1,12 @@
+import { buttonVariants } from "@/components/ui/button";
+import { getSession } from "@/lib/session";
+import Link from "next/link";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
 export default async function Orders() {
+  const session = await getSession();
+  console.log(session);
   // const data = await prisma?.order.findMany({
   //   include: {
   //     selectedProducts: true,
@@ -15,6 +20,21 @@ export default async function Orders() {
     },
     cache: "no-cache",
   }).then((res) => res.json());
+
+  if (session?.role !== "ADMIN") {
+    return (
+      <div className="flex min-h-screen w-full flex-col items-center justify-center gap-2">
+        <p>You are not authorized to view this page!</p>;
+        {session?.role && <p>Your role is {session?.role}</p>}
+        <Link
+          href="/auth/login"
+          className={buttonVariants({ variant: "outline" })}
+        >
+          Login
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto py-32">
