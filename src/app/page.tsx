@@ -8,13 +8,13 @@ export const revalidate = 0;
 
 export default async function Home() {
   const session = await getSession();
-  const products = await prisma.product.findMany({
-    include: {
-      productDetail: true,
-      category: true,
-      ingredients: true,
-    },
-  });
+  // const products = await prisma.product.findMany({
+  //   include: {
+  //     productDetail: true,
+  //     category: true,
+  //     ingredients: true,
+  //   },
+  // });
 
   const testimonials = await prisma.testimonial.findMany({
     where: {
