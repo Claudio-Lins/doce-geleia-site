@@ -1,27 +1,16 @@
 import { HeroText } from "@/components/Hero/HeroText";
 import { Slider } from "@/components/Hero/Slider/Slider";
 import { Testimonial } from "@/components/testimonials";
-import { prisma } from "@/lib/prisma";
-import { getSession } from "@/lib/session";
+import { api } from "@/lib/api";
 
-export const revalidate = 0;
+async function getAllTestimonials() {
+  const response = await api("/testimonials");
+  const testimonials = await response.json();
+  return testimonials;
+}
 
 export default async function Home() {
-  const session = await getSession();
-  // const products = await prisma.product.findMany({
-  //   include: {
-  //     productDetail: true,
-  //     category: true,
-  //     ingredients: true,
-  //   },
-  // });
-
-  const testimonials = await prisma.testimonial.findMany({
-    where: {
-      published: true,
-    },
-  });
-
+  const testimonials = await getAllTestimonials();
   return (
     <div className="">
       <div className=" flex min-h-screen w-full flex-col items-center justify-center bg-[url('/img01.jpg')] bg-cover bg-right bg-no-repeat">
@@ -33,9 +22,7 @@ export default async function Home() {
           </div>
         </div>
       </div>
-      <div className="">
-        <pre>{JSON.stringify(session, null, 2)}</pre>
-      </div>
+      <div className=""></div>
       <Testimonial testimonials={testimonials} />
     </div>
   );
