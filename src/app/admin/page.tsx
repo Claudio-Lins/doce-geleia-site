@@ -22,7 +22,10 @@ export default async function AdminPage() {
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center">
-      <p>You are an admin, welcome!</p>;
+      <p>You are an admin, welcome!</p>
+      <pre>
+        <code>{JSON.stringify(session, null, 2)}</code>
+      </pre>
     </div>
   );
 }

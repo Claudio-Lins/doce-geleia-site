@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 interface OrderProps {
   orderNumber: string;
+  userId: string;
   statusPayment: "PENDING" | "PAID" | "CANCELED";
   statusOrder: "PENDING" | "PREPERING" | "CANCELED" | "DELIVERED";
   firstName: string;
@@ -47,6 +48,7 @@ export async function POST(request: Request, response: Response) {
   const body = await request.json();
 
   const order: OrderProps = {
+    userId: body.userId,
     orderNumber: body.orderNumber,
     statusPayment: body.statusPayment,
     statusOrder: body.statusOrder,

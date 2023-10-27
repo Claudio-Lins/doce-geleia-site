@@ -22,7 +22,10 @@ export default async function MinhaConta() {
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center">
-      <p>Painel do Usuário</p>;
+      <p>Painel do Usuário</p>
+      <pre>
+        <code>{JSON.stringify(session, null, 2)}</code>
+      </pre>
     </div>
   );
 }

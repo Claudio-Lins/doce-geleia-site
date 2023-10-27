@@ -65,6 +65,7 @@ export interface InfoClient {
 
 export interface OrderProps {
   orderNumber: string;
+  userId: string;
   statusPayment: "PENDING" | "PAID" | "CANCELED";
   statusOrder: "PENDING" | "PREPERING" | "CANCELED" | "DELIVERED";
   firstName: string;
