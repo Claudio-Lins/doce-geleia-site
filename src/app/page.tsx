@@ -1,7 +1,8 @@
 import { TestimonialTypes } from "@/@types";
 import { HeroText } from "@/components/Hero/HeroText";
 import { Slider } from "@/components/Hero/Slider/Slider";
-import { Testimonial } from "@/components/testimonials";
+import { SliderTestimonial } from "@/components/testimonials/SliderTestimonial/SliderTestimonial";
+import { Separator } from "@/components/ui/separator";
 import { api } from "@/lib/api";
 
 async function getAllTestimonials(): Promise<TestimonialTypes[]> {
@@ -29,7 +30,14 @@ export default async function Home() {
         </div>
       </div>
       <div className=""></div>
-      <Testimonial testimonials={testimonials} />
+      {/* <Testimonial testimonials={testimonials} /> */}
+      <div className="flex w-full flex-col items-center justify-center px-4 py-20">
+        <h2 className="mb-8 font-oldStandardTT text-4xl font-bold uppercase">
+          O QUE ANDAM DIZENDO DA Doce Geleia POR AÍ
+        </h2>
+        <Separator />
+        <SliderTestimonial numSlides={1} testimonials={testimonials} />
+      </div>
     </div>
   );
 }
