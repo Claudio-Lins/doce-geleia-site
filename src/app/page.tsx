@@ -36,7 +36,24 @@ export default async function Home() {
         </h2>
         <Separator />
         {/* <SliderTestimonial numSlides={1} testimonials={testimonials} /> */}
-        <pre>{JSON.stringify(testimonials, null, 2)}</pre>
+        {testimonials.map((testimonial) => {
+          return (
+            <div
+              key={testimonial.id}
+              className="flex flex-col items-center justify-center"
+            >
+              <div className="flex flex-col items-center justify-center">
+                <img
+                  src={testimonial.imageUrl ?? ""}
+                  alt={testimonial.name}
+                  className="h-20 w-20 rounded-full"
+                />
+                <h3 className="text-xl font-bold">{testimonial.name}</h3>
+                <p className="text-center">{testimonial.testimonial}</p>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
