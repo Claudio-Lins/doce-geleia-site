@@ -7,6 +7,7 @@ interface OrderStore {
 }
 export const useOrderStore = create<OrderStore>((set, get) => {
   let initialOrder: OrderProps = {
+    userId: "",
     orderNumber: "",
     statusPayment: "PENDING",
     statusOrder: "PENDING",
