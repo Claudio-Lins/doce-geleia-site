@@ -81,3 +81,14 @@ export interface OrderProps {
   delivered: boolean;
   selectedProduct: SelectedProduct[];
 }
+
+export interface TestimonialTypes {
+  id: string;
+  name: string;
+  testimonial: string;
+  email: string | null;
+  published: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  imageUrl: string | null;
+}

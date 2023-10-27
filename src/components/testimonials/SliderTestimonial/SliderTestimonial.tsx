@@ -1,6 +1,6 @@
 "use client";
 
-import { Testimonial } from "@prisma/client";
+import { TestimonialTypes } from "@/@types";
 import "swiper/css";
 import "swiper/css/pagination";
 import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
@@ -9,7 +9,7 @@ import { CardTestimonial } from "./CardTestimonial";
 
 interface SliderProps {
   numSlides: number;
-  testimonials: Testimonial[];
+  testimonials: TestimonialTypes[];
 }
 
 export function SliderTestimonial({ numSlides, testimonials }: SliderProps) {
@@ -29,7 +29,7 @@ export function SliderTestimonial({ numSlides, testimonials }: SliderProps) {
   };
   return (
     <Swiper
-      className="w-full max-w-xs flex flex-col"
+      className="flex w-full max-w-xs flex-col"
       modules={[Autoplay, Navigation, Pagination, A11y]}
       {...settings}
       style={{
