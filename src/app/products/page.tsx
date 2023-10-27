@@ -1,15 +1,16 @@
 import { ProductCard } from "@/components/ProductCard";
 import { Separator } from "@/components/ui/separator";
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
+
+async function getAllProducts() {
+  const response = await api("/products");
+  const products = await response.json();
+  return products;
+}
 
 export default async function Products() {
-  const products = await prisma.product.findMany({
-    include: {
-      productDetail: true,
-      category: true,
-      ingredients: true,
-    },
-  });
+  const products = await getAllProducts();
+
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col justify-center px-2 pb-12 pt-24 sm:p-0 md:h-screen">
       <h1 className="text-2xl font-bold">Sabores</h1>

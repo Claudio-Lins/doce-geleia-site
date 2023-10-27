@@ -1,15 +1,15 @@
-"use client"
-import Image from "next/image"
-import { Separator } from "./ui/separator"
-import Link from "next/link"
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { Separator } from "./ui/separator";
 
 interface ProductCardProps {
-  product: any
+  product: any;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <div className="flex w-[100px] h-[100px] flex-col justify-center rounded-md border px-2 py-1 text-center text-[10px] leading-3 shadow-sm space-y-1">
+    <div className="flex h-[100px] w-[100px] cursor-pointer flex-col justify-center space-y-1 rounded-md border px-2 py-1 text-center text-[10px] leading-3 shadow-sm transition-all duration-200 hover:scale-110">
       <Link className="mx-auto" href={`/products/${product.slug}`}>
         <Image
           src={product.coverUrl}
@@ -20,12 +20,13 @@ export function ProductCard({ product }: ProductCardProps) {
             objectFit: "cover",
             objectPosition: "center",
           }}
+          className=""
         />
       </Link>
       <Separator />
-      <div className="w-full h-[25px] flex items-center justify-center">
+      <div className="flex h-[25px] w-full items-center justify-center">
         <strong>{product.title}</strong>
       </div>
     </div>
-  )
+  );
 }
