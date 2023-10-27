@@ -2,8 +2,9 @@ import { HeroText } from "@/components/Hero/HeroText";
 import { Slider } from "@/components/Hero/Slider/Slider";
 import { Testimonial } from "@/components/testimonials";
 import { api } from "@/lib/api";
+import { Testimonial as TestimonialProps } from "@prisma/client";
 
-async function getAllTestimonials() {
+async function getAllTestimonials(): Promise<TestimonialProps[]> {
   const response = await api("/testimonials");
   const testimonials = await response.json();
   return testimonials;
