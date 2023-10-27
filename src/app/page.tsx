@@ -1,7 +1,6 @@
 import { TestimonialTypes } from "@/@types";
 import { HeroText } from "@/components/Hero/HeroText";
 import { Slider } from "@/components/Hero/Slider/Slider";
-import { SliderTestimonial } from "@/components/testimonials/SliderTestimonial/SliderTestimonial";
 import { Separator } from "@/components/ui/separator";
 import { api } from "@/lib/api";
 
@@ -36,7 +35,8 @@ export default async function Home() {
           O QUE ANDAM DIZENDO DA Doce Geleia POR AÍ
         </h2>
         <Separator />
-        <SliderTestimonial numSlides={1} testimonials={testimonials} />
+        {/* <SliderTestimonial numSlides={1} testimonials={testimonials} /> */}
+        <pre>{JSON.stringify(testimonials, null, 2)}</pre>
       </div>
     </div>
   );
