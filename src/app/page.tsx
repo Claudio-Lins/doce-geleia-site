@@ -1,23 +1,23 @@
-// import { TestimonialTypes } from "@/@types";
+import { TestimonialTypes } from "@/@types";
 import { HeroText } from "@/components/Hero/HeroText";
 import { Slider } from "@/components/Hero/Slider/Slider";
 import { Testimonial } from "@/components/Testimonial";
-// import { api } from "@/lib/api";
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
+// import { prisma } from "@/lib/prisma";
 
-// async function getAllTestimonials(): Promise<TestimonialTypes[]> {
-//   const response = await api("/testimonials");
-//   const testimonials = await response.json();
-//   return testimonials;
-// }
+async function getAllTestimonials(): Promise<TestimonialTypes[]> {
+  const response = await api("/testimonials");
+  const testimonials = await response.json();
+  return testimonials;
+}
 
 export default async function Home() {
-  // const testimonials = await getAllTestimonials();
-  const testimonials = await prisma.testimonial.findMany({
-    where: {
-      published: true,
-    },
-  });
+  const testimonials = await getAllTestimonials();
+  // const testimonials = await prisma.testimonial.findMany({
+  //   where: {
+  //     published: true,
+  //   },
+  // });
   return (
     <div className="">
       <div className=" flex min-h-screen w-full flex-col items-center justify-center bg-[url('/img01.jpg')] bg-cover bg-right bg-no-repeat">
