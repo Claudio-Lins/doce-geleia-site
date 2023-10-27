@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function HeroText() {
   return (
-    <div className="mt-16 flex w-full max-w-xs flex-col space-y-4 rounded-lg bg-transparent bg-opacity-50 p-6 md:mt-0 md:max-w-md">
+    <div className="mt-10 flex w-full max-w-xs flex-col space-y-4 rounded-lg bg-transparent bg-opacity-50 p-6 md:mt-0 md:max-w-md">
       <h1 className="font-oldStandardTT text-5xl font-bold text-white">
         Doce Geleia
       </h1>
