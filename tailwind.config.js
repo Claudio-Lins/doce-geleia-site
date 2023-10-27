@@ -8,6 +8,10 @@ module.exports = {
     "./src/**/*.{ts,tsx}",
   ],
   theme: {
+    fontFamily: {
+      sans: "var(--font-montserrat)",
+      oldStandardTT: "var(--font-oldStandardTT)",
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -16,11 +20,6 @@ module.exports = {
       },
     },
     extend: {
-      fontFamily: {
-        oldStandardTT: ["Old Standard TT", "serif"],
-        montserrat: ["Montserrat", "system-ui"],
-      },
-
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -78,4 +77,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
