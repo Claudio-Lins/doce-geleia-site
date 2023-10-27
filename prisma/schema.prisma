@@ -87,6 +87,8 @@ model Order {
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   selectedProducts SelectedProduct[]
+  User             User?             @relation(fields: [userId], references: [id])
+  userId           String?
 }
 
 model SelectedProduct {
@@ -152,6 +154,7 @@ model User {
   hashedPassword String?
   accounts       Account[]
   sessions       Session[]
+  orders         Order[]
 }
 
 model VerificationToken {

@@ -11,13 +11,6 @@ async function getAllProducts(): Promise<Product[]> {
 
 export default async function Products() {
   const products = await getAllProducts();
-  // const products = await prisma.product.findMany({
-  //   include: {
-  //     productDetail: true,
-  //     category: true,
-  //     ingredients: true,
-  //   },
-  // });
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col justify-center px-2 pb-12 pt-24 sm:p-0 md:h-screen">
