@@ -1,17 +1,14 @@
 import { HeroText } from "@/components/Hero/HeroText";
 import { Slider } from "@/components/Hero/Slider/Slider";
-import { Testimonial } from "@/components/testimonials";
-import { api } from "@/lib/api";
-import { Testimonial as TestimonialProps } from "@prisma/client";
 
-async function getAllTestimonials(): Promise<TestimonialProps[]> {
-  const response = await api("/testimonials");
-  const testimonials = await response.json();
-  return testimonials;
-}
+// async function getAllTestimonials(): Promise<TestimonialProps[]> {
+//   const response = await api("/testimonials");
+//   const testimonials = await response.json();
+//   return testimonials;
+// }
 
 export default async function Home() {
-  const testimonials = await getAllTestimonials();
+  // const testimonials = await getAllTestimonials();
   // const testimonials = await prisma.testimonial.findMany({
   //   where: {
   //     published: true,
@@ -29,7 +26,7 @@ export default async function Home() {
         </div>
       </div>
       <div className=""></div>
-      <Testimonial testimonials={testimonials} />
+      {/* <Testimonial testimonials={testimonials} /> */}
     </div>
   );
 }
