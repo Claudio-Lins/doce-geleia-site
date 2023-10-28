@@ -53,13 +53,13 @@ export function Cart() {
   useEffect(() => {
     setTotalItems(items.reduce((acc, item) => acc + item.quantity, 0));
     setSubTotalPrice(
-      items.reduce((acc, item) => acc + item.price * item.quantity, 0)
+      items.reduce((acc, item) => acc + item.price * item.quantity, 0),
     );
     setTotalWeight(
       items.reduce(
         (acc, item) => acc + item.netWeight * item.quantity + packageWeight,
-        0
-      )
+        0,
+      ),
     );
     if (items.length === 0) {
       setShowCart(false);
@@ -82,22 +82,22 @@ export function Cart() {
           <div
             className={cn(
               " flex items-center gap-2 text-zinc-900",
-              pathName === "/" ? "text-white" : "text-zinc-900"
+              pathName === "/" ? "text-white" : "text-zinc-900",
             )}
           >
             <div className="flex items-center gap-1">
               <ShoppingCart
                 strokeWidth={1.2}
                 className={cn(
-                  "w-6 h-6 cursor-pointer font-light",
-                  pathName === "/" ? "text-white" : "text-zinc-900"
+                  "h-6 w-6 cursor-pointer font-light",
+                  pathName === "/" ? "text-white" : "text-zinc-900",
                 )}
               />
               {totalItems}
             </div>
           </div>
         </SheetTrigger>
-        <SheetContent className="w-full flex flex-col justify-between">
+        <SheetContent className="flex w-full flex-col justify-between">
           <SheetHeader>
             <SheetTitle className="flex items-center gap-2">
               <span className="text-xl font-bold">Carrinho de compras</span>
@@ -107,13 +107,13 @@ export function Cart() {
           </SheetHeader>
 
           <ScrollArea className="flex-1 pb-6">
-            <div className=" flex flex-wrap gap-4 justify-center mt-4">
+            <div className=" mt-4 flex flex-wrap justify-center gap-4">
               {items
                 .sort((a, b) => a.weight - b.weight)
                 .sort((a, b) => a.title.localeCompare(b.title))
                 .map((item: SelectedProduct) => (
                   <div
-                    className="border w-full flex max-w-xs p-2 rounded-lg bg-white shadow-sm gap-2"
+                    className="flex w-full max-w-xs gap-2 rounded-lg border bg-white p-2 shadow-sm"
                     key={item.id}
                   >
                     <Image
@@ -121,18 +121,18 @@ export function Cart() {
                       width={100}
                       height={100}
                       alt={item.title}
-                      className="bg-cover bg-center border-r"
+                      className="border-r bg-cover bg-center"
                     />
-                    <div className="flex flex-col w-full justify-between">
-                      <div className="w-full flex flex-col flex-1 gap-2">
-                        <p className=" leading-4 font-bold text-center w-full">
+                    <div className="flex w-full flex-col justify-between">
+                      <div className="flex w-full flex-1 flex-col gap-2">
+                        <p className=" w-full text-center font-bold leading-4">
                           {item.title}
                         </p>
                         <p className="w-full text-center text-xs font-bold">
                           {item.weight}gr
                         </p>
                       </div>
-                      <div className="flex w-full h-10 border-t justify-center gap-2 items-center">
+                      <div className="flex h-10 w-full items-center justify-center gap-2 border-t">
                         <button
                           onClick={() => removeItem(item.id, item.weight)}
                         >
@@ -177,8 +177,8 @@ export function Cart() {
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-bold text-lg">Total</TableCell>
-                  <TableCell className="text-right font-bold text-lg">
+                  <TableCell className="text-lg font-bold">Total</TableCell>
+                  <TableCell className="text-right text-lg font-bold">
                     <Currency
                       value={
                         isPickup

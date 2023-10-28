@@ -1,7 +1,7 @@
 import { ProductList } from "@/components/ProductList";
 import { Info } from "@/components/info";
 import { Separator } from "@/components/ui/separator";
-import { prisma } from "@/lib/prisma";
+import { getAllProducts, getProduct } from "@/data/products";
 import Image from "next/image";
 
 export default async function ProductPage({
@@ -9,30 +9,9 @@ export default async function ProductPage({
 }: {
   params: { slug: string };
 }) {
-  const product = await prisma.product.findUnique({
-    where: {
-      slug: params.slug,
-    },
-    include: {
-      productDetail: true,
-      category: true,
-      ingredients: true,
-    },
-  });
-  if (product && product.productDetail) {
-    product.productDetail = product.productDetail.map((detail) => ({
-      ...detail,
-      price: detail.price - (detail.price * detail.discount!) / 100,
-    }));
-  }
+  const product = await getProduct(params.slug);
+  const products = await getAllProducts();
 
-  const products = await prisma.product.findMany({
-    include: {
-      productDetail: true,
-      category: true,
-      ingredients: true,
-    },
-  });
   return (
     <div className="mx-auto mt-20 flex min-h-screen max-w-5xl items-center justify-center sm:mt-10">
       <div className="px-4 py-6 sm:px-6 lg:px-8">
@@ -55,7 +34,7 @@ export default async function ProductPage({
         <h2 className="mb-4 mt-10 text-center text-xl font-medium text-gray-900">
           Productos relacionados
         </h2>
-        {/* @ts-ignore */}
+
         <ProductList products={products} />
       </div>
     </div>
