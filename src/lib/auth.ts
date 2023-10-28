@@ -7,9 +7,15 @@ import { prisma } from "./prisma";
 
 export const authOptions: AuthOptions = {
   secret: process.env.SECRET,
+
+  jwt: {
+    secret: process.env.SECRET,
+  },
+
   session: {
     strategy: "jwt",
   },
+
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
@@ -36,8 +42,6 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req): Promise<any> {
-        console.log("Autorized", credentials);
-
         if (!credentials?.email || !credentials.password)
           throw new Error("Dados de login necessários");
 
@@ -55,22 +59,24 @@ export const authOptions: AuthOptions = {
           user.hashedPassword,
         );
         if (!isPasswordValid) throw new Error("Senha inválida");
-        console.log("Autorized", user);
         return user;
       },
     }),
   ],
 
-  jwt: {
-    secret: process.env.SECRET,
-  },
-
   callbacks: {
     async jwt({ token, user }) {
-      return { ...token, ...user };
+      console.log("token", token);
+      console.log("user", user);
+      if (user) {
+        return { ...token, ...user };
+      } else {
+        return token;
+      }
     },
     async session({ session, token }) {
       session.user.role = token.role;
+      session.user.id = token.id; // adicione esta linha
       return session;
     },
   },

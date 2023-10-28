@@ -51,8 +51,8 @@ export interface SelectedProduct {
 }
 
 export interface InfoClient {
-  firstName: string;
-  lastName: string;
+  fullName: string;
+  userId: string;
   email: string;
   phone: string;
   postalCode: string;
@@ -68,8 +68,7 @@ export interface OrderProps {
   userId: string;
   statusPayment: "PENDING" | "PAID" | "CANCELED";
   statusOrder: "PENDING" | "PREPERING" | "CANCELED" | "DELIVERED";
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
   phone: string;
   postalCode: string;

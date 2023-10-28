@@ -6,16 +6,14 @@ import { Separator } from "../ui/separator";
 export function DataPickupShip() {
   const { isPickup, infoClient } = useCartStore();
   return (
-    <div className="mt-4 rounded-lg border-[1px] p-2 text-xs text-gray-500 w-full md:w-1/2 print:w-1/2 h-48">
-      <h3 className="mb-2 border-b font-bold text-lg text-gray-500">
+    <div className="mt-4 h-48 w-full rounded-lg border-[1px] p-2 text-xs text-gray-500 print:w-1/2 md:w-1/2">
+      <h3 className="mb-2 border-b text-lg font-bold text-gray-500">
         {isPickup ? "Dados da Recolha" : "Dados da Entrega"}
       </h3>
       <div className="flex items-center gap-1">
         <strong>Nome:</strong>
         <p className="text-sm">
-          {isPickup
-            ? "Doce Geleia"
-            : infoClient.firstName + " " + infoClient.lastName}
+          {isPickup ? "Doce Geleia" : infoClient.fullName}
         </p>
       </div>
       <div className="flex items-center gap-1">

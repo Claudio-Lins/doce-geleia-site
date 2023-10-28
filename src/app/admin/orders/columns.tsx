@@ -30,8 +30,7 @@ const orderSchema = z.object({
   orderNumber: z.string(),
   statusOrder: z.enum(["PENDING", "PREPERING", "CANCELED", "DELIVERED"]),
   statusPayment: z.enum(["PENDING", "PAID", "CANCELED"]),
-  firstName: z.string().min(3),
-  lastName: z.string().min(3),
+  fullName: z.string().min(3),
   phone: z.string(),
   postalCode: z.string(),
   address: z.string(),
@@ -50,7 +49,7 @@ const orderSchema = z.object({
       coverUrl: z.string(),
       price: z.number(),
       quantity: z.number(),
-    })
+    }),
   ),
 });
 
@@ -93,12 +92,8 @@ export const columns: ColumnDef<Order>[] = [
     header: "Pagamento",
   },
   {
-    accessorKey: "firstName",
+    accessorKey: "fullName",
     header: "Name",
-  },
-  {
-    accessorKey: "lastName",
-    header: "Apelido",
   },
   // {
   //   accessorKey: "email",
@@ -159,13 +154,13 @@ export const columns: ColumnDef<Order>[] = [
               <DialogTrigger>
                 <EyeIcon className="h-5 w-5" />
               </DialogTrigger>
-              <DialogContent className="h-[calc(90vh)] max-w-none md:max-w-4xl w-full">
+              <DialogContent className="h-[calc(90vh)] w-full max-w-none md:max-w-4xl">
                 <DialogHeader>
                   <DialogTitle>
                     <div className="flex items-center">
                       <div className="flex flex-col gap-0">
                         <div className="text-lg font-medium">
-                          {order.firstName} {order.lastName}
+                          {order.fullName}
                         </div>
                         <div className="text-sm font-medium">
                           Pedido #:{order.orderNumber}

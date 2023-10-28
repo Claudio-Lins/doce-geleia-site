@@ -1,26 +1,21 @@
-import * as React from "react"
-import Currency from "../currency"
-
 interface SelectedProduct {
-  id: string
-  title: string
-  weight: number
-  quantity: number
+  id: string;
+  title: string;
+  weight: number;
+  quantity: number;
 }
 
 interface EmailContactProps {
-  firstName: string
-  lastName: string
-  email: string
-  totalItems: number
-  shippingPrice: number
-  subTotalPrice: number
-  products: SelectedProduct[]
+  fullName: string;
+  email: string;
+  totalItems: number;
+  shippingPrice: number;
+  subTotalPrice: number;
+  products: SelectedProduct[];
 }
 
 export function EmailOrder({
-  firstName,
-  lastName,
+  fullName,
   totalItems,
   shippingPrice,
   subTotalPrice,
@@ -29,9 +24,7 @@ export function EmailOrder({
 }: EmailContactProps) {
   return (
     <div>
-      <h1>
-        Olá, {firstName} {lastName}!
-      </h1>
+      <h1>Olá, {fullName}!</h1>
       <p>Obrigado ....!</p>
 
       <h2>Detalhes do Pedido</h2>
@@ -194,5 +187,5 @@ export function EmailOrder({
         </tr>
       </table>
     </div>
-  )
+  );
 }

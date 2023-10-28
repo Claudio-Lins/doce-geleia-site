@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default async function AdminPage() {
   const session = await getSession();
-
+  console.log({ session });
   if (session?.role !== "ADMIN") {
     return (
       <div className="flex min-h-screen w-full flex-col items-center justify-center gap-2">

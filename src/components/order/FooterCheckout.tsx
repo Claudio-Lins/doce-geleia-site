@@ -18,8 +18,7 @@ import { Table, TableCell, TableRow } from "../ui/table";
 import { DataPickupShip } from "./DataPickupShip";
 
 const EmailOrderSchema = z.object({
-  firstName: z.string().min(3),
-  lastName: z.string().min(3),
+  fullName: z.string().min(3),
   email: z.string().email(),
   totalItems: z.number(),
   shippingPrice: z.number(),
@@ -31,7 +30,7 @@ const EmailOrderSchema = z.object({
       weight: z.number(),
       netWeight: z.number(),
       quantity: z.number(),
-    })
+    }),
   ),
 });
 
@@ -44,8 +43,7 @@ export function FooterCheckout() {
   const [client, setClient] = useState({} as InfoClient);
   const [itemsSelected, setItemsSelected] = useState([] as SelectedProduct[]);
   const [isPortugal, setIsPortugal] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const {
     showModalOrder,
@@ -71,8 +69,7 @@ export function FooterCheckout() {
   }, [infoClient]);
 
   useEffect(() => {
-    setFirstName(client.firstName);
-    setLastName(client.lastName);
+    setFullName(client.fullName);
     setEmail(client.email);
     itemsSelected.map((item) => {
       const products = {
@@ -106,8 +103,7 @@ export function FooterCheckout() {
   async function handleSend() {
     setSending(true);
     await sendEmail({
-      firstName,
-      lastName,
+      fullName,
       email,
       totalItems,
       shippingPrice,
@@ -129,28 +125,28 @@ export function FooterCheckout() {
   }, [infoClient]);
 
   return (
-    <div className="py-4 border-t-4">
+    <div className="border-t-4 py-4">
       <Table className="w-full text-sm text-zinc-950">
         <TableRow>
           <TableCell className="text-right font-bold"></TableCell>
           <TableCell className="text-right font-bold">Subtotal</TableCell>
-          <TableCell className="text-right text-lg w-56">
+          <TableCell className="w-56 text-right text-lg">
             <Currency value={subTotalPrice / 100} />
           </TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="text-right font-bold">Frete</TableCell>
-          <TableCell className="text-right text-lg w-72">
+          <TableCell className="w-72 text-right text-lg">
             <BtnToggleShip />
           </TableCell>
-          <TableCell className="text-right text-lg w-56">
+          <TableCell className="w-56 text-right text-lg">
             <Currency value={isPickup ? 0 : shippingPrice} />
           </TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="text-right"></TableCell>
           <TableCell className="text-right text-lg font-bold">Total</TableCell>
-          <TableCell className="text-right font-extrabold text-xl w-56">
+          <TableCell className="w-56 text-right text-xl font-extrabold">
             <Currency
               value={
                 isPickup
@@ -161,16 +157,16 @@ export function FooterCheckout() {
           </TableCell>
         </TableRow>
       </Table>
-      <div className="flex flex-col w-full">
-        <div className="flex items-center flex-col sm:flex-row w-full gap-2 px-2">
+      <div className="flex w-full flex-col">
+        <div className="flex w-full flex-col items-center gap-2 px-2 sm:flex-row">
           <DataPickupShip />
 
-          <div className="mt-4 rounded-lg border-[1px] p-2 text-x w-full text-gray-500 print:w-1/2 md:w-1/2 h-48">
-            <h3 className=" border-b font-bold text-lg text-gray-500">
+          <div className="text-x mt-4 h-48 w-full rounded-lg border-[1px] p-2 text-gray-500 print:w-1/2 md:w-1/2">
+            <h3 className=" border-b text-lg font-bold text-gray-500">
               Dados de Pagamento
             </h3>
             <div className="flex items-center justify-center pt-2">
-              <div className="w-full rounded-lg flex flex-col justify-center items-center gap-4">
+              <div className="flex w-full flex-col items-center justify-center gap-4 rounded-lg">
                 <div className="flex flex-col items-center">
                   <Image
                     src={"/assets/mbway_logo.svg"}
@@ -196,12 +192,12 @@ export function FooterCheckout() {
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-4 px-2 mt-10 w-full print:hidden">
+      <div className="mt-10 flex w-full items-center gap-4 px-2 print:hidden">
         <Link
           href="/"
           className={cn(
             buttonVariants({ variant: "outline" }),
-            "w-1/2 flex items-center gap-2 text-zinc-50 bg-red-500"
+            "flex w-1/2 items-center gap-2 bg-red-500 text-zinc-50",
           )}
         >
           <span>Cancelar</span>
@@ -209,7 +205,7 @@ export function FooterCheckout() {
 
         <Button
           onClick={() => window.print()}
-          className="w-1/2 bg-gradient-to-tr from-zinc-500 to-zinc-700 flex items-center gap-2 text-white"
+          className="flex w-1/2 items-center gap-2 bg-gradient-to-tr from-zinc-500 to-zinc-700 text-white"
           type="button"
         >
           <span>Imprimir</span>
@@ -219,7 +215,7 @@ export function FooterCheckout() {
         <Button
           onClick={handleSend}
           disabled={sending}
-          className="w-1/2 bg-gradient-to-tr from-blue-500 to-blue-700 flex items-center gap-2 text-white"
+          className="flex w-1/2 items-center gap-2 bg-gradient-to-tr from-blue-500 to-blue-700 text-white"
         >
           <span>Enviar</span>
           <Mail size={16} />

@@ -1,24 +1,13 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import Image from "next/image"
-import { useCartStore } from "@/hooks/useCartStore"
-import { Separator } from "../ui/separator"
-import { Mail, Printer } from "lucide-react"
-import { SelectedProduct } from "@/@types"
-import Currency from "../currency"
-import { ScrollArea } from "../ui/scroll-area"
-import { useState } from "react"
-import { cn } from "@/lib/utils"
+import { SelectedProduct } from "@/@types";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import { useCartStore } from "@/hooks/useCartStore";
+import { Mail, Printer } from "lucide-react";
+import Image from "next/image";
+import Currency from "../currency";
+import { Separator } from "../ui/separator";
 
 export function ModalOrder() {
   const {
@@ -29,7 +18,7 @@ export function ModalOrder() {
     totalItems,
     totalWeight,
     subTotalPrice,
-  } = useCartStore()
+  } = useCartStore();
   return (
     <Dialog open={showModalOrder}>
       <DialogContent className="sm:max-w-5xl">
@@ -39,7 +28,7 @@ export function ModalOrder() {
             <tr className="text-gray-500">
               <th className="text-left">Produto</th>
               <th className="text-right">Quantidade</th>
-              <th className="text-right w-32">Sub-total</th>
+              <th className="w-32 text-right">Sub-total</th>
             </tr>
           </thead>
         </table>
@@ -49,7 +38,7 @@ export function ModalOrder() {
               return (
                 <li
                   key={item.id}
-                  className="flex justify-between items-center border-b"
+                  className="flex items-center justify-between border-b"
                 >
                   <div className="flex items-center gap-2 py-2">
                     <Image
@@ -72,7 +61,7 @@ export function ModalOrder() {
                     </span>
                   </div>
                 </li>
-              )
+              );
             })}
           </ul>
         </div>
@@ -89,13 +78,12 @@ export function ModalOrder() {
         </div>
         <Separator className="my-2" />
         <div className="flex flex-col">
-          <div className="flex items-center flex-col sm:flex-row w-full gap-2">
-            <div className="mt-4 rounded-lg border-[1px] p-2 text-xs text-gray-500 md:w-1/2 h-40">
-              <h3 className="mb-2 border-b font-bold text-lg text-gray-500">
+          <div className="flex w-full flex-col items-center gap-2 sm:flex-row">
+            <div className="mt-4 h-40 rounded-lg border-[1px] p-2 text-xs text-gray-500 md:w-1/2">
+              <h3 className="mb-2 border-b text-lg font-bold text-gray-500">
                 Dados de entrega
               </h3>
-              <strong>{infoClient.firstName}</strong>
-              <strong> {infoClient.lastName}</strong>
+              <strong>{infoClient.fullName}</strong>
               <br />
               <span>{infoClient.email} - </span>
               <span>{infoClient.phone}</span>
@@ -107,11 +95,11 @@ export function ModalOrder() {
               <p>{infoClient.observations}</p>
             </div>
 
-            <div className="mt-4 rounded-lg border-[1px] p-2 text-xs text-gray-500 md:w-1/2 h-40">
-              <h3 className="mb-2 border-b font-bold text-lg text-gray-500">
+            <div className="mt-4 h-40 rounded-lg border-[1px] p-2 text-xs text-gray-500 md:w-1/2">
+              <h3 className="mb-2 border-b text-lg font-bold text-gray-500">
                 Dados de pagamento
               </h3>
-              <div className="w-full rounded-lg p-2 flex flex-col justify-center items-center">
+              <div className="flex w-full flex-col items-center justify-center rounded-lg p-2">
                 <div className="flex items-center gap-2">
                   <Image
                     src={"/assets/mbway_logo.svg"}
@@ -148,7 +136,7 @@ export function ModalOrder() {
 
           <Button
             onClick={() => window.print()}
-            className="w-1/2 bg-gradient-to-tr from-zinc-500 to-zinc-700 flex items-center gap-2 text-white"
+            className="flex w-1/2 items-center gap-2 bg-gradient-to-tr from-zinc-500 to-zinc-700 text-white"
             type="submit"
           >
             <span>Imprimir</span>
@@ -157,7 +145,7 @@ export function ModalOrder() {
 
           <Button
             onClick={() => setShowModalOrder(false)}
-            className="w-1/2 bg-gradient-to-tr from-blue-500 to-blue-700 flex items-center gap-2 text-white"
+            className="flex w-1/2 items-center gap-2 bg-gradient-to-tr from-blue-500 to-blue-700 text-white"
             type="submit"
           >
             <span>Enviar</span>
@@ -166,5 +154,5 @@ export function ModalOrder() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

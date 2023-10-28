@@ -72,8 +72,7 @@ model Order {
   orderNumber      String
   statusPayment    StatusPayment     @default(PENDING)
   statusOrder      StatusOrder       @default(PENDING)
-  firstName        String
-  lastName         String
+  fullName         String
   email            String
   phone            String
   postalCode       String

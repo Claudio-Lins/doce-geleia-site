@@ -1,5 +1,8 @@
+"use client";
 import { useCartStore } from "@/hooks/useCartStore";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import PhoneInput from "react-phone-input-2";
 import { z } from "zod";
@@ -7,8 +10,8 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 
 const formInfoClientSchema = z.object({
-  firstName: z.string().min(3),
-  lastName: z.string().min(3),
+  userId: z.string(),
+  fullName: z.string(),
   email: z.string().email(),
   phone: z.string().min(12),
   postalCode: z.string().min(4),
@@ -22,7 +25,16 @@ const formInfoClientSchema = z.object({
 type FormInfoClientData = z.infer<typeof formInfoClientSchema>;
 
 export function FormInfoClient() {
-  const { infoClient, setInfoClient, setStep, step } = useCartStore();
+  const { data: session, status } = useSession();
+  const { infoClient, setInfoClient, setStep, step, userId, setUserId } =
+    useCartStore();
+
+  useEffect(() => {
+    if (session) {
+      setUserId(session?.user?.id!);
+    }
+  }, [session, setUserId]);
+
   const {
     control,
     register,
@@ -31,9 +43,9 @@ export function FormInfoClient() {
   } = useForm<FormInfoClientData>({
     resolver: zodResolver(formInfoClientSchema),
     defaultValues: {
-      firstName: infoClient.firstName,
-      lastName: infoClient.lastName,
-      email: infoClient.email,
+      userId: userId,
+      fullName: session ? session?.user?.name! : infoClient.fullName,
+      email: session ? session?.user?.email! : infoClient.email,
       phone: infoClient.phone,
       postalCode: infoClient.postalCode,
       address: infoClient.address,
@@ -44,13 +56,8 @@ export function FormInfoClient() {
     },
   });
 
-  // persist data in localstorage
-  // useEffect(() => {
-  //   localStorage.setItem("infoClient", JSON.stringify(infoClient))
-  // }, [infoClient])
-
   async function handleFormInfoClient(data: FormInfoClientData) {
-    await setInfoClient(data);
+    setInfoClient(data);
     setStep(step + 1);
   }
 
@@ -61,29 +68,32 @@ export function FormInfoClient() {
         onSubmit={handleSubmit(handleFormInfoClient)}
         className="flex w-full flex-col gap-2"
       >
+        <p>UserId:{userId}</p>
         <div className="flex w-full flex-col items-center gap-2 md:flex-row">
           <div className="itmes-cneter flex w-full flex-col">
             <Input
               type="text"
-              placeholder="Primeiro Nome"
+              placeholder="Nome e Apelido"
               className="w-full"
-              {...register("firstName")}
+              value={session?.user?.name!}
+              {...register("fullName")}
             />
             <small className="mt-2 text-red-600">
-              {errors.firstName && "Campo obrigatório"}
+              {errors.fullName && "Campo obrigatório"}
             </small>
           </div>
-          <div className="itmes-cneter flex w-full flex-col">
+          {/* <div className="itmes-cneter flex w-full flex-col">
             <Input
               type="text"
               placeholder="Apelido"
               className="w-full"
+              value={session?.data?.user?.name!}
               {...register("lastName")}
             />
             <small className="mt-2 text-red-600">
               {errors.lastName && "Campo obrigatório"}
             </small>
-          </div>
+          </div> */}
         </div>
         <div className="flex w-full items-center gap-2">
           <div className="itmes-cneter flex w-full flex-col">
@@ -91,6 +101,7 @@ export function FormInfoClient() {
               type="email"
               placeholder="Email"
               className="w-full"
+              value={session?.user?.email!}
               {...register("email")}
             />
             <small className="mt-2 text-red-600">

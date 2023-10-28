@@ -8,16 +8,15 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { firstName, lastName, email } = body;
+    const { fullName, email } = body;
     const data = await resend.emails.send({
       from: "Order - Carrinho de compras <order@docegeleia.pt>",
       to: email,
-      reply_to: process.env.EMAIL_KAREN,
-      cc: process.env.EMAIL_DOCE,
+      reply_to: process.env.EMAIL_REPLAY_TO,
+      // cc: process.env.EMAIL_CC,
       subject: "Order - Carrinho de compras",
       react: EmailOrder({
-        firstName,
-        lastName,
+        fullName,
         email,
         totalItems: body.totalItems,
         shippingPrice: body.shippingPrice,

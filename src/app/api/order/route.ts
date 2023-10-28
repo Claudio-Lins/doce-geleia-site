@@ -7,8 +7,7 @@ interface OrderProps {
   userId: string;
   statusPayment: "PENDING" | "PAID" | "CANCELED";
   statusOrder: "PENDING" | "PREPERING" | "CANCELED" | "DELIVERED";
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
   phone: string;
   postalCode: string;
@@ -52,8 +51,7 @@ export async function POST(request: Request, response: Response) {
     orderNumber: body.orderNumber,
     statusPayment: body.statusPayment,
     statusOrder: body.statusOrder,
-    firstName: body.firstName,
-    lastName: body.lastName,
+    fullName: body.fullName,
     email: body.email,
     phone: body.phone,
     postalCode: body.postalCode,

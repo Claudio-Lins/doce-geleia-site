@@ -36,6 +36,8 @@ type CartStore = {
   removeItem: (id: string, weight: number) => void;
   infoClient: InfoClient;
   setInfoClient: (infoClient: InfoClient) => void;
+  userId: string;
+  setUserId: (userId: string) => void;
   showModalOrder: boolean;
   setShowModalOrder: (showModalOrder: boolean) => void;
   resetLocalStorage: () => void;
@@ -60,8 +62,7 @@ export const useCartStore = create<CartStore>((set, get) => {
       set({
         items: [],
         // infoClient: {
-        //   firstName: "",
-        //   lastName: "",
+        //   fulltName: "",
         //   email: "",
         //   address: "",
         //   city: "",
@@ -110,7 +111,7 @@ export const useCartStore = create<CartStore>((set, get) => {
     addItem: (item) =>
       set((state) => {
         const itemExists = state.items.find(
-          (i) => i.id === item.id && i.weight === item.weight
+          (i) => i.id === item.id && i.weight === item.weight,
         );
 
         if (itemExists) {
@@ -118,7 +119,7 @@ export const useCartStore = create<CartStore>((set, get) => {
             items: state.items.map((i) =>
               i.id === item.id && i.weight === item.weight
                 ? { ...i, quantity: i.quantity + 1 }
-                : i
+                : i,
             ),
           };
         } else {
@@ -129,13 +130,13 @@ export const useCartStore = create<CartStore>((set, get) => {
     removeItem: (id, weight: number) =>
       set((state) => {
         const itemExists = state.items.find(
-          (i) => i.id === id && i.weight === weight
+          (i) => i.id === id && i.weight === weight,
         );
 
         if (itemExists?.quantity === 1) {
           return {
             items: state.items.filter(
-              (i) => !(i.id === id && i.weight === weight)
+              (i) => !(i.id === id && i.weight === weight),
             ),
           };
         } else {
@@ -143,7 +144,7 @@ export const useCartStore = create<CartStore>((set, get) => {
             items: state.items.map((i) =>
               i.id === id && i.weight === weight
                 ? { ...i, quantity: i.quantity - 1 }
-                : i
+                : i,
             ),
           };
         }
@@ -154,5 +155,8 @@ export const useCartStore = create<CartStore>((set, get) => {
 
     infoClient: initialInfoClient ? JSON.parse(initialInfoClient) : {},
     setInfoClient: (infoClient) => set({ infoClient }),
+
+    userId: "",
+    setUserId: (userId) => set({ userId }),
   };
 });

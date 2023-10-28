@@ -4,10 +4,10 @@ import { z } from "zod";
 
 const orderSchema = z.object({
   orderNumber: z.string(),
+  userId: z.string(),
   statusPayment: z.enum(["PENDING", "PAID", "CANCELED"]),
   statusOrder: z.enum(["PENDING", "PREPERING", "CANCELED", "DELIVERED"]),
-  firstName: z.string().min(3),
-  lastName: z.string().min(3),
+  fullName: z.string().min(3),
   email: z.string().email(),
   phone: z.string(),
   postalCode: z.string(),
@@ -27,7 +27,7 @@ const orderSchema = z.object({
       weight: z.number(),
       netWeight: z.number(),
       quantity: z.number(),
-    })
+    }),
   ),
 });
 
@@ -38,6 +38,7 @@ export function useCreateOrder() {
   const {
     items,
     infoClient,
+    userId,
     orderNumber,
     isPickup,
     subTotalPrice,
@@ -47,6 +48,7 @@ export function useCreateOrder() {
   async function handleFormOrder() {
     const order: OrderData = {
       ...infoClient,
+      userId: userId,
       selectedProducts: items,
       orderNumber: orderNumber,
       statusPayment: "PENDING",

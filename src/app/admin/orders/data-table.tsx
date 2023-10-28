@@ -43,7 +43,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [],
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -74,10 +74,10 @@ export function DataTable<TData, TValue>({
         <Input
           placeholder="Filtrar nome..."
           value={
-            (table.getColumn("firstName")?.getFilterValue() as string) ?? ""
+            (table.getColumn("fullName")?.getFilterValue() as string) ?? ""
           }
           onChange={(event) =>
-            table.getColumn("firstName")?.setFilterValue(event.target.value)
+            table.getColumn("fullName")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -115,12 +115,12 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="font-bold text-lg">
+                    <TableHead key={header.id} className="text-lg font-bold">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -138,14 +138,14 @@ export function DataTable<TData, TValue>({
                   className={cn(
                     rowData.statusPayment === "PAID" && "bg-blue-50",
                     rowData.statusPayment === "PENDING" && "bg-yellow-50",
-                    rowData.statusPayment === "CANCELED" && "bg-red-50"
+                    rowData.statusPayment === "CANCELED" && "bg-red-50",
                   )}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

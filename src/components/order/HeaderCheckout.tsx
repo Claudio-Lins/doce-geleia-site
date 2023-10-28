@@ -31,12 +31,10 @@ export function HeaderCheckout() {
   }, [items, infoClient, setOrderNumber]);
 
   return (
-    <header className="border-b pb-2 px-2 md:px-0 fixed w-full max-w-6xl bg-white z-10 ">
+    <header className="fixed z-10 w-full max-w-6xl border-b bg-white px-2 pb-2 md:px-0 ">
       <div className="flex items-center justify-between">
         <div className="">
-          <h1 className="text-3xl font-bold ">
-            {client?.firstName} {client.lastName},
-          </h1>
+          <h1 className="text-3xl font-bold ">{client?.fullName},</h1>
           <span>Resumo da compra</span>
         </div>
         <span>

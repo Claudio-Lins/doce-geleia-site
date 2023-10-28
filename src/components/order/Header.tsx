@@ -1,7 +1,7 @@
-import { useCartStore } from "@/hooks/useCartStore"
+import { useCartStore } from "@/hooks/useCartStore";
 
 export function Header() {
-  const { infoClient, step } = useCartStore()
+  const { infoClient, step } = useCartStore();
   return (
     <header>
       {step === 1 && (
@@ -15,7 +15,7 @@ export function Header() {
       {step === 2 && (
         <div className="">
           <h2 className="text-2xl font-bold">
-            Olá {infoClient.firstName}, confira seus produtos
+            Olá {infoClient.fullName}, confira seus produtos
           </h2>
           <span className="text-gray-500"></span>
         </div>
@@ -29,5 +29,5 @@ export function Header() {
         </div>
       )}
     </header>
-  )
+  );
 }
