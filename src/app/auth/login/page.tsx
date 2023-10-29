@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
+import { AuthButton } from "@/components/AuthButton";
 import { Slider } from "@/components/Hero/Slider/Slider";
 import { UserLoginForm } from "@/components/user-login-auth";
 
@@ -30,27 +31,37 @@ export default function AuthenticationPage() {
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">Entrar</h1>
               <p className="text-sm text-muted-foreground">
-                Enter your email and password below to login your account
+                Entre com seu email e senha!
               </p>
             </div>
             <UserLoginForm />
-            <p className="px-8 text-center text-sm text-muted-foreground">
-              By clicking continue, you agree to our{" "}
+            <div className="flex w-full flex-col items-center justify-center gap-2">
+              <span>ou</span>
+              <AuthButton page="register" />
+            </div>
+            <Link
+              href="/police"
+              className="w-full text-center text-xs underline-offset-4 hover:text-primary hover:underline"
+            >
+              Politica de privacidade
+            </Link>
+            {/* <p className="px-8 text-center text-sm text-muted-foreground">
+              Clicando em continuar você esta de acordo com os termos{" "}
               <Link
                 href="/terms"
                 className="underline underline-offset-4 hover:text-primary"
               >
-                Terms of Service
+                Termos dos serviços
               </Link>{" "}
               and{" "}
               <Link
-                href="/privacy"
+                href="/police"
                 className="underline underline-offset-4 hover:text-primary"
               >
-                Privacy Policy
+                Politica de privacidade
               </Link>
               .
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
