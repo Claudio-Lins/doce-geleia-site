@@ -16,7 +16,7 @@ export default async function Home() {
   return (
     <div className="">
       <div className=" flex min-h-screen w-full flex-col items-center justify-center bg-[url('/img01.jpg')] bg-cover bg-right bg-no-repeat">
-        <div className=" absolute  min-h-screen w-full bg-zinc-950 opacity-70" />
+        <div className=" absolute  min-h-screen w-full bg-zinc-950 opacity-50" />
         <div className="z-[1] mt-0 flex min-h-screen w-full flex-col items-center justify-center md:flex-row md:justify-evenly">
           <HeroText />
           <div className="hidden md:block">

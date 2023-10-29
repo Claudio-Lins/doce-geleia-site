@@ -1,4 +1,7 @@
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CookingPot } from "@phosphor-icons/react";
+import { Truck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -9,6 +12,9 @@ import { Separator } from "../ui/separator";
 interface FormStatusProps {
   order: any;
 }
+// const FormStatusPreperingSchema = z.object({
+//   fullName: z.string().min(3),
+// });
 
 const orderSchema = z.object({
   id: z.string(),
@@ -18,6 +24,7 @@ const orderSchema = z.object({
 });
 
 export type StatusOrderData = z.infer<typeof orderSchema>;
+// export type FormStatusPreperingData = z.infer<typeof FormStatusPreperingSchema>;
 
 export function FormStatus({ order }: FormStatusProps) {
   const route = useRouter();
@@ -35,6 +42,22 @@ export function FormStatus({ order }: FormStatusProps) {
     },
   });
 
+  async function handleFormOrderPrepering(data: StatusOrderData) {
+    const response = await fetch("/api/email-order-prepering", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      toast.success("Pedido enviado com sucesso!");
+    } else {
+      toast.error("Erro ao enviar o pedido");
+    }
+  }
+
   async function handleFormOrderStatus(data: StatusOrderData) {
     await fetch(`/api/order`, {
       method: "PUT",
@@ -48,19 +71,19 @@ export function FormStatus({ order }: FormStatusProps) {
   }
 
   return (
-    <div className="p-4 border rounded-lg shadow-sm flex flex-col gap-2">
+    <div className="flex flex-col gap-2 rounded-lg border p-4 shadow-sm">
       <form
         onSubmit={handleSubmit(handleFormOrderStatus)}
-        className="gap-2 flex flex-col"
+        className="flex flex-col gap-2"
       >
-        <div className="flex items-center gap-2 justify-center">
+        <div className="flex items-center justify-center gap-2">
           <div className="w-full">
-            <div className="ml-2 mb-1 text-sm font-medium">
+            <div className="mb-1 ml-2 text-sm font-medium">
               <span>Status do pedido</span>
             </div>
             <select
               placeholder="Status do pedido"
-              className="w-full rounded-md border text-sm border-gray-300 p-2"
+              className="w-full rounded-md border border-gray-300 p-2 text-sm"
               {...register("statusOrder")}
             >
               <option value="PENDING">Pendente</option>
@@ -70,12 +93,12 @@ export function FormStatus({ order }: FormStatusProps) {
             </select>
           </div>
           <div className="w-full">
-            <div className="ml-2 mb-1 text-sm font-medium">
+            <div className="mb-1 ml-2 text-sm font-medium">
               <span>Status do pagamento</span>
             </div>
             <select
               placeholder="Status do Pagamento"
-              className="w-full rounded-md border text-sm border-gray-300 p-2"
+              className="w-full rounded-md border border-gray-300 p-2 text-sm"
               {...register("statusPayment")}
             >
               <option value="PENDING">Pendente</option>
@@ -85,9 +108,41 @@ export function FormStatus({ order }: FormStatusProps) {
           </div>
         </div>
         <Separator className="my-2" />
-        <div className="flex items-center justify-end mb-2 gap-2">
+        <div className="mb-2 flex items-center justify-end gap-2">
+          <Button
+            variant={
+              order.statusOrder === "PREPERING" ? "outline" : "secondary"
+            }
+            onClick={() => handleFormOrderPrepering(order)}
+            className="flex w-1/4 items-center justify-center gap-2"
+            type="button"
+          >
+            <span>Preparando</span>
+            <CookingPot
+              className={cn(
+                "h-4 w-4",
+                order.statusOrder === "PREPERING" && "animate-bounce",
+              )}
+            />
+          </Button>
+          <Button
+            variant={
+              order.statusOrder === "DELIVERED" ? "destructive" : "secondary"
+            }
+            onClick={() => handleFormOrderPrepering(order)}
+            className="flex w-1/4 items-center justify-center gap-2"
+            type="button"
+          >
+            <span>Enviado</span>
+            <Truck
+              className={cn(
+                "h-4 w-4",
+                order.statusOrder === "DELIVERED" && "animate-bounce",
+              )}
+            />
+          </Button>
           <Button className="w-1/4" type="submit">
-            Edit
+            Salvar
           </Button>
         </div>
       </form>

@@ -163,7 +163,7 @@ export const columns: ColumnDef<Order>[] = [
                           {order.fullName}
                         </div>
                         <div className="text-sm font-medium">
-                          Pedido #:{order.orderNumber}
+                          Pedidooo #:{order.orderNumber}
                         </div>
                       </div>
                       <div className="ml-auto">

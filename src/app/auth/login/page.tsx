@@ -40,7 +40,7 @@ export default function AuthenticationPage() {
               <AuthButton page="register" />
             </div>
             <Link
-              href="/police"
+              href="/policy"
               className="w-full text-center text-xs underline-offset-4 hover:text-primary hover:underline"
             >
               Politica de privacidade
