@@ -120,8 +120,18 @@ export function Navbar() {
             {data ? (
               <Profile />
             ) : (
-              <Button onClick={handleLogin} variant={"ghost"} size={"icon"}>
-                <User size={24} />
+              <Button
+                onClick={handleLogin}
+                variant={"ghost"}
+                size={"icon"}
+                className={cn(
+                  "rounded-lg bg-transparent",
+                  pathName !== "/"
+                    ? " text-zinc-950 hover:bg-zinc-100"
+                    : " hover:bg-zinc-100/50 hover:text-zinc-900",
+                )}
+              >
+                <User strokeWidth={1.5} size={24} />
               </Button>
             )}
           </NavigationMenuItem>
