@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-import { AuthButton } from "@/components/AuthButton";
 import { UserRegisterForm } from "@/components/user-register-auth";
 
 export const metadata: Metadata = {
@@ -14,7 +13,7 @@ export default function RegisterPage() {
   return (
     <>
       <div className="container relative hidden h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-        <AuthButton page="/admin/register" />
+        {/* <AuthButton page="/admin/register" /> */}
         <div className="relative hidden min-h-screen flex-col  text-white dark:border-r lg:flex">
           <Image
             src="https://source.unsplash.com/random/400×400/?fruit"

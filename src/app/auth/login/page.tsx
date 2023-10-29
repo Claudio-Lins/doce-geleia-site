@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
-import { AuthButton } from "@/components/AuthButton";
 import { Slider } from "@/components/Hero/Slider/Slider";
 import { UserLoginForm } from "@/components/user-login-auth";
 
@@ -14,7 +13,7 @@ export default function AuthenticationPage() {
   return (
     <>
       <div className="container relative hidden h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-        <AuthButton page="login" />
+        {/* <AuthButton page="login" /> */}
         <div className="relative hidden min-h-screen flex-col  text-white dark:border-r lg:flex">
           <div className="relative hidden min-h-screen flex-col items-center justify-center text-white dark:border-r lg:flex">
             {/* <Image
