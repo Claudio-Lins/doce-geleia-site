@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 
 import { AuthButton } from "@/components/AuthButton";
+import { Slider } from "@/components/Hero/Slider/Slider";
 import { UserRegisterForm } from "@/components/user-register-auth";
 
 export const metadata: Metadata = {
@@ -13,16 +13,11 @@ export const metadata: Metadata = {
 export default function RegisterPage() {
   return (
     <>
-      <div className="container relative hidden h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-        <div className="relative hidden min-h-screen flex-col  text-white dark:border-r lg:flex">
-          <Image
-            src="https://source.unsplash.com/random/400×400/?fruit"
-            alt="Random image from Unsplash"
-            width={1200}
-            height={800}
-          />
+      <div className=" flex w-full items-center justify-evenly">
+        <div className="hidden min-h-screen flex-col items-center justify-center text-white dark:border-r lg:flex">
+          <Slider numSlides={1} />
         </div>
-        <div className="lg:p-8">
+        <div className=" flex w-full max-w-sm items-center justify-center px-4 py-24 pb-10 lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
