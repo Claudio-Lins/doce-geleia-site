@@ -6,7 +6,7 @@ export default function Contact() {
     <div className="flex min-h-screen w-full flex-wrap items-center justify-center pt-20">
       <div className="w-1/2">
         <Image
-          src="/assets/karen-comic.jpg"
+          src="https://res.cloudinary.com/dq5cfx6jf/image/upload/v1698660571/assets/contact/fxjnntjrrvtyrhhxbv46.jpg"
           alt="contact"
           width={500}
           height={500}
