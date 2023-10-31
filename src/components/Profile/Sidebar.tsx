@@ -21,16 +21,16 @@ export function Sidebar() {
   }
 
   return (
-    <aside className=" flex flex-col gap-6 border-r border-zinc-200 px-5 py-8">
+    <aside className="flex flex-col gap-6 border-r border-zinc-200 px-0 py-0 md:px-5 md:py-8">
       <div className="flex items-center gap-2">
         <Avatar>
           <AvatarImage src={session?.user.image} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <span>{session?.user.name}</span>
+        <span className="hidden md:flex">{session?.user.name}</span>
       </div>
       <Separator />
-      <nav className="space-y-0.5">
+      <nav className="w-12 space-y-0.5 md:w-full">
         <NavItem
           icon={PackageOpen}
           title={"Pedidos"}

@@ -23,10 +23,10 @@ export default async function MinhaConta() {
   }
 
   return (
-    <div className="mx-auto mb-20 mt-28 w-full max-w-6xl overflow-hidden rounded-xl border p-4">
-      <div className="grid-cols-app grid ">
+    <div className="mx-auto mb-20 mt-28 w-full max-w-6xl overflow-hidden border-t p-4 md:rounded-xl md:border">
+      <div className="grid-cols-appMobile grid md:grid-cols-app ">
         <Sidebar />
-        <div className="p-10">
+        <div className="p-4 md:p-10">
           <ProfileContent />
         </div>
       </div>

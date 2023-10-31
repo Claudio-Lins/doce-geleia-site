@@ -49,14 +49,20 @@ export function OrderHistory() {
   return (
     <div className="w-full">
       <h1 className="text-2xl font-bold">Historico de Pedidos</h1>
-      <div className="mt-2 w-full">
+      <div className="mt-2 hidden w-full md:block">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-zinc-950">
             <TableRow>
-              <TableHead className="w-[100px] font-bold">Data</TableHead>
-              <TableHead className="font-bold">orderNumber</TableHead>
-              <TableHead className="font-bold">Valor</TableHead>
-              <TableHead className="text-right font-bold">Status</TableHead>
+              <TableHead className="w-[100px] font-bold text-zinc-950">
+                Data
+              </TableHead>
+              <TableHead className=" font-bold text-zinc-950">
+                orderNumber
+              </TableHead>
+              <TableHead className="font-bold text-zinc-950">Valor</TableHead>
+              <TableHead className="text-right font-bold text-zinc-950">
+                Status
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -69,8 +75,8 @@ export function OrderHistory() {
                     day: "numeric",
                   }).format(new Date(order.createdAt))}
                 </TableHead>
-                <TableHead>{order.orderNumber}</TableHead>
-                <TableHead>
+                <TableHead className="">{order.orderNumber}</TableHead>
+                <TableHead className="">
                   <Currency value={order.totalAmount} />
                 </TableHead>
                 <TableHead className="text-right">
@@ -95,9 +101,52 @@ export function OrderHistory() {
           </TableBody>
         </Table>
       </div>
-      {/* <pre>
-        <code>{JSON.stringify(orderHistory, null, 2)}</code>
-      </pre> */}
+      <div className="mt-2 w-full md:hidden">
+        <table className="w-full">
+          <thead className="border-b">
+            <tr>
+              <th className="w-[100px] py-2 text-left font-bold text-zinc-950">
+                Data
+              </th>
+              <th className="py-2 text-right font-bold text-zinc-950">
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {orderHistory.map((order: OrderHistoryProps) => (
+              <tr
+                key={order.id}
+                className="transition-colors duration-200 ease-in-out hover:bg-gray-100"
+              >
+                <td className="w-[100px] py-2">
+                  {new Intl.DateTimeFormat("pt-PT", {
+                    month: "numeric",
+                    day: "numeric",
+                  }).format(new Date(order.createdAt))}
+                </td>
+                <td className="py-2 text-right">
+                  <Badge
+                    variant="default"
+                    className={cn(
+                      order.statusOrder === "PENDING" &&
+                        "bg-orange-500 text-orange-100",
+                      order.statusOrder === "PREPERING" &&
+                        "bg-blue-500 text-blue-100",
+                      order.statusOrder === "CANCELED" &&
+                        "bg-red-600 text-red-100",
+                      order.statusOrder === "DELIVERED" &&
+                        "bg-green-600 text-green-100",
+                    )}
+                  >
+                    {statusOrder(order.statusOrder)}
+                  </Badge>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
