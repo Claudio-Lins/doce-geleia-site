@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -7,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Currency from "../currency";
@@ -72,7 +74,21 @@ export function OrderHistory() {
                   <Currency value={order.totalAmount} />
                 </TableHead>
                 <TableHead className="text-right">
-                  {statusOrder(order.statusOrder)}
+                  <Badge
+                    variant="default"
+                    className={cn(
+                      order.statusOrder === "PENDING" &&
+                        "bg-orange-500 text-orange-100",
+                      order.statusOrder === "PREPERING" &&
+                        "bg-blue-500 text-blue-100",
+                      order.statusOrder === "CANCELED" &&
+                        "bg-red-600 text-red-100",
+                      order.statusOrder === "DELIVERED" &&
+                        "bg-green-600 text-green-100",
+                    )}
+                  >
+                    {statusOrder(order.statusOrder)}
+                  </Badge>
                 </TableHead>
               </TableRow>
             ))}
