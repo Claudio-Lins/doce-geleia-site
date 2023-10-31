@@ -8,6 +8,7 @@ const nextConfig = {
       "www.google.com",
       "docegeleia.pt",
       "source.unsplash.com",
+      "lh3.googleusercontent.com",
     ],
   },
 };

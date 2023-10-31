@@ -4,6 +4,10 @@ import { create } from "zustand";
 interface OrderStore {
   order: OrderProps;
   setOrder: (order: OrderProps) => void;
+  showOrderHistory: boolean;
+  setShowOrderHistory: (showOrderHistory: boolean) => void;
+  showTestimonial: boolean;
+  setShowTestimonial: (showTestimonial: boolean) => void;
 }
 export const useOrderStore = create<OrderStore>((set, get) => {
   let initialOrder: OrderProps = {
@@ -32,6 +36,10 @@ export const useOrderStore = create<OrderStore>((set, get) => {
   }
 
   return {
+    showOrderHistory: false,
+    setShowOrderHistory: (showOrderHistory) => set({ showOrderHistory }),
+    showTestimonial: false,
+    setShowTestimonial: (showTestimonial) => set({ showTestimonial }),
     order: initialOrder,
     setOrder: (order: OrderProps) => {
       localStorage.setItem("order", JSON.stringify(order));

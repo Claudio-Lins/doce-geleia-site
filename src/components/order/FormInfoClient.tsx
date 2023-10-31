@@ -68,7 +68,6 @@ export function FormInfoClient() {
         onSubmit={handleSubmit(handleFormInfoClient)}
         className="flex w-full flex-col gap-2"
       >
-        <p>UserId:{userId}</p>
         <div className="flex w-full flex-col items-center gap-2 md:flex-row">
           <div className="itmes-cneter flex w-full flex-col">
             <Input

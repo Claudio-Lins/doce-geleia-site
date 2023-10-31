@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
+import { getSession } from "next-auth/react";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -32,4 +33,18 @@ export async function POST(request: NextRequest) {
   });
 
   return NextResponse.json(user);
+}
+
+export async function GET() {
+  const session = await getSession();
+  const userId = session?.user?.id;
+  const users = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    include: {
+      orders: true,
+    },
+  });
+  return NextResponse.json(users);
 }
