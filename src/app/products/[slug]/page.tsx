@@ -4,6 +4,14 @@ import { Separator } from "@/components/ui/separator";
 import { getAllProducts, getProduct } from "@/data/products";
 import Image from "next/image";
 
+export async function generateStaticParams() {
+  const products = await getAllProducts();
+
+  return products.map((product) => {
+    return { slug: product.slug };
+  });
+}
+
 export default async function ProductPage({
   params,
 }: {
