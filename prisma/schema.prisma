@@ -113,6 +113,7 @@ enum StatusOrder {
   PREPERING
   CANCELED
   DELIVERED
+  SHIPPED
 }
 
 // AUTH

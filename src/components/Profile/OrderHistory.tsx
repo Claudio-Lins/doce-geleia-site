@@ -42,6 +42,9 @@ export function OrderHistory() {
     if (status === "CANCELED") {
       return "Cancelado";
     }
+    if (status === "SHIPPED") {
+      return "Enviado";
+    }
     if (status === "DELIVERED") {
       return "Entregue";
     }
@@ -95,6 +98,8 @@ export function OrderHistory() {
                           "bg-red-600 text-red-100",
                         order.statusOrder === "DELIVERED" &&
                           "bg-green-600 text-green-100",
+                        order.statusOrder === "SHIPPED" &&
+                          "bg-zinc-900 text-zinc-50",
                       )}
                     >
                       {statusOrder(order.statusOrder)}
@@ -145,6 +150,8 @@ export function OrderHistory() {
                           "bg-red-600 text-red-100",
                         order.statusOrder === "DELIVERED" &&
                           "bg-green-600 text-green-100",
+                        order.statusOrder === "SHIPPED" &&
+                          "bg-zinc-900 text-zinc-50",
                       )}
                     >
                       {statusOrder(order.statusOrder)}

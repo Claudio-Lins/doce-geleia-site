@@ -18,7 +18,13 @@ interface FormStatusProps {
 
 const orderSchema = z.object({
   id: z.string(),
-  statusOrder: z.enum(["PENDING", "PREPERING", "CANCELED", "DELIVERED"]),
+  statusOrder: z.enum([
+    "PENDING",
+    "PREPERING",
+    "CANCELED",
+    "SHIPPED",
+    "DELIVERED",
+  ]),
   statusPayment: z.enum(["PENDING", "PAID", "CANCELED"]),
   delivered: z.boolean(),
 });
@@ -89,6 +95,7 @@ export function FormStatus({ order }: FormStatusProps) {
               <option value="PENDING">Pendente</option>
               <option value="PREPERING">Preparando</option>
               <option value="CANCELED">Cancelado</option>
+              <option value="SHIPPED">Enviado</option>
               <option value="DELIVERED">Entregue</option>
             </select>
           </div>
@@ -127,7 +134,7 @@ export function FormStatus({ order }: FormStatusProps) {
           </Button>
           <Button
             variant={
-              order.statusOrder === "DELIVERED" ? "destructive" : "secondary"
+              order.statusOrder === "SHIPPED" ? "destructive" : "secondary"
             }
             onClick={() => handleFormOrderPrepering(order)}
             className="flex w-1/4 items-center justify-center gap-2"
@@ -137,7 +144,7 @@ export function FormStatus({ order }: FormStatusProps) {
             <Truck
               className={cn(
                 "h-4 w-4",
-                order.statusOrder === "DELIVERED" && "animate-bounce",
+                order.statusOrder === "SHIPPED" && "animate-bounce",
               )}
             />
           </Button>

@@ -67,7 +67,7 @@ export interface OrderProps {
   orderNumber: string;
   userId: string;
   statusPayment: "PENDING" | "PAID" | "CANCELED";
-  statusOrder: "PENDING" | "PREPERING" | "CANCELED" | "DELIVERED";
+  statusOrder: "PENDING" | "PREPERING" | "CANCELED" | "SHIPPED" | "DELIVERED";
   fullName: string;
   email: string;
   phone: string;
