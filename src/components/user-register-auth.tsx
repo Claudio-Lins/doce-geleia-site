@@ -64,7 +64,10 @@ export function UserRegisterForm({ className, ...props }: UserLoginFormProps) {
   }
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <div
+      className={cn("mx-auto grid w-full max-w-xs gap-6", className)}
+      {...props}
+    >
       <form onSubmit={onSubmit}>
         <div className="grid gap-2">
           <div className="grid gap-1">

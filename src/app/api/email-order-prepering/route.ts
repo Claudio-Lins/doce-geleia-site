@@ -10,11 +10,11 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { fullName, email, orderNumber } = body;
     const data = await resend.emails.send({
-      from: "Order - Preparação <order@docegeleia.pt>",
+      from: "<order@docegeleia.pt>",
       to: email,
       reply_to: process.env.EMAIL_REPLAY_TO,
-      // cc: process.env.EMAIL_CC,
-      subject: "Order - Preparação de encomenda",
+      cc: process.env.EMAIL_CC,
+      subject: "Preparação de encomenda",
       react: EmailOrderPrepering({
         fullName,
         email,

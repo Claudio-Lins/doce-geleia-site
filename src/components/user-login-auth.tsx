@@ -1,14 +1,15 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { GoogleLogo } from "@phosphor-icons/react";
 import { Loader2 } from "lucide-react";
 import { signIn } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { GoogleGIcon } from "../../public/assets/icons/google-g-icon";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
 import { useToast } from "@/components/ui/use-toast";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ToastAction } from "./ui/toast";
 
@@ -21,6 +22,14 @@ interface IUserProps {
 export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
   const { toast } = useToast();
   const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      router.push("/");
+    }
+  }, [router, session]);
+
   const [data, setData] = useState<IUserProps>({
     email: "",
     password: "",
@@ -64,7 +73,10 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
   }
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <div
+      className={cn("mx-auto grid w-full max-w-xs gap-6", className)}
+      {...props}
+    >
       <form onSubmit={onSubmit}>
         <div className="grid gap-2">
           <div className="grid gap-1">
@@ -114,8 +126,8 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
           onClick={() => signIn("google")}
           variant="secondary"
         >
+          <GoogleGIcon className="w-6" />
           Entrar com Google
-          <GoogleLogo className="text-red-500" size={24} weight="bold" />
         </Button>
       </div>
     </div>
