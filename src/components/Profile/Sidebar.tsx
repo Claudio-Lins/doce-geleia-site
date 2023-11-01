@@ -8,7 +8,12 @@ import { NavItem } from "./NavItem";
 
 export function Sidebar() {
   const { data: session } = useSession();
-  const { setShowOrderHistory, setShowTestimonial } = useOrderStore();
+  const {
+    setShowOrderHistory,
+    setShowTestimonial,
+    showOrderHistory,
+    showTestimonial,
+  } = useOrderStore();
 
   function handleOrderHistoryClick() {
     setShowOrderHistory(true);
@@ -32,11 +37,13 @@ export function Sidebar() {
       <Separator />
       <nav className="w-12 space-y-0.5 md:w-full">
         <NavItem
+          active={showOrderHistory}
           icon={PackageOpen}
           title={"Pedidos"}
           clickHandler={handleOrderHistoryClick}
         />
         <NavItem
+          active={showTestimonial}
           icon={MessageCircle}
           title={"Tetimonial"}
           clickHandler={handleTestimonialClick}

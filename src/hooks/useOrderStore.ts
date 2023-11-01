@@ -36,7 +36,7 @@ export const useOrderStore = create<OrderStore>((set, get) => {
   }
 
   return {
-    showOrderHistory: false,
+    showOrderHistory: true,
     setShowOrderHistory: (showOrderHistory) => set({ showOrderHistory }),
     showTestimonial: false,
     setShowTestimonial: (showTestimonial) => set({ showTestimonial }),

@@ -87,8 +87,8 @@ export interface TestimonialTypes {
   name: string;
   testimonial: string;
   email: string | null;
+  imageUrl: string | null;
   published: boolean;
   createdAt: Date;
   updatedAt: Date;
-  imageUrl: string | null;
 }
