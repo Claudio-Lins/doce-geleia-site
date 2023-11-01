@@ -193,10 +193,12 @@ export function Cart() {
             <Separator className="mb-2" />
             <div className="flex w-full flex-col gap-2">
               <SheetClose asChild>
-                <Button className="flex w-full items-center gap-2 bg-blue-500">
-                  <span>Continuar comprando</span>
-                  <ShoppingCart className="w-4" strokeWidth={1.5} />
-                </Button>
+                <Link href="/products">
+                  <Button className="flex w-full items-center gap-2 bg-blue-500">
+                    <span>Continuar comprando</span>
+                    <ShoppingCart className="w-4" strokeWidth={1.5} />
+                  </Button>
+                </Link>
               </SheetClose>
               <SheetClose asChild>
                 <Link href="/order">
