@@ -82,7 +82,7 @@ model Order {
   complement       String?
   observations     String?
   totalAmount      Decimal
-  delivered        Boolean           @default(false)
+  delivered        Boolean?          @default(false)
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   selectedProducts SelectedProduct[]

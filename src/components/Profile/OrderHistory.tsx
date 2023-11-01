@@ -27,7 +27,7 @@ export function OrderHistory() {
   const [orderHistory, setOrderHistory] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/order/${session?.user.id}`)
+    fetch(`/api/order/${session?.user.id}`)
       .then((response) => response.json())
       .then((data) => setOrderHistory(data));
   }, [session]);
