@@ -190,12 +190,20 @@ export function Cart() {
                 </TableRow>
               </TableBody>
             </Table>
-
-            <SheetClose asChild>
-              <Link href="/order">
-                <Button className="w-full">Finalizar pedido</Button>
-              </Link>
-            </SheetClose>
+            <Separator className="mb-2" />
+            <div className="flex w-full flex-col gap-2">
+              <SheetClose asChild>
+                <Button className="flex w-full items-center gap-2 bg-blue-500">
+                  <span>Continuar comprando</span>
+                  <ShoppingCart className="w-4" strokeWidth={1.5} />
+                </Button>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link href="/order">
+                  <Button className="w-full">Finalizar pedido</Button>
+                </Link>
+              </SheetClose>
+            </div>
           </div>
         </SheetContent>
       </Sheet>
