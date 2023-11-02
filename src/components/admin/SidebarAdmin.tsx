@@ -5,8 +5,7 @@ import { MessageCircle, PackageOpen } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { NavItem } from "../NavItem";
 import { Separator } from "../ui/separator";
-
-export function Sidebar() {
+export function SidebarAdmin() {
   const { data: session } = useSession();
   const {
     setShowOrderHistory,

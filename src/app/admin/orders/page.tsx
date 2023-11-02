@@ -6,12 +6,6 @@ import { DataTable } from "./data-table";
 
 export default async function Orders() {
   const session = await getSession();
-  console.log(session);
-  // const data = await prisma?.order.findMany({
-  //   include: {
-  //     selectedProducts: true,
-  //   },
-  // });
 
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order`, {
     method: "GET",

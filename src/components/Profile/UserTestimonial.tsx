@@ -48,7 +48,6 @@ export function UserTestimonial() {
       toast.error("Erro ao enviar comentário!");
       return;
     }
-    console.log(data);
     toast.success("Obrigado pelo seu comentário!");
     reset();
   }

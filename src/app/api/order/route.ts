@@ -81,7 +81,6 @@ export async function POST(request: Request, response: Response) {
         },
       },
     });
-    console.log(createdOrder);
     return NextResponse.json(createdOrder);
   } catch (error) {
     console.error(error);
@@ -109,7 +108,6 @@ export async function PUT(request: Request, response: Response) {
         delivered: statusOrder.delivered,
       },
     });
-    console.log(updatedOrder);
     return NextResponse.json(updatedOrder);
   } catch (error) {
     console.error(error);

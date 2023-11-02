@@ -29,7 +29,6 @@ export function UserRegisterForm({ className, ...props }: UserLoginFormProps) {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
-    console.log(data);
 
     const request = await fetch("/api/users", {
       method: "POST",
@@ -40,8 +39,6 @@ export function UserRegisterForm({ className, ...props }: UserLoginFormProps) {
     });
 
     const response = await request.json();
-
-    console.log("USER REGISTER FORM", response);
 
     if (!request.ok) {
       toast.error("Erro ao registrar o usuário");

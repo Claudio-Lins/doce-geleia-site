@@ -39,7 +39,6 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
-    console.log(data);
 
     const res = await signIn<"credentials">("credentials", {
       redirect: false,

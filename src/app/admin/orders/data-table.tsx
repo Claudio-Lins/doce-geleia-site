@@ -42,6 +42,7 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
+
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
@@ -84,7 +85,7 @@ export function DataTable<TData, TValue>({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns
+              Colunas
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -135,11 +136,11 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className={cn(
-                    rowData.statusPayment === "PAID" && "bg-blue-50",
-                    rowData.statusPayment === "PENDING" && "bg-yellow-50",
-                    rowData.statusPayment === "CANCELED" && "bg-red-50",
-                  )}
+                  className={cn()
+                  // rowData.statusPayment === "PAID" && "text-blue-500",
+                  // rowData.statusPayment === "PENDING" && "text-yellow-500",
+                  // rowData.statusPayment === "CANCELED" && "text-red-500",
+                  }
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -155,7 +156,7 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                Não há pedidos!
               </TableCell>
             </TableRow>
           )}
@@ -168,7 +169,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          Anterior
         </Button>
         <Button
           variant="outline"
@@ -176,7 +177,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          Próximo
         </Button>
       </div>
     </div>

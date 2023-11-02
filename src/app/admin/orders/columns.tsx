@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import {
   Table,
@@ -62,83 +63,29 @@ const orderSchema = z.object({
 export type Order = z.infer<typeof orderSchema>;
 
 export const columns: ColumnDef<Order>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={table.getIsAllPageRowsSelected()}
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
   {
     accessorKey: "date",
-    header: "Data",
+    header: () => <div className="text-left text-sm">Data</div>,
   },
   {
     accessorKey: "orderNumber",
-    header: "#",
+    header: () => <div className="text-left text-sm"># Pedido</div>,
   },
   {
     accessorKey: "statusOrder",
-    header: "Status",
+    header: () => <div className="text-left text-sm">Status</div>,
   },
   {
     accessorKey: "statusPayment",
-    header: "Pagamento",
+    header: () => <div className="text-left text-sm">Pagamento</div>,
   },
   {
     accessorKey: "fullName",
-    header: "Name",
+    header: () => <div className="text-left text-sm">Cliente</div>,
   },
-  // {
-  //   accessorKey: "email",
-  //   header: "Email",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         variant="ghost"
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       >
-  //         Email
-  //         <ArrowUpDown className="ml-2 h-4 w-4" />
-  //       </Button>
-  //     );
-  //   },
-  // },
-  {
-    accessorKey: "phone",
-    header: "Phone",
-  },
-  // {
-  //   accessorKey: "postalCode",
-  //   header: "Código Postal",
-  // },
-  // {
-  //   accessorKey: "address",
-  //   header: "Modada",
-  // },
-  // {
-  //   accessorKey: "city",
-  //   header: "Cidade",
-  // },
-  // {
-  //   accessorKey: "country",
-  //   header: "País",
-  // },
   {
     accessorKey: "totalAmount",
-    header: () => <div className="text-right">Total</div>,
+    header: () => <div className="text-right text-sm">Total</div>,
     cell: ({ row }) => {
       const totalAmount = parseFloat(row.getValue("totalAmount"));
       const formatted = new Intl.NumberFormat("pt-PT", {
@@ -165,16 +112,18 @@ export const columns: ColumnDef<Order>[] = [
                   <DialogTitle>
                     <div className="flex items-center">
                       <div className="flex flex-col gap-0">
-                        <div className="text-lg font-medium">
+                        <div className="text-sm font-medium">
                           {order.fullName}
                         </div>
                         <div className="text-sm font-medium">
-                          Pedidooo #:{order.orderNumber}
+                          Pedido #:{order.orderNumber}
                         </div>
                       </div>
                       <div className="ml-auto">
                         <div className={cn("text-sm font-medium")}>
-                          {order.statusOrder}
+                          {order.statusOrder === "PENDING" && (
+                            <span className="text-yellow-500">Pendente</span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -191,25 +140,31 @@ export const columns: ColumnDef<Order>[] = [
                       <Table className="w-full">
                         <TableHeader>
                           <TableRow>
-                            <TableHead>Produto</TableHead>
-                            <TableHead>Peso</TableHead>
-                            <TableHead className="text-right">
-                              Quantidade
-                            </TableHead>
+                            <TableHead className="w-2/3">Produto</TableHead>
+                            <TableHead className="w-1/3">Peso</TableHead>
+                            <TableHead className="w-1/3">Quantidade</TableHead>
                           </TableRow>
                         </TableHeader>
-                        <TableBody>
-                          {order.selectedProducts.map((product) => (
-                            <TableRow key={product.id}>
-                              <TableCell>{product.title}</TableCell>
-                              <TableCell>{product.weight}gr</TableCell>
-                              <TableCell className="text-right">
-                                {product.quantity}
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
                       </Table>
+                      <ScrollArea className="h-40 w-full overflow-hidden">
+                        <Table className="">
+                          <TableBody>
+                            {order.selectedProducts.map((product) => (
+                              <TableRow key={product.id}>
+                                <TableCell className="text-left">
+                                  {product.title}
+                                </TableCell>
+                                <TableCell className="">
+                                  {product.weight}gr
+                                </TableCell>
+                                <TableCell className="">
+                                  {product.quantity}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </ScrollArea>
                     </div>
                   </DialogDescription>
                 </DialogHeader>

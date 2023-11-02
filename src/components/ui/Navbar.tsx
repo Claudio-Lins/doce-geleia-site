@@ -50,7 +50,7 @@ export function Navbar() {
   return (
     <div
       className={cn(
-        " fixed inset-0 z-10 h-24 w-full bg-transparent px-4 print:hidden",
+        " fixed inset-0 z-10 h-28 w-full bg-transparent px-4 print:hidden",
         pathName !== "/" ? "bg-white" : "bg-transparent",
       )}
       style={{
@@ -58,17 +58,17 @@ export function Navbar() {
       }}
     >
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between py-4">
-        <div className="border p-1">
+        <div className="">
           <Link href="/" legacyBehavior passHref>
             <Image
               src={
                 pathName === "/" && !lgNeg
-                  ? "/logo/lg-site-neg.svg"
-                  : "/logo/lg-site.svg"
+                  ? "/logo/logo-pos.svg"
+                  : "/logo/logo-pos.svg"
               }
               alt="Doce Geleia"
-              width={60}
-              height={60}
+              width={80}
+              height={80}
               className="aspect-square cursor-pointer"
             />
           </Link>
