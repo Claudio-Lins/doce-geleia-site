@@ -117,7 +117,7 @@ export function Cart() {
                     key={item.id}
                   >
                     <Image
-                      src={item.coverUrl ?? "/logo/lg-site.svg"}
+                      src={item.coverUrl ?? "/logo/logo-pos.svg"}
                       width={100}
                       height={100}
                       alt={item.title}

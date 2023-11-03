@@ -9,11 +9,11 @@ export function Footer() {
         <div className="flex justify-center">
           <Link href="/">
             <Image
-              className="h-16 w-auto  border border-white p-2"
-              src="/logo/lg-site-neg.svg"
+              className="h-20 w-auto"
+              src="/logo/logo-pos.svg"
               alt="Logo"
-              width={48}
-              height={48}
+              width={68}
+              height={68}
             />
           </Link>
         </div>
@@ -23,7 +23,7 @@ export function Footer() {
           consequuntur amet culpa cum itaque neque.
         </p> */}
 
-        <div className="mt-12 flex flex-wrap text-white justify-center gap-6 md:gap-8 lg:gap-12">
+        <div className="mt-12 flex flex-wrap justify-center gap-6 text-white md:gap-8 lg:gap-12">
           <Link href="/products">Produtos</Link>
           <Link href="/about">Sobre</Link>
           <Link href="/contact">Contato</Link>

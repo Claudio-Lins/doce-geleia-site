@@ -10,14 +10,30 @@ async function getOrders() {
     headers: {
       "Content-Type": "application/json",
     },
+    cache: "force-cache",
   }).then((res) => res.json());
+
+  return data;
+}
+
+async function getTestimonials() {
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/testimonials/all-testimonials`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  ).then((res) => res.json());
 
   return data;
 }
 
 export default async function AdminPage() {
   const order = await getOrders();
-  console.log(order);
+  const testimonial = await getTestimonials();
+
   const session = await getSession();
   if (session?.role !== "ADMIN") {
     return (
@@ -39,7 +55,7 @@ export default async function AdminPage() {
       <div className="grid grid-cols-appMobile md:grid-cols-app ">
         <SidebarAdmin />
         <div className="p-4 md:p-10">
-          <AdminContent order={order} />
+          <AdminContent order={order} testimonial={testimonial} />
         </div>
       </div>
     </div>

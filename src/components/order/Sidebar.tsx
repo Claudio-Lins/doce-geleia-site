@@ -1,8 +1,8 @@
-import { Step } from "@/components/order/Step"
-import Image from "next/image"
+import { Step } from "@/components/order/Step";
+import Image from "next/image";
 
 interface SidebarProps {
-  step: number
+  step: number;
 }
 
 export function Sidebar({ step }: SidebarProps) {
@@ -23,14 +23,14 @@ export function Sidebar({ step }: SidebarProps) {
       </div>
       <div className="hidden justify-center md:flex">
         <Image
-          src="/logo/lg-site-neg.svg"
+          src="/logo/logo-pos.svg"
           alt="Logo"
           width={123 * 0.8}
           height={110}
           priority
-          className="border-[1px] border-white p-2"
+          className=""
         />
       </div>
     </div>
-  )
+  );
 }
