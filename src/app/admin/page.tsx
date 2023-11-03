@@ -1,7 +1,7 @@
 import { AdminContent } from "@/components/admin/AdminContent";
 import { SidebarAdmin } from "@/components/admin/SidebarAdmin";
 import { buttonVariants } from "@/components/ui/button";
-import { prisma } from "@/lib/prisma";
+import { api } from "@/lib/api";
 import { getSession } from "@/lib/session";
 import Link from "next/link";
 
@@ -16,36 +16,16 @@ async function getOrders() {
 
   return data;
 }
-// async function getTestimonials() {
-//   const data = await api("/testimonials/all-testimonials", {
-//     method: "GET",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   })
-//     .then((res) => res.json())
-//     .catch((err) => console.log(err));
 
-//   return data;
-// }
-
-// async function getTestimonials() {
-//   const data = await fetch(
-//     `${process.env.NEXT_PUBLIC_API_URL}/api/testimonials/all-testimonials`,
-//     {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     },
-//   ).then((res) => res.json());
-
-//   return data;
-// }
+async function getTestimonials() {
+  const data = await api("/testimonials");
+  const testimonials = await data.json();
+  return testimonials;
+}
 
 export default async function AdminPage() {
   const order = await getOrders();
-  const testimonial = await prisma.testimonial.findMany();
+  const testimonial = await getTestimonials();
 
   const session = await getSession();
   if (session?.role !== "ADMIN") {

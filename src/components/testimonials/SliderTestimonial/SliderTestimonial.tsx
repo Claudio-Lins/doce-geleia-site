@@ -41,18 +41,20 @@ export function SliderTestimonial({ numSlides, testimonials }: SliderProps) {
         "--swiper-pagination-bullet-horizontal-gap": "6px",
       }}
     >
-      {testimonials.map((testimonial) => {
-        return (
-          <SwiperSlide key={testimonial.id}>
-            <CardTestimonial
-              img={testimonial.imageUrl ?? ""}
-              alt={testimonial.name}
-              name={testimonial.name}
-              testimonial={testimonial.testimonial}
-            />
-          </SwiperSlide>
-        );
-      })}
+      {testimonials
+        .filter((testimonial) => testimonial.published)
+        .map((testimonial) => {
+          return (
+            <SwiperSlide key={testimonial.id}>
+              <CardTestimonial
+                img={testimonial.imageUrl ?? ""}
+                alt={testimonial.name}
+                name={testimonial.name}
+                testimonial={testimonial.testimonial}
+              />
+            </SwiperSlide>
+          );
+        })}
     </Swiper>
   );
 }
