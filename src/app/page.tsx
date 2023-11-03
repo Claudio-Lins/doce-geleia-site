@@ -5,7 +5,7 @@ import { Testimonial } from "@/components/Testimonial";
 import { api } from "@/lib/api";
 
 async function getAllTestimonials(): Promise<TestimonialTypes[]> {
-  const response = await api("/testimonials");
+  const response = await api("/testimonials", { next: { revalidate: 1 } });
   const testimonials = await response.json();
   return testimonials;
 }

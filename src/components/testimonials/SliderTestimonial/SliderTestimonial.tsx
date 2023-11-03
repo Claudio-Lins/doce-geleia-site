@@ -42,7 +42,7 @@ export function SliderTestimonial({ numSlides, testimonials }: SliderProps) {
       }}
     >
       {testimonials
-        .filter((testimonial) => testimonial.published)
+        .filter((testimonial) => testimonial.published === true)
         .map((testimonial) => {
           return (
             <SwiperSlide key={testimonial.id}>

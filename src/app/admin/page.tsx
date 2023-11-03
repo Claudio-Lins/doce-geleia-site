@@ -20,7 +20,7 @@ async function getOrders() {
 }
 
 async function getTestimonials() {
-  const data = await api("/testimonials");
+  const data = await api("/testimonials", { next: { revalidate: 1 } });
   const testimonials = await data.json();
   return testimonials;
 }
