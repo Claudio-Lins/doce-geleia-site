@@ -12,7 +12,7 @@ export default async function Orders() {
     headers: {
       "Content-Type": "application/json",
     },
-    cache: "no-cache",
+    next: { revalidate: 1 },
   }).then((res) => res.json());
 
   if (session?.role !== "ADMIN") {

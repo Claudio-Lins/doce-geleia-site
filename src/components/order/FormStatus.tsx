@@ -1,13 +1,13 @@
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CookingPot } from "@phosphor-icons/react";
-import { Truck } from "lucide-react";
+import { Loader, Truck } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
 
 interface FormStatusProps {
   order: any;
@@ -33,6 +33,8 @@ export type StatusOrderData = z.infer<typeof orderSchema>;
 // export type FormStatusPreperingData = z.infer<typeof FormStatusPreperingSchema>;
 
 export function FormStatus({ order }: FormStatusProps) {
+  const [orderStatus, setOrderStatus] = useState(order.statusOrder);
+  const [isLoading, setIsLoading] = useState(false);
   const route = useRouter();
   const {
     register,
@@ -64,21 +66,77 @@ export function FormStatus({ order }: FormStatusProps) {
     }
   }
 
-  async function handleFormOrderStatus(data: StatusOrderData) {
-    await fetch(`/api/order`, {
+  async function handleOrderStatus(status: string) {
+    setIsLoading(true);
+    const response = await fetch(`/api/order`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ id: order.id, statusOrder: status }),
     });
-    route.refresh();
-    toast.success("Pedido atualizado com sucesso");
+
+    if (response.ok) {
+      toast.success("Pedido atualizado com sucesso");
+      setOrderStatus(status);
+    } else {
+      toast.error("Erro ao atualizar o pedido");
+    }
+    setIsLoading(false);
   }
 
   return (
     <div className="flex flex-col gap-2 rounded-lg border p-4 shadow-sm">
-      <form
+      <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center">
+          <Button
+            type="button"
+            disabled={isLoading}
+            onClick={() => handleOrderStatus("PENDING")}
+            className={cn(
+              "flex h-10 w-10 flex-col items-center justify-center rounded-full bg-blue-400",
+              orderStatus === "PENDING" && "animate-bounce",
+            )}
+          >
+            <Loader
+              className={cn(
+                "h-4 w-4",
+                orderStatus === "PENDING" && "animate-spin",
+              )}
+            />
+          </Button>
+          <small className="font-bold">Aguardando</small>
+        </div>
+        <div className="flex flex-col items-center">
+          <Button
+            type="button"
+            disabled={isLoading}
+            onClick={() => handleOrderStatus("PREPERING")}
+            className={cn(
+              "flex h-10 w-10 flex-col items-center justify-center rounded-full bg-blue-400",
+              orderStatus === "PREPERING" && "animate-bounce",
+            )}
+          >
+            <CookingPot className={cn("h-4 w-4")} />
+          </Button>
+          <small className="font-bold">Preparando</small>
+        </div>
+        <div className="flex flex-col items-center">
+          <Button
+            type="button"
+            disabled={isLoading}
+            onClick={() => handleOrderStatus("SHIPPED")}
+            className={cn(
+              "flex h-10 w-10 flex-col items-center justify-center rounded-full bg-blue-400",
+              orderStatus === "SHIPPED" && "animate-bounce",
+            )}
+          >
+            <Truck className={cn("h-4 w-4")} />
+          </Button>
+          <small className="font-bold">Entregue</small>
+        </div>
+      </div>
+      {/* <form
         onSubmit={handleSubmit(handleFormOrderStatus)}
         className="flex flex-col gap-2"
       >
@@ -148,11 +206,15 @@ export function FormStatus({ order }: FormStatusProps) {
               )}
             />
           </Button>
-          <Button className="w-1/4" type="submit">
+          <Button
+            onClick={() => route.refresh()}
+            className="w-1/4"
+            type="submit"
+          >
             Salvar
           </Button>
         </div>
-      </form>
+      </form> */}
     </div>
   );
 }

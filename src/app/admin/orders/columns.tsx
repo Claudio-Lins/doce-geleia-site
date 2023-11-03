@@ -20,7 +20,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { EyeIcon } from "lucide-react";
 import { z } from "zod";
@@ -110,20 +109,13 @@ export const columns: ColumnDef<Order>[] = [
               <DialogContent className="h-[calc(90vh)] w-full max-w-none md:max-w-4xl">
                 <DialogHeader>
                   <DialogTitle>
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-between">
                       <div className="flex flex-col gap-0">
                         <div className="text-sm font-medium">
                           {order.fullName}
                         </div>
                         <div className="text-sm font-medium">
                           Pedido #:{order.orderNumber}
-                        </div>
-                      </div>
-                      <div className="ml-auto">
-                        <div className={cn("text-sm font-medium")}>
-                          {order.statusOrder === "PENDING" && (
-                            <span className="text-yellow-500">Pendente</span>
-                          )}
                         </div>
                       </div>
                     </div>
