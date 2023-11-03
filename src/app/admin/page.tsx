@@ -11,7 +11,9 @@ async function getOrders() {
     headers: {
       "Content-Type": "application/json",
     },
-    cache: "force-cache",
+    next: {
+      revalidate: 1,
+    },
   }).then((res) => res.json());
 
   return data;

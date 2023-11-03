@@ -47,7 +47,9 @@ export function CardAdminTestimonial({
           onChange={() => onTogglePublished(testimonial.id)}
           onClick={() => onTogglePublished(testimonial.id)}
         />
-        <Label htmlFor="published">Publicado</Label>
+        <Label htmlFor="published">
+          {testimonial.published ? "Publicado" : "Publicar"}
+        </Label>
       </div>
       <div className="flex h-16 w-full items-center rounded-b-lg bg-gray-50 pl-4" />
     </div>
