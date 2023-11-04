@@ -4,6 +4,8 @@ import { Product } from "@/@types";
 import { useEffect, useState } from "react";
 import { JamIcon } from "../../../public/assets/icons/jam-icon";
 import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import { Switch } from "../ui/switch";
 
 interface ContentAdminJamsProps {
   jams: Product[];
@@ -33,11 +35,19 @@ export function ContentAdminJams() {
               <span className="text-lg font-bold">{jam.title}</span>
             </div>
             <div className="flex items-center gap-2">
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="published"
+                  checked={jam.isDestack}
+                  // onChange={() => onTogglePublished(testimonial.id)}
+                  // onClick={() => onTogglePublished(testimonial.id)}
+                />
+                <Label htmlFor="published">
+                  {jam.isDestack ? "Publicado" : "Publicar"}
+                </Label>
+              </div>
               <button className="rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-600">
                 Editar
-              </button>
-              <button className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600">
-                Eliminar
               </button>
             </div>
           </div>

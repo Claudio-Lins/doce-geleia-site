@@ -18,9 +18,11 @@ export default async function Products() {
       <span>Escolha aqui os sabores</span>
       <Separator className="my-4" />
       <div className="flex flex-wrap justify-center gap-4 md:mt-10 md:gap-10">
-        {products.map((product: any) => (
-          <ProductCard product={product} key={product.id} />
-        ))}
+        {products
+          .filter((product) => product.isDestack === true)
+          .map((product) => (
+            <ProductCard product={product} key={product.id} />
+          ))}
       </div>
     </div>
   );
