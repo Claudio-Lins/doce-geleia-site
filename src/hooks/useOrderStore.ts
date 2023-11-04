@@ -8,6 +8,8 @@ interface OrderStore {
   setShowOrderHistory: (showOrderHistory: boolean) => void;
   showTestimonial: boolean;
   setShowTestimonial: (showTestimonial: boolean) => void;
+  showJams: boolean;
+  setShowJams: (showJams: boolean) => void;
 }
 export const useOrderStore = create<OrderStore>((set, get) => {
   let initialOrder: OrderProps = {
@@ -40,6 +42,8 @@ export const useOrderStore = create<OrderStore>((set, get) => {
     setShowOrderHistory: (showOrderHistory) => set({ showOrderHistory }),
     showTestimonial: false,
     setShowTestimonial: (showTestimonial) => set({ showTestimonial }),
+    showJams: false,
+    setShowJams: (showJams) => set({ showJams }),
     order: initialOrder,
     setOrder: (order: OrderProps) => {
       localStorage.setItem("order", JSON.stringify(order));
