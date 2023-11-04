@@ -94,7 +94,7 @@ export function FormStatus({ order }: FormStatusProps) {
             disabled={isLoading}
             onClick={() => handleOrderStatus("PENDING")}
             className={cn(
-              "flex h-10 w-10 flex-col items-center justify-center rounded-full bg-blue-400",
+              "flex h-10 w-10 flex-col items-center justify-center rounded-full bg-yellow-400",
               orderStatus === "PENDING" && "animate-bounce",
             )}
           >
@@ -113,7 +113,7 @@ export function FormStatus({ order }: FormStatusProps) {
             disabled={isLoading}
             onClick={() => handleOrderStatus("PREPERING")}
             className={cn(
-              "flex h-10 w-10 flex-col items-center justify-center rounded-full bg-blue-400",
+              "flex h-10 w-10 flex-col items-center justify-center rounded-full bg-orange-400",
               orderStatus === "PREPERING" && "animate-bounce",
             )}
           >
@@ -127,7 +127,7 @@ export function FormStatus({ order }: FormStatusProps) {
             disabled={isLoading}
             onClick={() => handleOrderStatus("SHIPPED")}
             className={cn(
-              "flex h-10 w-10 flex-col items-center justify-center rounded-full bg-blue-400",
+              "flex h-10 w-10 flex-col items-center justify-center rounded-full bg-emerald-500",
               orderStatus === "SHIPPED" && "animate-bounce",
             )}
           >
