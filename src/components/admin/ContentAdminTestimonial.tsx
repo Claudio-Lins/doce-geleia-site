@@ -41,7 +41,7 @@ export function ContentAdminTestimonial({
     }
   }
   return (
-    <div className="flex w-full flex-wrap justify-center gap-4 p-2">
+    <div className="flex w-full flex-wrap justify-center gap-4">
       {testimonials.map((testimonial) => (
         <CardAdminTestimonial
           key={testimonial.id}

@@ -3,8 +3,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useOrderStore } from "@/hooks/useOrderStore";
 import { MessageCircle, PackageOpen } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { JamIcon } from "../../../public/assets/icons/jam-icon";
 import { NavItem } from "../NavItem";
 import { Separator } from "../ui/separator";
+
 export function SidebarAdmin() {
   const { data: session } = useSession();
   const {
@@ -12,15 +14,25 @@ export function SidebarAdmin() {
     setShowTestimonial,
     showOrderHistory,
     showTestimonial,
+    setShowJams,
+    showJams,
   } = useOrderStore();
 
   function handleOrderHistoryClick() {
     setShowOrderHistory(true);
     setShowTestimonial(false);
+    setShowJams(false);
   }
 
   function handleTestimonialClick() {
+    setShowJams(false);
     setShowTestimonial(true);
+    setShowOrderHistory(false);
+  }
+
+  function handleJamsClick() {
+    setShowJams(true);
+    setShowTestimonial(false);
     setShowOrderHistory(false);
   }
 
@@ -46,6 +58,12 @@ export function SidebarAdmin() {
           icon={MessageCircle}
           title={"Tetimonial"}
           clickHandler={handleTestimonialClick}
+        />
+        <NavItem
+          active={showJams}
+          icon={JamIcon}
+          title={"Geleias"}
+          clickHandler={handleJamsClick}
         />
       </nav>
     </aside>
