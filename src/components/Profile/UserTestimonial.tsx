@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
@@ -16,6 +17,7 @@ const UserTestimonialSchema = z.object({
 type UserTestimonialData = z.infer<typeof UserTestimonialSchema>;
 
 export function UserTestimonial() {
+  const [countCaracteres, setCountCaracteres] = useState(0);
   const { data: session } = useSession();
   const {
     register,
@@ -52,20 +54,20 @@ export function UserTestimonial() {
     reset();
   }
 
+  countCaracteres >= 300 && toast.error("Limite de caracteres excedido!");
+
   return (
     <div className="w-full">
       <h1 className="text-2xl font-bold">
         Comente aqui o que achou da Doce Geleia.
       </h1>
-      <p className="text-gray-500">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia a,
-        similique veritatis blanditiis odit quasi asperiores, explicabo!
-      </p>
-      <form className="-w-full flex flex-col space-y-4">
+      <form className="-w-full relative flex flex-col space-y-4">
         <textarea
-          className="mt-4 h-40 w-full rounded-lg border p-2"
+          className="mt-4 h-48 w-full rounded-lg border p-2"
           placeholder="Deixe aqui o seu comentário"
-          {...register("testimonial", { required: true })}
+          maxLength={300}
+          {...register("testimonial")}
+          onChange={(e) => setCountCaracteres(e.target.value.length)}
         />
         <Button
           onClick={handleSubmit(handleFormUserTestimonial)}
@@ -73,6 +75,9 @@ export function UserTestimonial() {
         >
           Enviar
         </Button>
+        <div className="absolute bottom-16 right-3 text-sm text-zinc-500">
+          {countCaracteres}/300
+        </div>
       </form>
     </div>
   );
