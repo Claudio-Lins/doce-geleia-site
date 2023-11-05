@@ -2,6 +2,7 @@
 
 import { Product } from "@/@types";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { JamIcon } from "../../../public/assets/icons/jam-icon";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
@@ -13,6 +14,7 @@ interface ContentAdminJamsProps {
 
 export function ContentAdminJams() {
   const [jams, setJams] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     async function getJams() {
       const response = await fetch("/api/products/jams");
@@ -21,6 +23,31 @@ export function ContentAdminJams() {
     }
     getJams();
   }, []);
+
+  async function toggleDestack(id: string) {
+    setIsLoading(true);
+    const jam = jams.find((j) => j.id === id);
+    if (!jam) {
+      return;
+    }
+    const response = await fetch("/api/products/destack", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        isDestack: !jam?.isDestack,
+      }),
+    });
+    if (response.ok) {
+      setJams(
+        jams.map((j) => (j.id === id ? { ...j, isDestack: !j.isDestack } : j)),
+      );
+    }
+    toast.success("Geleia atualizada com sucesso!");
+    setIsLoading(false);
+  }
 
   return (
     <div className="flex w-full flex-col justify-center space-y-2 pb-10">
@@ -37,10 +64,11 @@ export function ContentAdminJams() {
             <div className="flex items-center gap-2">
               <div className="flex items-center space-x-2">
                 <Switch
+                  disabled={isLoading}
                   id="published"
                   checked={jam.isDestack}
-                  // onChange={() => onTogglePublished(testimonial.id)}
-                  // onClick={() => onTogglePublished(testimonial.id)}
+                  onChange={() => toggleDestack(jam.id)}
+                  onClick={() => toggleDestack(jam.id)}
                 />
                 <Label htmlFor="published">
                   {jam.isDestack ? "Publicado" : "Publicar"}
