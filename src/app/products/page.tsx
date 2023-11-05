@@ -1,13 +1,6 @@
-import { Product } from "@/@types";
 import { ProductCard } from "@/components/ProductCard";
 import { Separator } from "@/components/ui/separator";
-import { api } from "@/lib/api";
-
-async function getAllProducts(): Promise<Product[]> {
-  const response = await api("/products", { next: { revalidate: 1 } });
-  const products = await response.json();
-  return products;
-}
+import { getAllProducts } from "@/data/products";
 
 export default async function Products() {
   const products = await getAllProducts();

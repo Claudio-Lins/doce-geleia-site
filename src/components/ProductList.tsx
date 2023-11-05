@@ -1,7 +1,6 @@
 "use client";
 import { Product } from "@/@types";
 import { usePathname } from "next/navigation";
-import { Key } from "react";
 import { ProductCard } from "./_ProductCard";
 
 interface ProductListProps {
@@ -15,7 +14,7 @@ export function ProductList({ products }: ProductListProps) {
       {products
         .filter((product: Product) => product.isDestack === true)
         .filter((product: Product) => product.slug !== pathname.slice(10))
-        .map((product: { id: Key | null | undefined }) => (
+        .map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
     </div>

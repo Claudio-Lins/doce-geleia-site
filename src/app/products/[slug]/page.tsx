@@ -24,10 +24,11 @@ export default async function ProductPage({
     <div className="mx-auto mt-20 flex min-h-screen max-w-5xl items-center justify-center sm:mt-10">
       <div className="px-4 py-6 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
-          <div className="flex items-center justify-center overflow-hidden sm:rounded-lg">
+          <div className="flex aspect-square items-center justify-center overflow-hidden sm:rounded-lg">
             <Image
-              width={400}
-              height={300}
+              layout="responsive"
+              width={500}
+              height={500}
               src={product?.coverUrl ?? ""}
               alt="Image"
               className="object-cover object-center"

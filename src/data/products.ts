@@ -2,7 +2,7 @@ import { Product } from "@/@types";
 import { api } from "@/lib/api";
 
 export async function getProduct(slug: string): Promise<Product> {
-  const response = await api(`/products/${slug}`);
+  const response = await api(`/products/${slug}`, { next: { revalidate: 1 } });
   const product = await response.json();
   return product;
 }
