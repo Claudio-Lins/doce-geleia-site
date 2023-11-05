@@ -9,6 +9,7 @@ const nextConfig = {
       "docegeleia.pt",
       "source.unsplash.com",
       "lh3.googleusercontent.com",
+      "exemplo.com",
     ],
   },
 };

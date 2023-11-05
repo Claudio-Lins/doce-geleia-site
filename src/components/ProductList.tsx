@@ -11,8 +11,9 @@ interface ProductListProps {
 export function ProductList({ products }: ProductListProps) {
   const pathname = usePathname();
   return (
-    <div className="flex flex-wrap gap-2 items-center justify-center">
+    <div className="flex flex-wrap items-center justify-center gap-2">
       {products
+        .filter((product: Product) => product.isDestack === true)
         .filter((product: Product) => product.slug !== pathname.slice(10))
         .map((product: { id: Key | null | undefined }) => (
           <ProductCard key={product.id} product={product} />

@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { api } from "@/lib/api";
 
 async function getAllProducts(): Promise<Product[]> {
-  const response = await api("/products");
+  const response = await api("/products", { next: { revalidate: 1 } });
   const products = await response.json();
   return products;
 }
