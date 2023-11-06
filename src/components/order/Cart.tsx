@@ -46,6 +46,8 @@ export function Cart() {
 
   const pathName = usePathname();
 
+  const scroolDectect = window.scrollY >= 10;
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(items));
   }, [items, setShowCart]);
@@ -91,7 +93,7 @@ export function Cart() {
                 className={cn(
                   "h-6 w-6 cursor-pointer font-light",
                   pathName === "/" ? " text-zinc-50" : " text-zinc-950",
-                  window.scrollY >= 10 && "text-zinc-900",
+                  scroolDectect && "text-zinc-900",
                 )}
               />
               <span

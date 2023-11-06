@@ -52,6 +52,8 @@ export function Navbar() {
     window.addEventListener("scroll", changeColor);
   }, [pathName]);
 
+  const scroolDectect = window.scrollY >= 10;
+
   return (
     <div
       className={cn(
@@ -132,7 +134,7 @@ export function Navbar() {
               className={cn(
                 "cursor-pointer p-1 text-zinc-50  transition-all duration-200 ease-in-out hover:scale-110 hover:rounded-lg hover:border",
                 pathName === "/" ? " text-zinc-50" : " text-zinc-950",
-                window.scrollY >= 10 && "text-zinc-900",
+                scroolDectect && "text-zinc-900",
               )}
             >
               <User strokeWidth={1.5} size={24} />
@@ -146,7 +148,7 @@ export function Navbar() {
                   size={24}
                   className={cn(
                     pathName === "/" ? " text-zinc-50" : " text-zinc-950",
-                    window.scrollY >= 10 && "text-zinc-900",
+                    scroolDectect && "text-zinc-900",
                   )}
                 />
               </SheetTrigger>
