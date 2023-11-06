@@ -90,10 +90,18 @@ export function Cart() {
                 strokeWidth={1.2}
                 className={cn(
                   "h-6 w-6 cursor-pointer font-light",
-                  pathName === "/" ? "text-white" : "text-zinc-900",
+                  pathName === "/" ? " text-zinc-50" : " text-zinc-950",
+                  window.scrollY >= 10 && "text-zinc-900",
                 )}
               />
-              {totalItems}
+              <span
+                className={cn(
+                  pathName === "/" ? " text-zinc-50" : " text-zinc-950",
+                  window.scrollY >= 10 && "text-zinc-900",
+                )}
+              >
+                {totalItems}
+              </span>
             </div>
           </div>
         </SheetTrigger>

@@ -31,6 +31,7 @@ export default async function ProductPage({
               height={500}
               src={product?.coverUrl ?? ""}
               alt="Image"
+              sizes="(min-width: 1040px) 464px, calc(97.78vw - 25px)"
               className="object-cover object-center"
             />
           </div>
