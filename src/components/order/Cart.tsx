@@ -108,7 +108,7 @@ export function Cart() {
               <span
                 className={cn(
                   pathName === "/" ? " text-zinc-50" : " text-zinc-950",
-                  window.scrollY >= 10 && "text-zinc-900",
+                  scroolDectect && "text-zinc-900",
                 )}
               >
                 {totalItems}
