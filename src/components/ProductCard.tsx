@@ -16,18 +16,15 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <div
       onClick={handleClick}
-      className="group relative flex h-[205px] w-[170px] cursor-pointer flex-col justify-between overflow-hidden rounded-2xl border shadow-md"
+      className="group relative flex h-[205px] w-[170px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border shadow-md"
     >
-      <div className="relative flex h-[205px] w-[170px] ">
+      <div className="relative h-[153px] w-[127px] ">
         <Image
           src={product?.coverUrl}
           alt={product?.title}
           fill
           quality={100}
-          sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-          className=" bg-top object-contain object-right-top transition-all duration-500 ease-in-out hover:scale-105"
+          className=" flex aspect-auto transform-gpu items-center justify-center object-contain  transition-all duration-500 ease-in-out hover:scale-110 group-hover:scale-110"
         />
       </div>
 

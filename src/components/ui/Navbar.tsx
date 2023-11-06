@@ -20,7 +20,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Profile } from "../Profile";
 import { Cart } from "../order/Cart";
-import { Button } from "./button";
 
 export function Navbar() {
   const pathName = usePathname();
@@ -67,11 +66,7 @@ export function Navbar() {
         <div className="w-12 md:w-20">
           <Link href="/" legacyBehavior passHref>
             <Image
-              src={
-                pathName === "/" && !lgNeg
-                  ? "/logo/logo-pos.svg"
-                  : "/logo/logo-pos.svg"
-              }
+              src={"/logo/logo-pos.svg"}
               alt="Doce Geleia"
               width={60}
               height={60}
@@ -132,28 +127,16 @@ export function Navbar() {
           {data ? (
             <Profile />
           ) : (
-            <Button
+            <div
               onClick={handleLogin}
-              variant={"ghost"}
-              size={"icon"}
               className={cn(
-                "rounded-lg bg-transparent",
-                pathName !== "/"
-                  ? " text-zinc-950 hover:bg-zinc-100"
-                  : " hover:bg-zinc-100/50 hover:text-zinc-900",
+                "cursor-pointer p-1 text-zinc-50  transition-all duration-200 ease-in-out hover:scale-110 hover:rounded-lg hover:border",
+                pathName === "/" ? " text-zinc-50" : " text-zinc-950",
+                window.scrollY >= 10 && "text-zinc-900",
               )}
             >
-              <User
-                strokeWidth={1.5}
-                size={24}
-                color={textColor}
-                className={cn(
-                  pathName === "/"
-                    ? " text-zinc-50  hover:text-zinc-100"
-                    : " hover:bg-zinc-100/50 hover:text-zinc-900",
-                )}
-              />
-            </Button>
+              <User strokeWidth={1.5} size={24} />
+            </div>
           )}
           <div className="flex md:hidden">
             <Sheet>
@@ -161,11 +144,9 @@ export function Navbar() {
                 <Menu
                   strokeWidth={1.5}
                   size={24}
-                  color={textColor}
                   className={cn(
-                    pathName === "/"
-                      ? " text-zinc-50  hover:text-zinc-100"
-                      : " hover:bg-zinc-100 hover:text-zinc-900",
+                    pathName === "/" ? " text-zinc-50" : " text-zinc-950",
+                    window.scrollY >= 10 && "text-zinc-900",
                   )}
                 />
               </SheetTrigger>
