@@ -27,6 +27,7 @@ export function Navbar() {
   const [textColor, setTextColor] = useState("white");
   const [cartColor, setCartColor] = useState("white");
   const [lgNeg, setLgNeg] = useState(false);
+  const [scrollDetect, setScrollDetect] = useState(false);
 
   const router = useRouter();
   const { data } = useSession();
@@ -52,7 +53,16 @@ export function Navbar() {
     window.addEventListener("scroll", changeColor);
   }, [pathName]);
 
-  const scroolDectect = window.scrollY >= 10;
+  useEffect(() => {
+    const changeColor = () => {
+      if (window.scrollY >= 10) {
+        setScrollDetect(true);
+      } else {
+        setScrollDetect(false);
+      }
+    };
+    window.addEventListener("scroll", changeColor);
+  }, []);
 
   return (
     <div
@@ -134,7 +144,7 @@ export function Navbar() {
               className={cn(
                 "cursor-pointer p-1 text-zinc-50  transition-all duration-200 ease-in-out hover:scale-110 hover:rounded-lg hover:border",
                 pathName === "/" ? " text-zinc-50" : " text-zinc-950",
-                scroolDectect && "text-zinc-900",
+                scrollDetect && "text-zinc-900",
               )}
             >
               <User strokeWidth={1.5} size={24} />
@@ -148,7 +158,7 @@ export function Navbar() {
                   size={24}
                   className={cn(
                     pathName === "/" ? " text-zinc-50" : " text-zinc-950",
-                    scroolDectect && "text-zinc-900",
+                    scrollDetect && "text-zinc-900",
                   )}
                 />
               </SheetTrigger>

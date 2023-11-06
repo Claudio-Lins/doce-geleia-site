@@ -7,7 +7,7 @@ import { MinusCircle, PlusCircle, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Currency from "../currency";
 import { BtnToggleShip } from "../shipping/BtnToggleShip";
 import { Button } from "../ui/button";
@@ -45,8 +45,17 @@ export function Cart() {
   } = useCartStore();
 
   const pathName = usePathname();
-
-  const scroolDectect = window.scrollY >= 10;
+  const [scroolDectect, setScrollDetect] = useState(false);
+  useEffect(() => {
+    const changeColor = () => {
+      if (window.scrollY >= 10) {
+        setScrollDetect(true);
+      } else {
+        setScrollDetect(false);
+      }
+    };
+    window.addEventListener("scroll", changeColor);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(items));
