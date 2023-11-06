@@ -5,8 +5,14 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { User } from "lucide-react";
+import { Menu, User } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,8 +39,8 @@ export function Navbar() {
   useEffect(() => {
     const changeColor = () => {
       if (window.scrollY >= 10) {
-        setColor("#ffffff");
-        setTextColor("#09090b");
+        setColor("#fff");
+        setTextColor("#0b0b0d");
         setCartColor("#09090b");
         setLgNeg(true);
       } else {
@@ -50,7 +56,7 @@ export function Navbar() {
   return (
     <div
       className={cn(
-        " fixed inset-0 z-10 h-28 w-full bg-transparent px-4 print:hidden",
+        " fixed inset-0 z-10 h-24 w-full bg-transparent px-4 print:hidden",
         pathName !== "/" ? "bg-white" : "bg-transparent",
       )}
       style={{
@@ -58,7 +64,7 @@ export function Navbar() {
       }}
     >
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between py-4">
-        <div className="">
+        <div className="w-12 md:w-20">
           <Link href="/" legacyBehavior passHref>
             <Image
               src={
@@ -67,75 +73,147 @@ export function Navbar() {
                   : "/logo/logo-pos.svg"
               }
               alt="Doce Geleia"
-              width={80}
-              height={80}
+              width={60}
+              height={60}
               className="aspect-square cursor-pointer"
             />
           </Link>
         </div>
-        <NavigationMenu>
-          <NavigationMenuItem
-            className="flex items-center gap-2"
-            style={{
-              color: textColor,
-            }}
-          >
-            <Link href="/products" legacyBehavior passHref>
-              <NavigationMenuLink
+
+        <div className="hidden items-center gap-2 md:flex">
+          <NavigationMenu>
+            <NavigationMenuItem
+              className="flex items-center gap-2"
+              style={{
+                color: textColor,
+              }}
+            >
+              <Link href="/products" legacyBehavior passHref>
+                <NavigationMenuLink
+                  className={cn(
+                    "rounded-lg bg-transparent px-3 py-2",
+                    pathName !== "/"
+                      ? " bg-white text-zinc-950  hover:bg-zinc-100"
+                      : " hover:bg-zinc-100/50 hover:text-zinc-900",
+                  )}
+                >
+                  Produtos
+                </NavigationMenuLink>
+              </Link>
+              <Link href="/about" legacyBehavior passHref>
+                <NavigationMenuLink
+                  className={cn(
+                    "rounded-lg bg-transparent px-3 py-2",
+                    pathName !== "/"
+                      ? " text-zinc-950 hover:bg-zinc-100"
+                      : " hover:bg-zinc-100/50 hover:text-zinc-900",
+                  )}
+                >
+                  Sobre
+                </NavigationMenuLink>
+              </Link>
+              <Link href="/contact" legacyBehavior passHref>
+                <NavigationMenuLink
+                  className={cn(
+                    "rounded-lg bg-transparent px-3 py-2",
+                    pathName !== "/"
+                      ? " text-zinc-950 hover:bg-zinc-100"
+                      : " hover:bg-zinc-100/50 hover:text-zinc-900",
+                  )}
+                >
+                  Contacto
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          </NavigationMenu>
+        </div>
+        <div className="flex items-center gap-2">
+          <Cart />
+          {data ? (
+            <Profile />
+          ) : (
+            <Button
+              onClick={handleLogin}
+              variant={"ghost"}
+              size={"icon"}
+              className={cn(
+                "rounded-lg bg-transparent",
+                pathName !== "/"
+                  ? " text-zinc-950 hover:bg-zinc-100"
+                  : " hover:bg-zinc-100/50 hover:text-zinc-900",
+              )}
+            >
+              <User
+                strokeWidth={1.5}
+                size={24}
+                color={textColor}
                 className={cn(
-                  "rounded-lg bg-transparent px-3 py-2",
-                  pathName !== "/"
-                    ? " bg-white text-zinc-950  hover:bg-zinc-100"
+                  pathName === "/"
+                    ? " text-zinc-50  hover:text-zinc-100"
                     : " hover:bg-zinc-100/50 hover:text-zinc-900",
                 )}
-              >
-                Produtos
-              </NavigationMenuLink>
-            </Link>
-            <Link href="/about" legacyBehavior passHref>
-              <NavigationMenuLink
-                className={cn(
-                  "rounded-lg bg-transparent px-3 py-2",
-                  pathName !== "/"
-                    ? " text-zinc-950 hover:bg-zinc-100"
-                    : " hover:bg-zinc-100/50 hover:text-zinc-900",
-                )}
-              >
-                Sobre
-              </NavigationMenuLink>
-            </Link>
-            <Link href="/contact" legacyBehavior passHref>
-              <NavigationMenuLink
-                className={cn(
-                  "rounded-lg bg-transparent px-3 py-2",
-                  pathName !== "/"
-                    ? " text-zinc-950 hover:bg-zinc-100"
-                    : " hover:bg-zinc-100/50 hover:text-zinc-900",
-                )}
-              >
-                Contacto
-              </NavigationMenuLink>
-            </Link>
-            <Cart />
-            {data ? (
-              <Profile />
-            ) : (
-              <Button
-                onClick={handleLogin}
-                variant={"ghost"}
-                size={"icon"}
-                className={cn(
-                  "rounded-lg bg-transparent",
-                  pathName !== "/"
-                    ? " text-zinc-950 hover:bg-zinc-100"
-                    : " hover:bg-zinc-100/50 hover:text-zinc-900",
-                )}
-              >
-                <User strokeWidth={1.5} size={24} />
-              </Button>
-            )}
-          </NavigationMenuItem>
-        </NavigationMenu>
+              />
+            </Button>
+          )}
+          <div className="flex md:hidden">
+            <Sheet>
+              <SheetTrigger>
+                <Menu
+                  strokeWidth={1.5}
+                  size={24}
+                  color={textColor}
+                  className={cn(
+                    pathName === "/"
+                      ? " text-zinc-50  hover:text-zinc-100"
+                      : " hover:bg-zinc-100 hover:text-zinc-900",
+                  )}
+                />
+              </SheetTrigger>
+              <SheetContent className="flex w-full max-w-none flex-col items-center justify-center bg-white text-xl">
+                <NavigationMenu>
+                  <NavigationMenuItem className="flex flex-col items-center gap-2">
+                    <Link href="/products" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={cn(
+                          "rounded-lg bg-transparent px-3 py-2",
+                          pathName === "/"
+                            ? " bg-white text-zinc-950  hover:bg-zinc-100"
+                            : " hover:bg-zinc-100/50 hover:text-zinc-900",
+                        )}
+                      >
+                        <SheetClose>Produtos</SheetClose>
+                      </NavigationMenuLink>
+                    </Link>
+                    <Link href="/about" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={cn(
+                          "rounded-lg bg-transparent px-3 py-2",
+                          pathName === "/"
+                            ? " text-zinc-950 hover:bg-zinc-100"
+                            : " hover:bg-zinc-100/50 hover:text-zinc-900",
+                        )}
+                      >
+                        <SheetClose>Sobre</SheetClose>
+                      </NavigationMenuLink>
+                    </Link>
+                    <Link href="/contact" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={cn(
+                          "rounded-lg bg-transparent px-3 py-2",
+                          pathName === "/"
+                            ? " text-zinc-950 hover:bg-zinc-100"
+                            : " hover:bg-zinc-100/50 hover:text-zinc-900",
+                        )}
+                      >
+                        <SheetClose>Contacto</SheetClose>
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                </NavigationMenu>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
       </div>
     </div>
   );
