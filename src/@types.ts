@@ -9,7 +9,7 @@ export interface Product {
   categoryId: string | null;
   createdAt: Date;
   productDetail: ProductDetail[];
-  category: Category | null;
+  category: Category;
   ingredients: Ingredient[];
 }
 

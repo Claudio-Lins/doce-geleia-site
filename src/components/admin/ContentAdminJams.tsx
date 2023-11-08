@@ -1,20 +1,25 @@
 "use client";
 
 import { Product } from "@/@types";
+import { useProductStore } from "@/hooks/useProductStore";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { JamIcon } from "../../../public/assets/icons/jam-icon";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
+import { AdminEditProductModal } from "./AdminEditProductModal";
 
 interface ContentAdminJamsProps {
-  jams: Product[];
+  products: Product[];
 }
 
-export function ContentAdminJams() {
+export function ContentAdminJams({ products }: ContentAdminJamsProps) {
   const [jams, setJams] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { setShowModalEditProduct, showModalEditProduct } = useProductStore();
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
   useEffect(() => {
     async function getJams() {
       const response = await fetch("/api/products/jams");
@@ -49,6 +54,12 @@ export function ContentAdminJams() {
     setIsLoading(false);
   }
 
+  function handleEditProduct(id: string) {
+    const selectedJam = jams.find((jam) => jam.id === id);
+    setSelectedProduct(selectedJam || null);
+    setShowModalEditProduct(true);
+  }
+
   return (
     <div className="flex w-full flex-col justify-center space-y-2 pb-10">
       {jams
@@ -74,9 +85,9 @@ export function ContentAdminJams() {
                   {jam.isDestack ? "Publicado" : "Publicar"}
                 </Label>
               </div>
-              <button className="rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-600">
+              <Button onClick={() => handleEditProduct(jam.id)} className="">
                 Editar
-              </button>
+              </Button>
             </div>
           </div>
         ))}
@@ -89,6 +100,7 @@ export function ContentAdminJams() {
           <JamIcon className="h-4 w-4" />
         </Button>
       </div>
+      <AdminEditProductModal produto={selectedProduct} />
     </div>
   );
 }
