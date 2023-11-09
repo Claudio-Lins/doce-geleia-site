@@ -37,17 +37,6 @@ interface Ingredient {
   createdAt: Date;
 }
 
-interface ProductDetail {
-  id: string;
-  weight: number;
-  netWeight: number;
-  discount?: number;
-  price: number;
-  qunatityInStock: number;
-  productId: string;
-  createdAt: Date;
-}
-
 interface AdminEditProductModalProps {
   produto: Product | null;
 }
@@ -62,6 +51,15 @@ const formProductSchema = z.object({
     .string()
     .min(10, { message: "Harmonização muito curta" })
     .max(200, { message: "Harmonização muito longa" }),
+  productDetail: z.array(
+    z.object({
+      weight: z.number().min(1, { message: "Peso inválido" }),
+      netWeight: z.number().min(1, { message: "Peso inválido" }),
+      price: z.number().min(1, { message: "Preço inválido" }),
+      discount: z.number().min(0, { message: "Desconto inválido" }),
+      qunatityInStock: z.number().min(0, { message: "Quantidade inválida" }),
+    }),
+  ),
 });
 
 type FormProductData = z.infer<typeof formProductSchema>;
@@ -84,12 +82,12 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
     setValue,
   } = useForm<FormProductData>({
     resolver: zodResolver(formProductSchema),
-    defaultValues: {
-      title: produto?.title,
-      category: produto?.category.id,
-      harmonization: produto?.harmonization ?? "",
-      ingredients: produto?.ingredients.map((ingredient) => ingredient.name),
-    },
+    // defaultValues: {
+    //   title: produto?.title,
+    //   category: produto?.category.id,
+    //   harmonization: produto?.harmonization ?? "",
+    //   ingredients: produto?.ingredients.map((ingredient) => ingredient.name),
+    // },
   });
 
   useEffect(() => {
@@ -97,6 +95,20 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
       setValue("title", produto.title);
       setValue("category", produto.category.id);
       setValue("harmonization", produto.harmonization ?? "");
+
+      produto.productDetail.forEach((productDetail, index) => {
+        setValue(`productDetail.${index}.weight`, productDetail.weight);
+        setValue(`productDetail.${index}.netWeight`, productDetail.netWeight);
+        setValue(`productDetail.${index}.price`, productDetail.price / 100);
+        setValue(
+          `productDetail.${index}.discount`,
+          productDetail.discount || 0,
+        );
+        setValue(
+          `productDetail.${index}.qunatityInStock`,
+          productDetail.qunatityInStock,
+        );
+      });
 
       setValue(
         "ingredients",
@@ -171,10 +183,10 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                     />
                   </div>
                   <Separator className="my-2" />
-                  <div className="">
+                  <div className="relative">
                     <Label htmlFor="harmonization">Combina com...</Label>
                     <Textarea
-                      className="relative"
+                      className=""
                       rows={5}
                       // placeholder="Harmonização"
                       {...register("harmonization")}
@@ -182,11 +194,73 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                         setCountCaracteres(e.target.value.length)
                       }
                     />
-                    <div className="absolute bottom-6 right-6 text-sm text-zinc-500">
+                    <div className="absolute bottom-2 right-4 text-sm text-zinc-500">
                       {countCaracteres}/200
                     </div>
                   </div>
-                  <div className=""></div>
+                  <div className="flex w-full flex-wrap items-center justify-center gap-2 rounded-lg border p-2">
+                    {produto?.productDetail.map((productDetail, index) => {
+                      return (
+                        <div
+                          key={productDetail.id}
+                          className="flex h-32 w-32 flex-col space-y-2 rounded-md border p-2"
+                        >
+                          <div className="flex w-full items-center space-x-1">
+                            <span className="text-xs text-gray-500">Liq.:</span>
+                            <input
+                              type="number"
+                              {...register(`productDetail.${index}.weight`)}
+                              className="h-full w-[25px] text-right text-xs text-gray-500 focus:outline-none focus:ring-0"
+                            />
+                            <span className="text-xs text-gray-500">gr</span>
+                          </div>
+                          <div className="flex w-full items-center space-x-1">
+                            <span className="text-xs text-gray-500">Net.:</span>
+                            <input
+                              type="number"
+                              {...register(`productDetail.${index}.netWeight`)}
+                              className="h-full w-[25px] text-right text-xs text-gray-500 focus:outline-none focus:ring-0"
+                            />
+                            <span className="text-xs text-gray-500">gr</span>
+                          </div>
+                          <div className="flex w-full items-center space-x-1">
+                            <span className="text-xs text-gray-500">
+                              Stock:
+                            </span>
+                            <input
+                              type="number"
+                              {...register(
+                                `productDetail.${index}.qunatityInStock`,
+                              )}
+                              className="h-full w-[20px] text-xs text-gray-500 focus:outline-none focus:ring-0"
+                            />
+                          </div>
+                          <div className="flex w-full items-center space-x-1">
+                            <span className="text-xs text-gray-500">
+                              Preço:
+                            </span>
+                            <input
+                              type="number"
+                              {...register(`productDetail.${index}.price`)}
+                              className="h-full w-[25px] text-right text-xs text-gray-500 focus:outline-none focus:ring-0"
+                            />
+                            <span className="text-xs text-gray-500">€</span>
+                          </div>
+                          <div className="flex w-full items-center space-x-1">
+                            <span className="text-xs text-gray-500">
+                              Desconto:
+                            </span>
+                            <input
+                              type="number"
+                              {...register(`productDetail.${index}.discount`)}
+                              className="h-full w-[20px] text-right text-xs text-gray-500 focus:outline-none focus:ring-0"
+                            />
+                            <span className="text-xs text-gray-500">%</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </ScrollArea>
             </div>
