@@ -1,5 +1,6 @@
 "use client";
 
+import { Product } from "@/@types";
 import {
   Dialog,
   DialogContent,
@@ -15,7 +16,6 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
@@ -49,26 +49,19 @@ interface ProductDetail {
 }
 
 interface AdminEditProductModalProps {
-  produto: {
-    id: string;
-    title: string;
-    slug: string;
-    coverUrl: string | null;
-    harmonization: string | null;
-    validate: string | null;
-    category: Category;
-    isDestack: boolean;
-    createdAt: Date;
-    productDetail: ProductDetail[];
-    ingredients: Ingredient[];
-  } | null;
+  produto: Product | null;
 }
 
 const formProductSchema = z.object({
-  title: z.string(),
+  title: z.string().min(3, { message: "Título muito curto" }),
   category: z.string(),
-  ingredients: z.array(z.string()),
-  harmonization: z.string().optional(),
+  ingredients: z.array(
+    z.string().min(1, { message: "Selecione um ingrediente" }),
+  ),
+  harmonization: z
+    .string()
+    .min(10, { message: "Harmonização muito curta" })
+    .max(200, { message: "Harmonização muito longa" }),
 });
 
 type FormProductData = z.infer<typeof formProductSchema>;
@@ -87,7 +80,6 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
     setValue,
   } = useForm<FormProductData>({
@@ -95,19 +87,26 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
     defaultValues: {
       title: produto?.title,
       category: produto?.category.id,
-      harmonization: produto?.harmonization || "",
+      harmonization: produto?.harmonization ?? "",
       ingredients: produto?.ingredients.map((ingredient) => ingredient.name),
     },
   });
+
   useEffect(() => {
-    setValue(
-      "ingredients",
-      selectedIngredients.map((ingredient) => ingredient.id),
-    );
-  }, [selectedIngredients, setValue]);
+    if (produto) {
+      setValue("title", produto.title);
+      setValue("category", produto.category.id);
+      setValue("harmonization", produto.harmonization ?? "");
+
+      setValue(
+        "ingredients",
+        produto.ingredients.map((ingredient) => ingredient.name),
+      );
+    }
+  }, [produto, setValue]);
 
   async function handleFormProduct(data: FormProductData) {
-    console.log(data);
+    alert(JSON.stringify(data, null, 2));
   }
 
   countCaracteres >= 200 && toast.error("Limite de caracteres excedido!");
@@ -136,19 +135,21 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
             <div className="flex flex-1 flex-col justify-between p-2">
               <ScrollArea className="h-[360px] pb-4 pr-4">
                 <div className="flex flex-col gap-2">
-                  <div className="w-full">
-                    <Input
-                      className="focus:border-zinc-600 focus:ring-0"
-                      placeholder={produto?.title}
-                      defaultValue={produto?.title}
+                  <div className="flex w-full flex-col space-y-1">
+                    <input
+                      className="h-10 w-full rounded-lg border border-gray-300 bg-white p-2 text-sm text-gray-500 focus:border-zinc-600  focus:ring-0"
                       {...register("title")}
                     />
+                    {errors.title && (
+                      <span className="text-[10px] text-red-500">
+                        {errors.title.message}
+                      </span>
+                    )}
                   </div>
                   <div className=" flex items-center justify-between gap-2">
                     <select
                       className="h-10 w-1/2 rounded-lg border border-gray-300 bg-white p-2 text-sm  text-gray-500  focus:border-blue-300 focus:outline-none focus:ring"
                       {...register("category")}
-                      defaultValue={produto?.category.id}
                     >
                       {categories.map((category) => (
                         <option key={category.id} value={category.id}>
@@ -175,8 +176,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                     <Textarea
                       className="relative"
                       rows={5}
-                      placeholder="Harmonização"
-                      defaultValue={produto?.harmonization || ""}
+                      // placeholder="Harmonização"
                       {...register("harmonization")}
                       onChange={(e) =>
                         setCountCaracteres(e.target.value.length)
