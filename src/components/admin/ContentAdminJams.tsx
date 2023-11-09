@@ -10,11 +10,7 @@ import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { AdminEditProductModal } from "./AdminEditProductModal";
 
-interface ContentAdminJamsProps {
-  products: Product[];
-}
-
-export function ContentAdminJams({ products }: ContentAdminJamsProps) {
+export function ContentAdminJams() {
   const [jams, setJams] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { setShowModalEditProduct, showModalEditProduct } = useProductStore();

@@ -1,4 +1,4 @@
-import { Category, Ingredient } from "@/@types";
+import { Category, Ingredient, Product } from "@/@types";
 import { create } from "zustand";
 
 async function getAllCategories(): Promise<Category[]> {
@@ -13,6 +13,12 @@ async function getAllIngredients(): Promise<Ingredient[]> {
   return ingredients;
 }
 
+async function getAllProducts(): Promise<Product[]> {
+  const response = await fetch(`/api/products`);
+  const products = await response.json();
+  return products;
+}
+
 interface ProductStore {
   showModalEditProduct: boolean;
   setShowModalEditProduct: (showModalEditProduct: boolean) => void;
@@ -20,10 +26,13 @@ interface ProductStore {
   setCategories: (categories: Category[]) => void;
   ingredients: Ingredient[];
   setIngredients: (ingredients: Ingredient[]) => void;
+  products: Product[];
+  setProducts: (products: Product[]) => void;
 }
 export const useProductStore = create<ProductStore>((set, get) => {
   getAllCategories().then((categories) => set({ categories }));
   getAllIngredients().then((ingredients) => set({ ingredients }));
+  getAllProducts().then((products) => set({ products }));
   return {
     showModalEditProduct: false,
     setShowModalEditProduct: (showModalEditProduct) =>
@@ -32,5 +41,7 @@ export const useProductStore = create<ProductStore>((set, get) => {
     setCategories: (categories) => set({ categories }),
     ingredients: [],
     setIngredients: (ingredients) => set({ ingredients }),
+    products: [],
+    setProducts: (products) => set({ products }),
   };
 });

@@ -1,4 +1,3 @@
-"use client";
 import { Ingredient } from "@/@types";
 import {
   Dialog,
@@ -14,12 +13,14 @@ import { Button } from "../ui/button";
 
 interface AdminIngredientsModalProps {
   ingredients: Ingredient[];
+  ingredientes: Ingredient[];
   onSave: (selected: Ingredient[]) => void;
 }
 
 export function AdminIngredientsModal({
   ingredients,
   onSave,
+  ingredientes,
 }: AdminIngredientsModalProps) {
   const [selected, setSelected] = useState<Ingredient[]>([]);
 
@@ -28,13 +29,15 @@ export function AdminIngredientsModal({
       <DialogTrigger className="h-auto w-full rounded-lg border py-2 hover:bg-zinc-100 hover:shadow-inner">
         {selected.length > 0 ? (
           <div className="flex h-full w-full items-center justify-between px-4">
-            <span className="text-zinc-500">
+            <span className="text-zinc-900">
               {selected.map((ingredient) => ingredient.name).join(" | ")}
             </span>
           </div>
         ) : (
           <div className="flex h-full w-full items-center justify-between px-4">
-            <span className="text-zinc-400">Escolha os ingredientes</span>
+            <span className="text-zinc-900">
+              {ingredientes?.map((ingredient) => ingredient.name).join(" | ")}
+            </span>
           </div>
         )}
       </DialogTrigger>

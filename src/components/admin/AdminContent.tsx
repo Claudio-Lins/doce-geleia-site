@@ -11,18 +11,14 @@ interface AdminContentProps {
   products: Product[];
 }
 
-export function AdminContent({
-  order,
-  testimonial,
-  products,
-}: AdminContentProps) {
+export function AdminContent({ order, testimonial }: AdminContentProps) {
   const { showOrderHistory, showTestimonial, showJams } = useOrderStore();
 
   return (
     <div className="h-[calc(70vh)] overflow-y-auto">
       {showOrderHistory && <AdminOrders order={order} />}
       {showTestimonial && <ContentAdminTestimonial testimonial={testimonial} />}
-      {showJams && <ContentAdminJams products={products} />}
+      {showJams && <ContentAdminJams />}
     </div>
   );
 }
