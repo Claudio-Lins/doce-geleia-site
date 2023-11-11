@@ -18,7 +18,9 @@ export function ContentAdminJams() {
 
   useEffect(() => {
     async function getJams() {
-      const response = await fetch("/api/products/jams");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/products/jams`,
+      );
       const data = await response.json();
       setJams(data);
     }
@@ -31,16 +33,19 @@ export function ContentAdminJams() {
     if (!jam) {
       return;
     }
-    const response = await fetch("/api/products/destack", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/products/destack`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          isDestack: !jam?.isDestack,
+        }),
       },
-      body: JSON.stringify({
-        id,
-        isDestack: !jam?.isDestack,
-      }),
-    });
+    );
     if (response.ok) {
       setJams(
         jams.map((j) => (j.id === id ? { ...j, isDestack: !j.isDestack } : j)),

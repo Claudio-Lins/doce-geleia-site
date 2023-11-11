@@ -22,7 +22,7 @@ export default function OrderPage() {
   }, [router, session]);
 
   useEffect(() => {
-    fetch("/api/products")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`)
       .then((response) => response.json())
       .then((data) => setProducts(data));
   }, []);

@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@/@types";
+import { Ingredient, Product } from "@/@types";
 import {
   Dialog,
   DialogContent,
@@ -22,21 +22,6 @@ import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
 import { AdminIngredientsModal } from "./AdminIngredientsModal";
 
-interface Category {
-  id: string;
-  title: string;
-  description: string | null;
-  coverUrl: string | null;
-  createdAt: Date;
-}
-interface Ingredient {
-  id: string;
-  name: string;
-  cor: string | null;
-  imageUrl: string | null;
-  createdAt: Date;
-}
-
 interface AdminEditProductModalProps {
   produto: Product | null;
 }
@@ -53,11 +38,11 @@ const formProductSchema = z.object({
     .max(200, { message: "Harmonização muito longa" }),
   productDetail: z.array(
     z.object({
-      weight: z.number().min(1, { message: "Peso inválido" }),
-      netWeight: z.number().min(1, { message: "Peso inválido" }),
-      price: z.number().min(1, { message: "Preço inválido" }),
-      discount: z.number().min(0, { message: "Desconto inválido" }),
-      qunatityInStock: z.number().min(0, { message: "Quantidade inválida" }),
+      weight: z.coerce.number(),
+      netWeight: z.coerce.number(),
+      price: z.coerce.number(),
+      discount: z.coerce.number(),
+      qunatityInStock: z.coerce.number(),
     }),
   ),
 });
@@ -73,7 +58,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
     setShowModalEditProduct,
     showModalEditProduct,
     categories,
-    ingredients,
+    // ingredients,
   } = useProductStore();
   const {
     register,
@@ -82,12 +67,6 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
     setValue,
   } = useForm<FormProductData>({
     resolver: zodResolver(formProductSchema),
-    // defaultValues: {
-    //   title: produto?.title,
-    //   category: produto?.category.id,
-    //   harmonization: produto?.harmonization ?? "",
-    //   ingredients: produto?.ingredients.map((ingredient) => ingredient.name),
-    // },
   });
 
   useEffect(() => {
@@ -119,7 +98,10 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
 
   async function handleFormProduct(data: FormProductData) {
     alert(JSON.stringify(data, null, 2));
+    console.log(data);
   }
+  const erros = Object.values(errors);
+  console.table(erros);
 
   countCaracteres >= 200 && toast.error("Limite de caracteres excedido!");
   return (
@@ -133,7 +115,10 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
             {produto?.title}
           </DialogTitle>
         </DialogHeader>
-        <form className="flex flex-col space-y-4">
+        <form
+          onSubmit={handleSubmit(handleFormProduct)}
+          className="flex flex-col space-y-4"
+        >
           <div className="flex items-center gap-4">
             <div className="flex h-[360px] w-[360px] items-center justify-center rounded-lg bg-white shadow-sm">
               <Image
@@ -177,7 +162,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                   <Separator className="my-2" />
                   <div className="">
                     <AdminIngredientsModal
-                      ingredients={ingredients}
+                      ingredients={produto?.ingredients || []}
                       onSave={setSelectedIngredients}
                       ingredientes={produto?.ingredients || []}
                     />
@@ -199,6 +184,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                     </div>
                   </div>
                   <div className="flex w-full flex-wrap items-center justify-center gap-2 rounded-lg border p-2">
+                    {/* <FormEditProductDetails product={produto} /> */}
                     {produto?.productDetail.map((productDetail, index) => {
                       return (
                         <div
@@ -210,6 +196,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                             <input
                               type="number"
                               {...register(`productDetail.${index}.weight`)}
+                              defaultValue={productDetail.weight}
                               className="h-full w-[25px] text-right text-xs text-gray-500 focus:outline-none focus:ring-0"
                             />
                             <span className="text-xs text-gray-500">gr</span>
@@ -219,6 +206,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                             <input
                               type="number"
                               {...register(`productDetail.${index}.netWeight`)}
+                              defaultValue={productDetail.netWeight}
                               className="h-full w-[25px] text-right text-xs text-gray-500 focus:outline-none focus:ring-0"
                             />
                             <span className="text-xs text-gray-500">gr</span>
@@ -232,6 +220,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                               {...register(
                                 `productDetail.${index}.qunatityInStock`,
                               )}
+                              defaultValue={productDetail.qunatityInStock}
                               className="h-full w-[20px] text-xs text-gray-500 focus:outline-none focus:ring-0"
                             />
                           </div>
@@ -242,6 +231,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                             <input
                               type="number"
                               {...register(`productDetail.${index}.price`)}
+                              defaultValue={productDetail.price / 100}
                               className="h-full w-[25px] text-right text-xs text-gray-500 focus:outline-none focus:ring-0"
                             />
                             <span className="text-xs text-gray-500">€</span>
@@ -253,6 +243,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                             <input
                               type="number"
                               {...register(`productDetail.${index}.discount`)}
+                              defaultValue={productDetail.discount || 0}
                               className="h-full w-[20px] text-right text-xs text-gray-500 focus:outline-none focus:ring-0"
                             />
                             <span className="text-xs text-gray-500">%</span>
@@ -272,15 +263,9 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                 Cancelar
               </Button>
             </DialogClose>
-            <DialogClose>
-              <Button
-                size={"lg"}
-                type="submit"
-                onClick={handleSubmit(handleFormProduct)}
-              >
-                Salvar
-              </Button>
-            </DialogClose>
+            <Button size={"lg"} type="submit">
+              Salvar
+            </Button>
           </div>
         </form>
       </DialogContent>

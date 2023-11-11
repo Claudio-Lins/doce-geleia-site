@@ -2,19 +2,25 @@ import { Category, Ingredient, Product } from "@/@types";
 import { create } from "zustand";
 
 async function getAllCategories(): Promise<Category[]> {
-  const response = await fetch(`/api/categories`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/categories`,
+  );
   const categories = await response.json();
   return categories;
 }
 
 async function getAllIngredients(): Promise<Ingredient[]> {
-  const response = await fetch(`/api/ingredients`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/ingredients`,
+  );
   const ingredients = await response.json();
   return ingredients;
 }
 
 async function getAllProducts(): Promise<Product[]> {
-  const response = await fetch(`/api/products`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/products`,
+  );
   const products = await response.json();
   return products;
 }
