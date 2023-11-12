@@ -37,7 +37,7 @@ function CartItem({
   }, [detail.discount, detail.qunatityInStock, isInStock]);
 
   return (
-    <div className="flex flex-col justify-between gap-1 p-2 rounded-md border relative w-28">
+    <div className="relative flex w-28 flex-col justify-between gap-1 rounded-md border p-2">
       {hasDiscount && <SplashDiscount discount={detail.discount} />}
       <span className="text-xs">{detail.weight}gr</span>
       <div className="text-sm font-bold">
@@ -50,11 +50,11 @@ function CartItem({
         <div className="w-8 text-center">
           {items.find(
             (item: SelectedProduct) =>
-              item.id === product.id && item.weight === detail.weight
+              item.id === product.id && item.weight === detail.weight,
           )?.quantity !== undefined
             ? items.find(
                 (item: SelectedProduct) =>
-                  item.id === product.id && item.weight === detail.weight
+                  item.id === product.id && item.weight === detail.weight,
               )?.quantity
             : 0}
         </div>
@@ -81,12 +81,12 @@ export function Info({ product }: any) {
     useCartStore();
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
-      <small>{product.category.title}</small>
+      <h1 className="text-3xl font-bold text-gray-900">{product?.title}</h1>
+      <small>{product?.category?.title}</small>
       <hr className="my-4" />
       <h3 className="font-semibold text-black">Ingredients:</h3>
-      <div className="flex flex-wrap gap-2 items-center mb-4 mt-2">
-        {product.ingredients?.map((ingredient: any) => (
+      <div className="mb-4 mt-2 flex flex-wrap items-center gap-2">
+        {product?.ingredients?.map((ingredient: any) => (
           <span key={ingredient.id} className="text-xs">
             {ingredient.name}
           </span>
@@ -95,17 +95,17 @@ export function Info({ product }: any) {
       <Separator className="my-4" />
       <div>
         <h3 className="font-semibold text-black">Vai bem com:</h3>
-        <p className="text-xs tracking-wider leading-relaxed">
-          {product.harmonization}
+        <p className="text-xs leading-relaxed tracking-wider">
+          {product?.harmonization}
         </p>
       </div>
       <Separator className="my-4" />
 
-      <div className="w-full flex flex-col items-center justify-center">
-        <div className="flex flex-col w-full">
+      <div className="flex w-full flex-col items-center justify-center">
+        <div className="flex w-full flex-col">
           <h2 className="font-semibold text-black">Adicione ao carrinho</h2>
-          <div className="flex items-center justify-evenly gap-2 mt-2">
-            {product.productDetail
+          <div className="mt-2 flex items-center justify-evenly gap-2">
+            {product?.productDetail
               .sort((a: ProductOption, b: ProductOption) => a.price - b.price)
               ?.map((detail: ProductOption) => (
                 <CartItem key={detail.id} product={product} detail={detail} />
@@ -114,7 +114,7 @@ export function Info({ product }: any) {
           {totalItems > 0 && (
             <Button
               onClick={() => setShowCart(true)}
-              className="w-full mt-4 flex items-center gap-2"
+              className="mt-4 flex w-full items-center gap-2"
             >
               <span>Adicionado ao</span> <ShoppingCart size={16} />
               {totalItems}

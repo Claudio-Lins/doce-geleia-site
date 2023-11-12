@@ -30,6 +30,7 @@ interface AdminEditProductModalProps {
 
 const formProductSchema = z.object({
   title: z.string().min(3, { message: "Título muito curto" }),
+  slug: z.string().min(3, { message: "Slug muito curto" }),
   category: z.string(),
   ingredients: z.array(
     z.string().min(1, { message: "Selecione um ingrediente" }),
@@ -40,6 +41,7 @@ const formProductSchema = z.object({
     .max(200, { message: "Harmonização muito longa" }),
   productDetail: z.array(
     z.object({
+      id: z.string(),
       weight: z.coerce.number(),
       netWeight: z.coerce.number(),
       price: z.coerce.number(),
@@ -75,9 +77,11 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
     if (produto) {
       setValue("title", produto.title);
       setValue("category", produto.category.id);
+      setValue("slug", produto.slug);
       setValue("harmonization", produto.harmonization ?? "");
 
       produto.productDetail.forEach((productDetail, index) => {
+        setValue(`productDetail.${index}.id`, productDetail.id);
         setValue(`productDetail.${index}.weight`, productDetail.weight);
         setValue(`productDetail.${index}.netWeight`, productDetail.netWeight);
         setValue(`productDetail.${index}.price`, productDetail.price / 100);
@@ -99,11 +103,35 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
   }, [produto, setValue]);
 
   async function handleFormProduct(data: FormProductData) {
-    alert(JSON.stringify(data, null, 2));
-    console.log(data);
+    const response = await fetch("/api/products", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: produto?.id,
+        title: data.title,
+        slug: data.title.toLowerCase().replace(/ /g, "-"),
+        category: data.category,
+        harmonization: data.harmonization,
+        ingredients: selectedIngredients.map((ingredient) => ingredient.id),
+        productDetail: data.productDetail.map((detail) => ({
+          id: detail.id,
+          weight: detail.weight,
+          netWeight: detail.netWeight,
+          price: detail.price * 100,
+          discount: detail.discount,
+          qunatityInStock: detail.qunatityInStock,
+        })),
+      }),
+    });
+    if (response.ok) {
+      toast.success("Produto atualizado com sucesso!");
+      setShowModalEditProduct(false);
+    } else {
+      toast.error("Erro ao atualizar o Produto");
+    }
   }
-  const erros = Object.values(errors);
-  console.table(erros);
 
   countCaracteres >= 200 && toast.error("Limite de caracteres excedido!");
   return (
@@ -175,7 +203,6 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                     <Textarea
                       className=""
                       rows={5}
-                      // placeholder="Harmonização"
                       {...register("harmonization")}
                       onChange={(e) =>
                         setCountCaracteres(e.target.value.length)
