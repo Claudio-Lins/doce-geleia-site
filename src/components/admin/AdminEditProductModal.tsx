@@ -16,6 +16,8 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
 import { Button } from "../ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
@@ -184,73 +186,97 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                     </div>
                   </div>
                   <div className="flex w-full flex-wrap items-center justify-center gap-2 rounded-lg border p-2">
-                    {/* <FormEditProductDetails product={produto} /> */}
-                    {produto?.productDetail.map((productDetail, index) => {
-                      return (
-                        <div
-                          key={productDetail.id}
-                          className="flex h-32 w-32 flex-col space-y-2 rounded-md border p-2"
-                        >
-                          <div className="flex w-full items-center space-x-1">
-                            <span className="text-xs text-gray-500">Liq.:</span>
-                            <input
-                              type="number"
-                              {...register(`productDetail.${index}.weight`)}
-                              defaultValue={productDetail.weight}
-                              className="h-full w-[25px] text-right text-xs text-gray-500 focus:outline-none focus:ring-0"
-                            />
-                            <span className="text-xs text-gray-500">gr</span>
-                          </div>
-                          <div className="flex w-full items-center space-x-1">
-                            <span className="text-xs text-gray-500">Net.:</span>
-                            <input
-                              type="number"
-                              {...register(`productDetail.${index}.netWeight`)}
-                              defaultValue={productDetail.netWeight}
-                              className="h-full w-[25px] text-right text-xs text-gray-500 focus:outline-none focus:ring-0"
-                            />
-                            <span className="text-xs text-gray-500">gr</span>
-                          </div>
-                          <div className="flex w-full items-center space-x-1">
-                            <span className="text-xs text-gray-500">
-                              Stock:
-                            </span>
-                            <input
-                              type="number"
-                              {...register(
-                                `productDetail.${index}.qunatityInStock`,
-                              )}
-                              defaultValue={productDetail.qunatityInStock}
-                              className="h-full w-[20px] text-xs text-gray-500 focus:outline-none focus:ring-0"
-                            />
-                          </div>
-                          <div className="flex w-full items-center space-x-1">
-                            <span className="text-xs text-gray-500">
-                              Preço:
-                            </span>
-                            <input
-                              type="number"
-                              {...register(`productDetail.${index}.price`)}
-                              defaultValue={productDetail.price / 100}
-                              className="h-full w-[25px] text-right text-xs text-gray-500 focus:outline-none focus:ring-0"
-                            />
-                            <span className="text-xs text-gray-500">€</span>
-                          </div>
-                          <div className="flex w-full items-center space-x-1">
-                            <span className="text-xs text-gray-500">
-                              Desconto:
-                            </span>
-                            <input
-                              type="number"
-                              {...register(`productDetail.${index}.discount`)}
-                              defaultValue={productDetail.discount || 0}
-                              className="h-full w-[20px] text-right text-xs text-gray-500 focus:outline-none focus:ring-0"
-                            />
-                            <span className="text-xs text-gray-500">%</span>
-                          </div>
-                        </div>
-                      );
-                    })}
+                    {produto?.productDetail
+                      .sort((a, b) => a.weight - b.weight)
+                      .map((productDetail, index) => {
+                        return (
+                          <Card
+                            key={productDetail.id}
+                            className="w-full max-w-[200px]"
+                          >
+                            <CardHeader className="p-2">
+                              <CardTitle className="text-lg">
+                                {productDetail.weight}g
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent className="flex flex-col gap-2 px-2">
+                              <div className="flex flex-col space-y-2">
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-xs">Peso Liq.:</Label>
+                                  <Input
+                                    className="h-6 text-right text-xs "
+                                    type="number"
+                                    {...register(
+                                      `productDetail.${index}.weight`,
+                                    )}
+                                    defaultValue={productDetail.weight}
+                                  />
+
+                                  <small className="text-xs font-medium">
+                                    gr
+                                  </small>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-xs">Peso Net.:</Label>
+                                  <Input
+                                    className="h-6 text-right text-xs "
+                                    type="number"
+                                    {...register(
+                                      `productDetail.${index}.netWeight`,
+                                    )}
+                                    defaultValue={productDetail.netWeight}
+                                  />
+                                  <small className="text-xs font-medium">
+                                    gr
+                                  </small>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-xs">Estoque:</Label>
+                                  <Input
+                                    className="h-6 text-right text-xs "
+                                    type="number"
+                                    {...register(
+                                      `productDetail.${index}.qunatityInStock`,
+                                    )}
+                                    defaultValue={productDetail.qunatityInStock}
+                                  />
+                                  <small className="text-xs font-medium">
+                                    Unid.
+                                  </small>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-xs">Preço:</Label>
+                                  <Input
+                                    className="h-6 text-right text-xs "
+                                    type="number"
+                                    {...register(
+                                      `productDetail.${index}.price`,
+                                    )}
+                                    defaultValue={productDetail.price / 100}
+                                  />
+                                  <small className="text-xs font-medium">
+                                    €
+                                  </small>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Label className="text-xs">Desconto:</Label>
+                                  <Input
+                                    className="h-6 text-right text-xs "
+                                    type="number"
+                                    {...register(
+                                      `productDetail.${index}.discount`,
+                                    )}
+                                    defaultValue={productDetail.discount || 0}
+                                  />
+                                  <small className="text-xs font-medium">
+                                    %
+                                  </small>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        );
+                      })}
                   </div>
                 </div>
               </ScrollArea>
