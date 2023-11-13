@@ -2,6 +2,7 @@
 
 import { Product } from "@/@types";
 import { useProductStore } from "@/hooks/useProductStore";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { JamIcon } from "../../../public/assets/icons/jam-icon";
@@ -15,6 +16,7 @@ export function ContentAdminJams() {
   const [isLoading, setIsLoading] = useState(false);
   const { setShowModalEditProduct, showModalEditProduct } = useProductStore();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     async function getJams() {
@@ -51,7 +53,8 @@ export function ContentAdminJams() {
         jams.map((j) => (j.id === id ? { ...j, isDestack: !j.isDestack } : j)),
       );
     }
-    toast.success("Geleia atualizada com sucesso!");
+    toast.success("Status atualizado com sucesso!");
+    router.refresh();
     setIsLoading(false);
   }
 
