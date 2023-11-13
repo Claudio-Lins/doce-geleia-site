@@ -11,6 +11,7 @@ import { useProductStore } from "@/hooks/useProductStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogClose } from "@radix-ui/react-dialog";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -54,6 +55,7 @@ const formProductSchema = z.object({
 type FormProductData = z.infer<typeof formProductSchema>;
 
 export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
+  const router = useRouter();
   const [countCaracteres, setCountCaracteres] = useState(0);
   const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>(
     [],
@@ -128,6 +130,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
     if (response.ok) {
       toast.success("Produto atualizado com sucesso!");
       setShowModalEditProduct(false);
+      router.refresh();
     } else {
       toast.error("Erro ao atualizar o Produto");
     }
