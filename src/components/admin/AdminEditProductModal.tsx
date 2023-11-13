@@ -130,6 +130,10 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
     if (response.ok) {
       toast.success("Produto atualizado com sucesso!");
       setShowModalEditProduct(false);
+      // atualizar title do produto na lista de produtos
+      if (produto) {
+        produto.title = data.title;
+      }
       router.refresh();
     } else {
       toast.error("Erro ao atualizar o Produto");

@@ -1,5 +1,5 @@
 "use client";
-import { Product, TestimonialTypes } from "@/@types";
+import { TestimonialTypes } from "@/@types";
 import { useOrderStore } from "@/hooks/useOrderStore";
 import { AdminOrders } from "./AdminOrders";
 import { ContentAdminJams } from "./ContentAdminJams";
@@ -8,7 +8,7 @@ import { ContentAdminTestimonial } from "./ContentAdminTestimonial";
 interface AdminContentProps {
   order: any;
   testimonial: TestimonialTypes[];
-  products: Product[];
+  // products: Product[];
 }
 
 export function AdminContent({ order, testimonial }: AdminContentProps) {

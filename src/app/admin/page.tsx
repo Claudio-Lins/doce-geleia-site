@@ -1,7 +1,6 @@
 import { AdminContent } from "@/components/admin/AdminContent";
 import { SidebarAdmin } from "@/components/admin/SidebarAdmin";
 import { buttonVariants } from "@/components/ui/button";
-import { getAllProducts } from "@/data/products";
 import { api } from "@/lib/api";
 import { getSession } from "@/lib/session";
 import Link from "next/link";
@@ -27,7 +26,7 @@ async function getTestimonials() {
 export default async function AdminPage() {
   const order = await getOrders();
   const testimonial = await getTestimonials();
-  const products = await getAllProducts();
+  // const products = await getAllProducts();
 
   const session = await getSession();
   if (session?.role !== "ADMIN") {
@@ -53,7 +52,7 @@ export default async function AdminPage() {
           <AdminContent
             order={order}
             testimonial={testimonial}
-            products={products}
+            // products={products}
           />
         </div>
       </div>
