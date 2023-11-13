@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { Ingredient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 interface ProductTypes {
@@ -10,11 +11,7 @@ interface ProductTypes {
   validate: string | null;
   isDestack: boolean;
   categoryId: string | null;
-  ingredients: [
-    {
-      id: string;
-    },
-  ];
+  ingredients: Ingredient[];
   productDetail: {
     id: string;
     weight: number;
@@ -84,7 +81,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
 export async function PUT(req: NextRequest, res: NextResponse) {
   const body: ProductTypes = await req.json();
-  const id = body.id;
 
   try {
     for (const ingredient of body.ingredients) {
@@ -98,9 +94,8 @@ export async function PUT(req: NextRequest, res: NextResponse) {
         });
       }
     }
-    console.log(body.productDetail);
     const updatedProduct = await prisma.product.update({
-      where: { id: id as string },
+      where: { id: body.id },
       data: {
         title: body.title,
         slug: body.slug,
@@ -111,7 +106,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
         categoryId: body.categoryId,
         productDetail: {
           update: body.productDetail.map((detail) => ({
-            where: { id: detail.id }, // Make sure detail.id is defined
+            where: { id: detail.id },
             data: {
               weight: detail.weight,
               netWeight: detail.netWeight,
@@ -139,3 +134,58 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ error: error.message });
   }
 }
+
+// export async function PUT(req: NextRequest, res: NextResponse) {
+//   const body: ProductTypes = await req.json();
+
+//   try {
+//     for (const id of body.ingredients) {
+//       const existingIngredient = await prisma.ingredient.findUnique({
+//         // @ts-ignore
+//         where: { id },
+//       });
+
+//       if (!existingIngredient) {
+//         return NextResponse.json({
+//           error: `Ingredient with id ${id} not found`,
+//         });
+//       }
+//     }
+//     const updatedProduct = await prisma.product.update({
+//       where: { id: body.id },
+//       data: {
+//         title: body.title,
+//         slug: body.slug,
+//         coverUrl: body.coverUrl,
+//         harmonization: body.harmonization,
+//         validate: body.validate,
+//         isDestack: body.isDestack,
+//         categoryId: body.categoryId,
+//         productDetail: {
+//           update: body.productDetail.map((detail) => ({
+//             where: { id: detail.id },
+//             data: {
+//               weight: detail.weight,
+//               netWeight: detail.netWeight,
+//               price: detail.price,
+//               discount: detail.discount,
+//               qunatityInStock: detail.qunatityInStock,
+//             },
+//           })),
+//         },
+//         ingredients: {
+//           connect: body.ingredients,
+//         },
+//       },
+//       include: {
+//         productDetail: true,
+//         category: true,
+//         ingredients: true,
+//       },
+//     });
+
+//     return NextResponse.json(updatedProduct);
+//   } catch (error: any) {
+//     return NextResponse.json({ error: error.message });
+//   }
+// }

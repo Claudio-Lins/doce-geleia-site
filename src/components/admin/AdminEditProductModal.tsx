@@ -26,7 +26,7 @@ import { Textarea } from "../ui/textarea";
 import { AdminIngredientsModal } from "./AdminIngredientsModal";
 
 interface AdminEditProductModalProps {
-  produto: Product | null;
+  product: Product | null;
 }
 
 const formProductSchema = z.object({
@@ -54,18 +54,14 @@ const formProductSchema = z.object({
 
 type FormProductData = z.infer<typeof formProductSchema>;
 
-export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
+export function AdminEditProductModal({ product }: AdminEditProductModalProps) {
   const router = useRouter();
   const [countCaracteres, setCountCaracteres] = useState(0);
   const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>(
     [],
   );
-  const {
-    setShowModalEditProduct,
-    showModalEditProduct,
-    categories,
-    // ingredients,
-  } = useProductStore();
+  const { setShowModalEditProduct, showModalEditProduct, categories } =
+    useProductStore();
   const {
     register,
     handleSubmit,
@@ -76,13 +72,13 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
   });
 
   useEffect(() => {
-    if (produto) {
-      setValue("title", produto.title);
-      setValue("category", produto.category.id);
-      setValue("slug", produto.slug);
-      setValue("harmonization", produto.harmonization ?? "");
+    if (product) {
+      setValue("title", product.title);
+      setValue("category", product.category.id);
+      setValue("slug", product.slug);
+      setValue("harmonization", product.harmonization ?? "");
 
-      produto.productDetail.forEach((productDetail, index) => {
+      product.productDetail.forEach((productDetail, index) => {
         setValue(`productDetail.${index}.id`, productDetail.id);
         setValue(`productDetail.${index}.weight`, productDetail.weight);
         setValue(`productDetail.${index}.netWeight`, productDetail.netWeight);
@@ -99,10 +95,10 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
 
       setValue(
         "ingredients",
-        produto.ingredients.map((ingredient) => ingredient.name),
+        product.ingredients.map((ingredient) => ingredient.name),
       );
     }
-  }, [produto, setValue]);
+  }, [product, setValue]);
 
   async function handleFormProduct(data: FormProductData) {
     const response = await fetch("/api/products", {
@@ -111,7 +107,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: produto?.id,
+        id: product?.id,
         title: data.title,
         slug: data.title.toLowerCase().replace(/ /g, "-"),
         category: data.category,
@@ -130,9 +126,8 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
     if (response.ok) {
       toast.success("Produto atualizado com sucesso!");
       setShowModalEditProduct(false);
-      // atualizar title do produto na lista de produtos
-      if (produto) {
-        produto.title = data.title;
+      if (product) {
+        product.title = data.title;
       }
       router.refresh();
     } else {
@@ -148,7 +143,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
       <DialogContent className="max-w-4xl">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
-            {produto?.title}
+            {product?.title}
           </DialogTitle>
         </DialogHeader>
         <form
@@ -158,8 +153,8 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
           <div className="flex items-center gap-4">
             <div className="flex h-[360px] w-[360px] items-center justify-center rounded-lg bg-white shadow-sm">
               <Image
-                src={produto?.coverUrl ?? ""}
-                alt={produto?.title ?? ""}
+                src={product?.coverUrl ?? ""}
+                alt={product?.title ?? ""}
                 width={500}
                 height={500}
                 sizes="(min-width: 1040px) 464px, calc(97.78vw - 25px)"
@@ -198,9 +193,8 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                   <Separator className="my-2" />
                   <div className="">
                     <AdminIngredientsModal
-                      ingredients={produto?.ingredients || []}
+                      ingredients={product?.ingredients || []}
                       onSave={setSelectedIngredients}
-                      ingredientes={produto?.ingredients || []}
                     />
                   </div>
                   <Separator className="my-2" />
@@ -219,7 +213,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                     </div>
                   </div>
                   <div className="flex w-full flex-wrap items-center justify-center gap-2 rounded-lg border p-2">
-                    {produto?.productDetail
+                    {product?.productDetail
                       .sort((a, b) => a.weight - b.weight)
                       .map((productDetail, index) => {
                         return (

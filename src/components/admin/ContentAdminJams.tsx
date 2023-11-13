@@ -21,7 +21,7 @@ export function ContentAdminJams() {
   useEffect(() => {
     async function getJams() {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/products/jams`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/products`,
       );
       const data = await response.json();
       setJams(data);
@@ -104,7 +104,7 @@ export function ContentAdminJams() {
           <JamIcon className="h-4 w-4" />
         </Button>
       </div>
-      <AdminEditProductModal produto={selectedProduct} />
+      <AdminEditProductModal product={selectedProduct} />
     </div>
   );
 }

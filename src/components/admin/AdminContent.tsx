@@ -8,7 +8,6 @@ import { ContentAdminTestimonial } from "./ContentAdminTestimonial";
 interface AdminContentProps {
   order: any;
   testimonial: TestimonialTypes[];
-  // products: Product[];
 }
 
 export function AdminContent({ order, testimonial }: AdminContentProps) {

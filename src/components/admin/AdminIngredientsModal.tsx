@@ -19,7 +19,7 @@ interface AdminIngredientsModalProps {
 
 export function AdminIngredientsModal({
   ingredients,
-  onSave, // ingredientes,
+  onSave,
 }: AdminIngredientsModalProps) {
   const [selected, setSelected] = useState<Ingredient[]>([]);
   const [allIngredients, setAllIngredients] = useState<Ingredient[]>([]);
