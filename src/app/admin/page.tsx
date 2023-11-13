@@ -12,16 +12,14 @@ async function getOrders() {
     headers: {
       "Content-Type": "application/json",
     },
-    next: {
-      revalidate: 1,
-    },
+    cache: "no-cache",
   }).then((res) => res.json());
 
   return data;
 }
 
 async function getTestimonials() {
-  const data = await api("/testimonials", { next: { revalidate: 1 } });
+  const data = await api("/testimonials", { cache: "no-cache" });
   const testimonials = await data.json();
   return testimonials;
 }
