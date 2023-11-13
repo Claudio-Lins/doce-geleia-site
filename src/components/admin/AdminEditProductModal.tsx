@@ -84,7 +84,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
         setValue(`productDetail.${index}.id`, productDetail.id);
         setValue(`productDetail.${index}.weight`, productDetail.weight);
         setValue(`productDetail.${index}.netWeight`, productDetail.netWeight);
-        setValue(`productDetail.${index}.price`, productDetail.price / 100);
+        setValue(`productDetail.${index}.price`, productDetail.price);
         setValue(
           `productDetail.${index}.discount`,
           productDetail.discount || 0,
@@ -119,7 +119,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
           id: detail.id,
           weight: detail.weight,
           netWeight: detail.netWeight,
-          price: detail.price * 100,
+          price: detail.price,
           discount: detail.discount,
           qunatityInStock: detail.qunatityInStock,
         })),
@@ -278,7 +278,7 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
                                     {...register(
                                       `productDetail.${index}.price`,
                                     )}
-                                    defaultValue={productDetail.price / 100}
+                                    defaultValue={productDetail.price}
                                   />
                                   <small className="text-xs font-medium">
                                     €

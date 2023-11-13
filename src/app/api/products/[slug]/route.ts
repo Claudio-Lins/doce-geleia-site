@@ -18,7 +18,7 @@ export async function GET(
   if (product && product.productDetail) {
     product.productDetail = product.productDetail.map((detail) => ({
       ...detail,
-      price: detail.price - (detail.price * detail.discount!) / 100,
+      price: detail.price - detail.price * detail.discount!,
     }));
   }
   return NextResponse.json(product);
