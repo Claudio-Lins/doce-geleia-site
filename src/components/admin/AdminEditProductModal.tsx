@@ -132,7 +132,6 @@ export function AdminEditProductModal({ produto }: AdminEditProductModalProps) {
       toast.error("Erro ao atualizar o Produto");
     }
   }
-
   countCaracteres >= 200 && toast.error("Limite de caracteres excedido!");
   return (
     <Dialog

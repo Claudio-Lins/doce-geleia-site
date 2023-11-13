@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
 interface AdminIngredientsModalProps {
@@ -19,10 +19,18 @@ interface AdminIngredientsModalProps {
 
 export function AdminIngredientsModal({
   ingredients,
-  onSave,
-  ingredientes,
+  onSave, // ingredientes,
 }: AdminIngredientsModalProps) {
   const [selected, setSelected] = useState<Ingredient[]>([]);
+  const [allIngredients, setAllIngredients] = useState<Ingredient[]>([]);
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ingredients`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAllIngredients(data);
+      });
+  }, [ingredients]);
 
   return (
     <Dialog>
@@ -36,7 +44,7 @@ export function AdminIngredientsModal({
         ) : (
           <div className="flex h-full w-full items-center justify-between px-4">
             <span className="text-zinc-900">
-              {ingredientes?.map((ingredient) => ingredient.name).join(" | ")}
+              {ingredients?.map((ingredient) => ingredient.name).join(" | ")}
             </span>
           </div>
         )}
@@ -46,7 +54,7 @@ export function AdminIngredientsModal({
           <DialogTitle>Escolha os ingredientes</DialogTitle>
           <DialogDescription className="border-b border-t py-4">
             <form className=" grid grid-cols-3 gap-2">
-              {ingredients.map((ingredient) => (
+              {allIngredients.map((ingredient) => (
                 <div key={ingredient.id} className="flex items-center gap-1">
                   <input
                     type="checkbox"
