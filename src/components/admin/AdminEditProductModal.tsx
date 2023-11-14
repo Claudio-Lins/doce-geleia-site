@@ -34,7 +34,10 @@ const formProductSchema = z.object({
   slug: z.string().min(3, { message: "Slug muito curto" }),
   category: z.string(),
   ingredients: z.array(
-    z.string().min(1, { message: "Selecione um ingrediente" }),
+    z.object({
+      id: z.string(),
+      name: z.string(),
+    }),
   ),
   harmonization: z
     .string()
@@ -57,11 +60,22 @@ type FormProductData = z.infer<typeof formProductSchema>;
 export function AdminEditProductModal({ product }: AdminEditProductModalProps) {
   const router = useRouter();
   const [countCaracteres, setCountCaracteres] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [productIngredients, setProductIngredients] = useState<Ingredient[]>(
+    product?.ingredients ?? [],
+  );
   const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>(
     [],
   );
   const { setShowModalEditProduct, showModalEditProduct, categories } =
     useProductStore();
+
+  useEffect(() => {
+    if (product) {
+      setProductIngredients(product.ingredients);
+    }
+  }, [product]);
+
   const {
     register,
     handleSubmit,
@@ -75,8 +89,13 @@ export function AdminEditProductModal({ product }: AdminEditProductModalProps) {
     if (product) {
       setValue("title", product.title);
       setValue("category", product.category.id);
-      setValue("slug", product.slug);
+      setValue("slug", product.slug.toLowerCase().replace(/ /g, "-"));
       setValue("harmonization", product.harmonization ?? "");
+
+      product.ingredients.forEach((ingredient, index) => {
+        setValue(`ingredients.${index}.id`, ingredient.id);
+        setValue(`ingredients.${index}.name`, ingredient.name);
+      });
 
       product.productDetail.forEach((productDetail, index) => {
         setValue(`productDetail.${index}.id`, productDetail.id);
@@ -92,15 +111,16 @@ export function AdminEditProductModal({ product }: AdminEditProductModalProps) {
           productDetail.qunatityInStock,
         );
       });
-
-      setValue(
-        "ingredients",
-        product.ingredients.map((ingredient) => ingredient.name),
-      );
     }
   }, [product, setValue]);
 
-  async function handleFormProduct(data: FormProductData) {
+  async function handleUpdateProduct(data: FormProductData) {
+    setIsLoading(true);
+    const updatedData = {
+      ...data,
+      id: product?.id,
+      ingredients: productIngredients,
+    };
     const response = await fetch("/api/products", {
       method: "PUT",
       headers: {
@@ -112,7 +132,7 @@ export function AdminEditProductModal({ product }: AdminEditProductModalProps) {
         slug: data.title.toLowerCase().replace(/ /g, "-"),
         category: data.category,
         harmonization: data.harmonization,
-        ingredients: selectedIngredients.map((ingredient) => ingredient.id),
+        ingredients: productIngredients,
         productDetail: data.productDetail.map((detail) => ({
           id: detail.id,
           weight: detail.weight,
@@ -133,8 +153,45 @@ export function AdminEditProductModal({ product }: AdminEditProductModalProps) {
     } else {
       toast.error("Erro ao atualizar o Produto");
     }
+    // const response = await fetch("/api/products", {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     id: product?.id,
+    //     title: data.title,
+    //     slug: data.title.toLowerCase().replace(/ /g, "-"),
+    //     category: data.category,
+    //     harmonization: data.harmonization,
+    //     ingredients: data.ingredients.map((ingredient) => ({
+    //       id: ingredient.id,
+    //       name: ingredient.name,
+    //     })),
+    //     productDetail: data.productDetail.map((detail) => ({
+    //       id: detail.id,
+    //       weight: detail.weight,
+    //       netWeight: detail.netWeight,
+    //       price: detail.price,
+    //       discount: detail.discount,
+    //       qunatityInStock: detail.qunatityInStock,
+    //     })),
+    //   }),
+    // });
+    // if (response.ok) {
+    //   toast.success("Produto atualizado com sucesso!");
+    //   setShowModalEditProduct(false);
+    //   if (product) {
+    //     product.title = data.title;
+    //   }
+    //   router.refresh();
+    // } else {
+    //   toast.error("Erro ao atualizar o Produto");
+    // }
   }
+
   countCaracteres >= 200 && toast.error("Limite de caracteres excedido!");
+
   return (
     <Dialog
       open={showModalEditProduct}
@@ -147,7 +204,7 @@ export function AdminEditProductModal({ product }: AdminEditProductModalProps) {
           </DialogTitle>
         </DialogHeader>
         <form
-          onSubmit={handleSubmit(handleFormProduct)}
+          onSubmit={handleSubmit(handleUpdateProduct)}
           className="flex flex-col space-y-4"
         >
           <div className="flex items-center gap-4">
@@ -193,8 +250,10 @@ export function AdminEditProductModal({ product }: AdminEditProductModalProps) {
                   <Separator className="my-2" />
                   <div className="">
                     <AdminIngredientsModal
-                      ingredients={product?.ingredients || []}
-                      onSave={setSelectedIngredients}
+                      selected={selectedIngredients}
+                      setSelected={setSelectedIngredients}
+                      productIngredients={productIngredients}
+                      setProductIngredients={setProductIngredients}
                     />
                   </div>
                   <Separator className="my-2" />

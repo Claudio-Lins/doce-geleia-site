@@ -12,16 +12,18 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
 interface AdminIngredientsModalProps {
-  ingredients: Ingredient[];
-  ingredientes: Ingredient[];
-  onSave: (selected: Ingredient[]) => void;
+  selected: Ingredient[];
+  setSelected: React.Dispatch<React.SetStateAction<Ingredient[]>>;
+  productIngredients: Ingredient[];
+  setProductIngredients: React.Dispatch<React.SetStateAction<Ingredient[]>>;
 }
 
 export function AdminIngredientsModal({
-  ingredients,
-  onSave,
+  selected,
+  setSelected,
+  productIngredients,
+  setProductIngredients,
 }: AdminIngredientsModalProps) {
-  const [selected, setSelected] = useState<Ingredient[]>([]);
   const [allIngredients, setAllIngredients] = useState<Ingredient[]>([]);
 
   useEffect(() => {
@@ -30,29 +32,25 @@ export function AdminIngredientsModal({
       .then((data) => {
         setAllIngredients(data);
       });
-  }, [ingredients]);
+  }, []);
 
   return (
     <Dialog>
       <DialogTrigger className="h-auto w-full rounded-lg border py-2 hover:bg-zinc-100 hover:shadow-inner">
-        {selected.length > 0 ? (
-          <div className="flex h-full w-full items-center justify-between px-4">
-            <span className="text-zinc-900">
-              {selected.map((ingredient) => ingredient.name).join(" | ")}
-            </span>
-          </div>
-        ) : (
-          <div className="flex h-full w-full items-center justify-between px-4">
-            <span className="text-zinc-900">
-              {ingredients?.map((ingredient) => ingredient.name).join(" | ")}
-            </span>
-          </div>
-        )}
+        <div className="flex h-full w-full items-center justify-between px-4">
+          <span className="text-zinc-900">
+            {productIngredients
+              .map((ingredient) => ingredient.name)
+              .join(" | ")}
+          </span>
+        </div>
       </DialogTrigger>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Escolha os ingredientes</DialogTitle>
-          <DialogDescription className="border-b border-t py-4">
+          <DialogTitle>
+            <span className="text-xl font-bold">Selecione os ingredientes</span>
+          </DialogTitle>
+          <DialogDescription className="border-b border-t py-6">
             <form className=" grid grid-cols-3 gap-2">
               {allIngredients.map((ingredient) => (
                 <div key={ingredient.id} className="flex items-center gap-1">
@@ -61,12 +59,20 @@ export function AdminIngredientsModal({
                     id={ingredient.id}
                     name={ingredient.name}
                     value={ingredient.name}
+                    defaultChecked={productIngredients?.some(
+                      (i) => i.id === ingredient.id,
+                    )}
                     onChange={(e) => {
-                      if (e.target.checked) {
-                        setSelected([...selected, ingredient]);
+                      const isChecked = e.target.checked;
+                      if (isChecked) {
+                        setProductIngredients((prev) => [...prev, ingredient]);
+                        setSelected((prev) => [...prev, ingredient]);
                       } else {
-                        setSelected(
-                          selected.filter((i) => i.id !== ingredient.id),
+                        setProductIngredients((prev) =>
+                          prev.filter((i) => i.id !== ingredient.id),
+                        );
+                        setSelected((prev) =>
+                          prev.filter((i) => i.id !== ingredient.id),
                         );
                       }
                     }}
@@ -76,26 +82,13 @@ export function AdminIngredientsModal({
               ))}
             </form>
           </DialogDescription>
-          <div className="flex w-full items-center justify-between gap-4 pt-6">
-            <Button
-              type="button"
-              variant={"outline"}
-              className="w-full text-zinc-400"
-            >
+          <div className="flex w-full items-center justify-between gap-4">
+            <Button className="w-1/2" type="button" variant={"outline"}>
               Adicionar Ingrediente
             </Button>
-            <DialogClose>
-              <Button
-                type="button"
-                onClick={() => {
-                  onSave(selected);
-                }}
-                variant={"outline"}
-                className="w-full text-zinc-400"
-              >
-                Salvar
-              </Button>
-            </DialogClose>
+            <Button className="w-1/2" type="button" variant={"outline"}>
+              <DialogClose>Selecionar</DialogClose>
+            </Button>
           </div>
         </DialogHeader>
       </DialogContent>
