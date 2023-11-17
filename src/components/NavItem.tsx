@@ -12,9 +12,9 @@ export function NavItem({title, href, icon: Icon }:NavItemProps) {
   return (
     <Link
       href={href}
-      className='group flex items-center gap-3 px-3 py-2 rounded hover:bg-violet-950 cursor-pointer'>
+      className='group flex items-center gap-3 px-3 py-2 rounded hover:bg-violet-100 cursor-pointer'>
         <Icon className='h-5 w-5 text-zinc-500' />
-      <span className='font-medium text-zinc-700 group-hover:text-violet-700'>
+      <span className='font-medium text-zinc-700 group-hover:text-violet-950'>
         {title}
         </span>
         <ChevronDown className='ml-auto h-5 w-5 text-zinc-500 group-hover:text-violet-400'/>
