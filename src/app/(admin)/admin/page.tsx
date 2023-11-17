@@ -43,14 +43,8 @@ export default async function AdminPage() {
   }
 
   return (
-      <div className="grid grid-cols-appMobile md:grid-cols-app ">
-        <div className="p-4 md:p-4">
-          {/* <AdminContent
-            order={order}
-            testimonial={testimonial}
-            // products={products}
-          /> */}
-        </div>
+      <div className="flex items-center justify-center bg-pink-600 min-h-screen">
+        <h1>Intruções</h1>
       </div>
   );
 }

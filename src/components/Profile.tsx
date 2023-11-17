@@ -45,13 +45,6 @@ export function Profile() {
                 >
                   Dashboard Admin
                 </Link>
-                <Link
-                  href="/admin/orders"
-                  onClick={toglePopover}
-                  className={buttonVariants({ variant: "outline" })}
-                >
-                  Pedidos
-                </Link>
               </div>
             ) : (
               <Link

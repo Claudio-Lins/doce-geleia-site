@@ -17,7 +17,7 @@ export default async function Orders() {
   const session = await getSession();
   if (session?.role !== "ADMIN") {
     return (
-      <div className="flex bg-red-400 min-h-screen w-full flex-col items-center justify-center gap-2">
+      <div className="flex min-h-screen w-full flex-col items-center justify-center gap-2">
         <p>You are not authorized to view this page!</p>;
         {session?.role && <p>Your role is {session?.role}</p>}
         <Link
