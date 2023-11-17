@@ -5,7 +5,6 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
 export default async function Orders() {
-  const session = await getSession();
 
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order`, {
     method: "GET",
@@ -15,9 +14,10 @@ export default async function Orders() {
     next: { revalidate: 1 },
   }).then((res) => res.json());
 
+  const session = await getSession();
   if (session?.role !== "ADMIN") {
     return (
-      <div className="flex min-h-screen w-full flex-col items-center justify-center gap-2">
+      <div className="flex bg-red-400 min-h-screen w-full flex-col items-center justify-center gap-2">
         <p>You are not authorized to view this page!</p>;
         {session?.role && <p>Your role is {session?.role}</p>}
         <Link
@@ -31,7 +31,7 @@ export default async function Orders() {
   }
 
   return (
-    <div className="container mx-auto py-32">
+    <div className="container w-full mx-auto pt-20">
       <DataTable
         columns={columns}
         data={

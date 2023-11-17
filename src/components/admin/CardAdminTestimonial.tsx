@@ -1,3 +1,4 @@
+"use client"
 import { TestimonialTypes } from "@/@types";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";

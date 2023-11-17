@@ -1,6 +1,6 @@
 import { OrderProps } from "@/@types";
-import { columns } from "@/app/admin/orders/columns";
-import { DataTable } from "@/app/admin/orders/data-table";
+import { columns } from "@/app/(admin)/admin/orders/columns";
+import { DataTable } from "@/app/(admin)/admin/orders/data-table";
 
 interface AdminOrdersProps {
   order: OrderProps[];

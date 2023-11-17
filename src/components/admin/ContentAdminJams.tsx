@@ -65,7 +65,7 @@ export function ContentAdminJams() {
   }
 
   return (
-    <div className="flex w-full flex-col justify-center space-y-2 pb-10">
+    <div className="flex w-full flex-col justify-center space-y-2 mt-20">
       {jams
         .sort((a, b) => a.title.localeCompare(b.title))
         .map((jam) => (

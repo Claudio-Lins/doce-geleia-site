@@ -6,7 +6,7 @@ import { AuthProvider } from "@/providers/auth";
 import ToastProvider from "@/providers/toast-provider";
 import type { Metadata } from "next";
 import { Montserrat, Old_Standard_TT } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 
 const montserrat = Montserrat({
   subsets: ["latin"],

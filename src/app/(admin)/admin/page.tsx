@@ -1,5 +1,3 @@
-import { AdminContent } from "@/components/admin/AdminContent";
-import { SidebarAdmin } from "@/components/admin/SidebarAdmin";
 import { buttonVariants } from "@/components/ui/button";
 import { api } from "@/lib/api";
 import { getSession } from "@/lib/session";
@@ -45,17 +43,14 @@ export default async function AdminPage() {
   }
 
   return (
-    <div className="mx-auto mb-20 mt-28 w-full max-w-6xl overflow-hidden border-t p-4 shadow-sm md:rounded-xl md:border">
       <div className="grid grid-cols-appMobile md:grid-cols-app ">
-        <SidebarAdmin />
         <div className="p-4 md:p-4">
-          <AdminContent
+          {/* <AdminContent
             order={order}
             testimonial={testimonial}
             // products={products}
-          />
+          /> */}
         </div>
       </div>
-    </div>
   );
 }

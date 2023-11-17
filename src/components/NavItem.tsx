@@ -1,41 +1,23 @@
-import { cn } from "@/lib/utils";
-import { ElementType } from "react";
+import { ChevronDown } from 'lucide-react'
+import Link from 'next/link'
+import { ElementType } from 'react'
 
 interface NavItemProps {
-  icon: ElementType;
-  title: string;
-  clickHandler?: () => void;
-  active: boolean;
+  href: string
+  icon: ElementType
+  title: string
 }
 
-export function NavItem({
-  title,
-  icon: Icon,
-  clickHandler,
-  active,
-}: NavItemProps) {
+export function NavItem({title, href, icon: Icon }:NavItemProps) {
   return (
-    <div
-      onClick={clickHandler}
-      className={cn(
-        "group flex cursor-pointer items-center gap-3 rounded px-3 py-2 hover:bg-zinc-100",
-        active && "bg-zinc-100",
-      )}
-    >
-      <Icon
-        className={cn(
-          "h-6 w-6 text-zinc-500",
-          active && "animate-pulse text-zinc-700",
-        )}
-      />
-      <span
-        className={cn(
-          "hidden font-medium text-zinc-700 group-hover:text-zinc-700 md:flex",
-          active && "font-extrabold text-zinc-700",
-        )}
-      >
+    <Link
+      href={href}
+      className='group flex items-center gap-3 px-3 py-2 rounded hover:bg-violet-950 cursor-pointer'>
+        <Icon className='h-5 w-5 text-zinc-500' />
+      <span className='font-medium text-zinc-700 group-hover:text-violet-700'>
         {title}
-      </span>
-    </div>
-  );
+        </span>
+        <ChevronDown className='ml-auto h-5 w-5 text-zinc-500 group-hover:text-violet-400'/>
+      </Link>
+  )
 }

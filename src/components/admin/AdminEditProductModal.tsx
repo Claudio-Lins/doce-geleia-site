@@ -20,7 +20,6 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
 import { AdminIngredientsModal } from "./AdminIngredientsModal";
@@ -218,7 +217,7 @@ export function AdminEditProductModal({ product }: AdminEditProductModalProps) {
               />
             </div>
             <div className="flex flex-1 flex-col justify-between p-2">
-              <ScrollArea className="h-[360px] pb-4 pr-4">
+              {/* <ScrollArea className="h-[360px] pb-4 pr-4"> */}
                 <div className="flex flex-col gap-2">
                   <div className="flex w-full flex-col space-y-1">
                     <input
@@ -365,7 +364,7 @@ export function AdminEditProductModal({ product }: AdminEditProductModalProps) {
                       })}
                   </div>
                 </div>
-              </ScrollArea>
+              {/* </ScrollArea> */}
             </div>
           </div>
           <Separator className="my-4" />
