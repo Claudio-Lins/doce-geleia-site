@@ -37,16 +37,14 @@ export function Sidebar() {
       <Separator />
       <nav className="w-12 space-y-0.5 md:w-full">
         <NavItem
-          active={showOrderHistory}
+          href="/admin"
           icon={PackageOpen}
           title={"Pedidos"}
-          clickHandler={handleOrderHistoryClick}
         />
         <NavItem
-          active={showTestimonial}
+          href="/admin/jams"
           icon={MessageCircle}
           title={"Tetimonial"}
-          clickHandler={handleTestimonialClick}
         />
       </nav>
     </aside>
