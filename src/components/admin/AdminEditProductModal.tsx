@@ -89,7 +89,7 @@ export function AdminEditProductModal({ product }: AdminEditProductModalProps) {
     if (product) {
       setValue("title", product.title);
       setValue("category", product.category.id);
-      setValue("slug", product.slug.toLowerCase().replace(/ /g, "-"));
+      setValue("slug", product.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/ /g, "-"));
       setValue("harmonization", product.harmonization ?? "");
 
       product.ingredients.forEach((ingredient, index) => {
@@ -129,7 +129,7 @@ export function AdminEditProductModal({ product }: AdminEditProductModalProps) {
       body: JSON.stringify({
         id: product?.id,
         title: data.title,
-        slug: data.title.toLowerCase().replace(/ /g, "-"),
+        slug: data.slug,
         category: data.category,
         harmonization: data.harmonization,
         ingredients: productIngredients,
