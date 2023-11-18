@@ -34,7 +34,7 @@ export default async function RootLayout({
         <AuthProvider>
           <Navbar />
           <ToastProvider />
-          <main className="grow">{children}</main>
+          <main className="pt-4">{children}</main>
           <Footer />
           <CookieConsentPolicy />
         </AuthProvider>
