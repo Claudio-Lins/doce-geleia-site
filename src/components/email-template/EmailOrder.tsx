@@ -25,6 +25,11 @@ export function EmailOrder({
   return (
     <div>
       <h1>Olá, {fullName}!</h1>
+      <p>Recebemos o seu pedido com sucesso.</p>
+      <p>Em breve entraremos em contacto consigo.</p>
+      <p>Por favor, verifique o seu email.</p>
+      <small>{ email}</small>
+      <p>Segue abaixo os detalhes do seu pedido.</p>
       <p>Obrigado ....!</p>
 
       <h2>Detalhes do Pedido</h2>

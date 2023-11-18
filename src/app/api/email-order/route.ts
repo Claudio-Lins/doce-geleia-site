@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { fullName, email } = body;
     const data = await resend.emails.send({
-      from: "<order@docegeleia.pt>",
+      from: "order@docegeleia.pt",
       to: email,
       reply_to: process.env.EMAIL_REPLAY_TO,
       cc: "docegeleiapt@gmail.com",
