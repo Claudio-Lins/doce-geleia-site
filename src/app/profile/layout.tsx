@@ -1,8 +1,7 @@
-import { CookieConsentPolicy } from "@/components/CookieConcernPolicy";
-import { Footer } from "@/components/Footer";
-import { Navbar } from "@/components/ui/Navbar";
-
+import { SidebarProfile } from "@/components/Profile/SidebarProfile";
 import { cn } from "@/lib/utils";
+import { AuthProvider } from "@/providers/auth";
+import ToastProvider from "@/providers/toast-provider";
 import type { Metadata } from "next";
 import { Montserrat, Old_Standard_TT } from "next/font/google";
 import "../globals.css";
@@ -17,24 +16,26 @@ const oldStandardTT = Old_Standard_TT({
   variable: "--font-oldStandardTT",
 });
 
-
 export const metadata: Metadata = {
   title: "Doce Geleia",
-  description: "Login",
+  description: "Geleias artesanais feitas com carinho",
 };
 
-export default async function RootLayout({
+export default async function ProfileLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <html className={cn(montserrat.variable, oldStandardTT.variable)} lang="pt">
-      <body className={"min-h-screen w-full antialiased"}>
-          <Navbar />
-          <main className="pt-4">{children}</main>
-          <Footer />
-          <CookieConsentPolicy />
+      <body className={"antialiased"}>
+        <AuthProvider>
+          <ToastProvider />
+        <div className="min-h-screen grid grid-cols-app">
+         <SidebarProfile/>
+        <main className=''>{children}</main>
+          </div>
+          </AuthProvider>
       </body>
     </html>
   );

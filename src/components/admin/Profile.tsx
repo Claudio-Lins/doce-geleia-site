@@ -23,6 +23,5 @@ export function Profile() {
         <LogOut className='w-5 h-5 text-zinc-500' />
       </button>
           </div>
-
   )
 }

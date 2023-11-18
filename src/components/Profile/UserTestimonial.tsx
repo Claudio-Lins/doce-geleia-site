@@ -1,4 +1,6 @@
+"use client"
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -23,7 +25,7 @@ export function UserTestimonial() {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<UserTestimonialData>({
     resolver: zodResolver(UserTestimonialSchema),
     defaultValues: {
@@ -61,7 +63,9 @@ export function UserTestimonial() {
       <h1 className="text-2xl font-bold">
         Comente aqui o que achou da Doce Geleia.
       </h1>
-      <form className="-w-full relative flex flex-col space-y-4">
+      <form
+        onSubmit={handleSubmit(handleFormUserTestimonial)}
+        className="-w-full relative flex flex-col space-y-4">
         <textarea
           className="mt-4 h-48 w-full rounded-lg border p-2"
           placeholder="Deixe aqui o seu comentário"
@@ -70,10 +74,13 @@ export function UserTestimonial() {
           onChange={(e) => setCountCaracteres(e.target.value.length)}
         />
         <Button
-          onClick={handleSubmit(handleFormUserTestimonial)}
-          className="ml-auto w-2/5"
+          type="submit"
+          className="ml-auto w-2/5 flex justify-center items-center"
         >
-          Enviar
+          <span>Enviar</span>
+          {isSubmitting && (
+            <Loader className="animate-spin ml-2" size={20} color="#fff" />
+          )}
         </Button>
         <div className="absolute bottom-16 right-3 text-sm text-zinc-500">
           {countCaracteres}/300

@@ -1,5 +1,3 @@
-import { ProfileContent } from "@/components/Profile/ProfileContent";
-import { Sidebar } from "@/components/Profile/Sidebar";
 import { buttonVariants } from "@/components/ui/button";
 import { getSession } from "@/lib/session";
 import Link from "next/link";
@@ -23,13 +21,8 @@ export default async function MinhaConta() {
   }
 
   return (
-    <div className="mx-auto mb-20 mt-28 w-full max-w-6xl overflow-hidden border-t p-4 shadow-sm md:rounded-xl md:border">
-      <div className="grid-cols-appMobile grid md:grid-cols-app ">
-        <Sidebar />
-        <div className="p-4 md:p-10">
-          <ProfileContent />
-        </div>
+    <div className="flex items-center justify-center min-h-screen">
+        <h1>Page Client</h1>
       </div>
-    </div>
   );
 }
