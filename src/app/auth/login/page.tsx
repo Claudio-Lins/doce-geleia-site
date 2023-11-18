@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 import { AuthButton } from "@/components/AuthButton";
-import { Slider } from "@/components/Hero/Slider/Slider";
+import { Button } from "@/components/ui/button";
 import { UserLoginForm } from "@/components/user-login-auth";
 
 export const metadata: Metadata = {
@@ -13,21 +13,19 @@ export const metadata: Metadata = {
 export default function AuthenticationPage() {
   return (
     <>
-      <div className=" flex w-full items-center justify-evenly">
-        <div className="hidden min-h-screen flex-col items-center justify-center text-white dark:border-r lg:flex">
-          <Slider numSlides={1} />
-        </div>
-        <div className=" flex w-full max-w-sm items-center justify-center px-4 py-24 pb-10 lg:p-8">
-          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-            <div className="flex flex-col space-y-2 text-center">
+      <div className=" flex min-h-screen w-full flex-col items-center justify-center bg-[url('/img01.jpg')] bg-cover bg-right bg-no-repeat">
+
+        <div className="bg-white/50 rounded-lg backdrop-blur-sm flex w-full max-w-sm items-center justify-center px-4 py-24 pb-10 lg:p-8">
+          <div className="mx-auto flex w-full flex-col justify-center gap-4 sm:w-[350px]">
+            <div className="flex flex-col text-center">
               <h1 className="text-2xl font-semibold tracking-tight">Entrar</h1>
               <p className="text-sm text-muted-foreground">
                 Entre com seu email e senha!
               </p>
             </div>
             <UserLoginForm />
-            <div className="flex w-full flex-col items-center justify-center gap-2">
-              <span>ou</span>
+            <div className="flex w-full flex-col items-center justify-center">
+              {/* <span>ou</span> */}
               <AuthButton page="register" />
             </div>
             <Link
@@ -36,25 +34,11 @@ export default function AuthenticationPage() {
             >
               Politica de privacidade
             </Link>
-            {/* <p className="px-8 text-center text-sm text-muted-foreground">
-              Clicando em continuar você esta de acordo com os termos{" "}
-              <Link
-                href="/terms"
-                className="underline underline-offset-4 hover:text-primary"
-              >
-                Termos dos serviços
-              </Link>{" "}
-              and{" "}
-              <Link
-                href="/police"
-                className="underline underline-offset-4 hover:text-primary"
-              >
-                Politica de privacidade
-              </Link>
-              .
-            </p> */}
           </div>
         </div>
+        <Link href="/" className="absolute top-4 right-4">
+            <Button variant="outline">Voltar</Button>
+        </Link>
       </div>
     </>
   );

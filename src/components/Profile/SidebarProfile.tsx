@@ -25,7 +25,7 @@ export function SidebarProfile() {
           active={pathname === "/profile/orders"}
           icon={PackageOpen}
           title={"Pedidos"}
-          href="profile/orders"
+          href="/profile/orders"
         />
         <NavItem
           active={pathname === "/profile/testimonials"}

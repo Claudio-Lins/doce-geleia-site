@@ -73,7 +73,7 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
 
   return (
     <div
-      className={cn("mx-auto grid w-full max-w-xs gap-6", className)}
+      className={cn("mx-auto grid w-full max-w-xs gap-4", className)}
       {...props}
     >
       <form onSubmit={onSubmit}>
@@ -117,8 +117,12 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
           </Button>
         </div>
       </form>
-      <div className="flex w-full flex-col items-center justify-center gap-2">
-        <span>ou</span>
+      <div className="flex w-full flex-col items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-2">
+          <div className="h-px bg-gray-900 w-32"/>
+          <span className="text-gray-900">ou</span>
+          <div className="h-px bg-gray-900 w-32"/>
+        </div>
         <Button
           className="flex w-full items-center gap-2"
           type="button"
