@@ -111,7 +111,10 @@ export function FormStatus({ order }: FormStatusProps) {
           <Button
             type="button"
             disabled={isLoading}
-            onClick={() => handleOrderStatus("PREPERING")}
+            onClick={() => {
+              handleOrderStatus("PREPERING")
+              handleFormOrderPrepering(order)
+            }}
             className={cn(
               "flex h-10 w-10 flex-col items-center justify-center rounded-full bg-orange-400",
               orderStatus === "PREPERING" && "animate-bounce",
