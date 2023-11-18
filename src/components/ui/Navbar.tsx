@@ -67,8 +67,8 @@ export function Navbar() {
   return (
     <div
       className={cn(
-        " fixed inset-0 z-10 h-24 w-full bg-transparent px-4 print:hidden border-b border-zinc-200 transition-all duration-200 ease-in-out shadow-sm",
-        pathName !== "/" ? "bg-white" : "bg-transparent",
+        " fixed inset-0 z-10 h-24 w-full bg-transparent px-4 print:hidden  transition-all duration-200 ease-in-out shadow-sm",
+        pathName !== "/" ? "bg-white border-b border-zinc-200" : "bg-transparent",
       )}
       style={{
         backgroundColor: color,
