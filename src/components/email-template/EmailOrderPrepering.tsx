@@ -13,14 +13,18 @@ interface EmailOrderPreperingProps {
 import { CSSProperties } from 'react';
 
 const containerStyles: CSSProperties = {
-  width: "100%",
-  height: "100vh",
+  width: "50%",
+  height: "300px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   textAlign: "center",
   fontFamily: "sans-serif",
   padding: "20px",
+  margin: "20px auto",
+  borderRadius: "10px",
+  boxShadow: "0 0 10px rgba(0,0,0,0.15)",
+  border: "1px solid #ddd",
 };
 
 const contentStyles: CSSProperties = {
@@ -43,58 +47,8 @@ export function EmailOrderPrepering({
     <div style={containerStyles}>
       <div style={contentStyles}>
         <h1>Olá, {fullName}!</h1>
-        <p>Recebemos o seu pedido com sucesso.</p>
+        <p>Seu pedido # {orderNumber} está em <b>{ statusOrder}</b>.</p>
         <p>Em breve entraremos em contacto consigo.</p>
-
-        <p>Segue abaixo os detalhes do seu pedido.</p>
-        <small>{orderNumber}</small>
-        <p>Obrigado ....!</p>
-
-        <h2>Detalhes do Pedido</h2>
-        <table
-          style={{
-            width: "100%",
-            textAlign: "left",
-            borderCollapse: "collapse",
-            marginTop: "20px",
-          }}
-        >
-          <thead>
-            <tr style={{ backgroundColor: "#f2f2f2" }}>
-              <th
-                style={{
-                  padding: "10px",
-                  borderBottom: "1px solid #ddd",
-                  textAlign: "center",
-                }}
-              >
-                Produtos
-              </th>
-              <th
-                style={{
-                  padding: "10px",
-                  borderBottom: "1px solid #ddd",
-                  textAlign: "center",
-                }}
-              >
-                Tamanho
-              </th>
-              <th
-                style={{
-                  padding: "10px",
-                  borderBottom: "1px solid #ddd",
-                  textAlign: "center",
-                }}
-              >
-                Quantidade
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-
-          </tbody>
-        </table>
-        <h1>{ statusOrder}</h1>
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       react: EmailOrderPrepering({
         fullName,
         orderNumber,
-        statusOrder: "Preparação de encomenda",
+        statusOrder: "PREPARAÇÃO",
       }) as React.ReactElement,
     });
     return NextResponse.json(data);
