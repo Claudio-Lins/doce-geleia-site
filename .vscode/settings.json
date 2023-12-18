@@ -16,10 +16,10 @@
 
   // on save
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true,
-    "source.addMissingImports": true,
-    "source.sortImports": true,
-    "source.sortImportsByMembers": true
+    "source.organizeImports": "explicit",
+    "source.addMissingImports": "explicit",
+    "source.sortImports": "explicit",
+    "source.sortImportsByMembers": "explicit"
   },
 
   // explorer
